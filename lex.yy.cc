@@ -624,8 +624,7 @@ static yyconst flex_int32_t yy_rule_can_match_eol[82] =
 	using std::cerr;
 
 
-
-#line 629 "lex.yy.cc"
+#line 628 "lex.yy.cc"
 
 #define INITIAL 0
 #define STRING 1
@@ -732,10 +731,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 32 "yare.l"
+#line 31 "yare.l"
 
 
-#line 739 "lex.yy.cc"
+#line 738 "lex.yy.cc"
 
 	if ( !(yy_init) )
 		{
@@ -830,7 +829,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 34 "yare.l"
+#line 33 "yare.l"
 {
 	lexema->valnum = strtold(yytext, NULL);
 	return YL::BisonParser::token::NUMERIC;
@@ -838,7 +837,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 39 "yare.l"
+#line 38 "yare.l"
 {
 						/* TODO Revisar esto con calma */
 	if(isupper(*yytext))
@@ -850,7 +849,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 48 "yare.l"
+#line 47 "yare.l"
 {
 	strcpy(lexema->identificador, yytext);
 	for(unsigned _i_ = 0; _i_ < strlen(lexema->identificador); _i_++)
@@ -861,7 +860,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 56 "yare.l"
+#line 55 "yare.l"
 {
 	strcpy(lexema->nameFunction, yytext);
 	lexema->nameFunction[strlen(lexema->nameFunction)] = '\0';
@@ -870,7 +869,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 62 "yare.l"
+#line 61 "yare.l"
 {
 	lexema->valnum = strtold(yytext, NULL);
 	return YL::BisonParser::token::NUMERIC;
@@ -878,7 +877,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 67 "yare.l"
+#line 66 "yare.l"
 {
 	// 676 ...? 8729834, expr ...? expr
 	return YL::BisonParser::token::RANGE_RANDOM;
@@ -886,70 +885,70 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 72 "yare.l"
+#line 71 "yare.l"
 {
 	return YL::BisonParser::token::PROC;
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 76 "yare.l"
+#line 75 "yare.l"
 {
 	return YL::BisonParser::token::CALL;
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 80 "yare.l"
+#line 79 "yare.l"
 {
 	return YL::BisonParser::token::PRINTN;
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 84 "yare.l"
+#line 83 "yare.l"
 {
 	return YL::BisonParser::token::PRINT;
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 88 "yare.l"
+#line 87 "yare.l"
 {
 	return YL::BisonParser::token::INC;
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 92 "yare.l"
+#line 91 "yare.l"
 {
 	return YL::BisonParser::token::DEC;
 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 96 "yare.l"
+#line 95 "yare.l"
 {
 	return YL::BisonParser::token::LETSET_ASSIGN;
 }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 100 "yare.l"
+#line 99 "yare.l"
 {
 	return YL::BisonParser::token::TO;
 }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 104 "yare.l"
+#line 103 "yare.l"
 {
 	return YL::BisonParser::token::MOVE;
 }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 108 "yare.l"
+#line 107 "yare.l"
 {
 	// mov x, 1 + 2;
 	return YL::BisonParser::token::MOV_ASM;
@@ -957,7 +956,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 113 "yare.l"
+#line 112 "yare.l"
 {
 	// dd x, 1+ 2 * 3;
 	return YL::BisonParser::token::ADD_ASM;
@@ -965,7 +964,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 118 "yare.l"
+#line 117 "yare.l"
 {
 	// add x, 1+ 2 * 3;
 	return YL::BisonParser::token::SUB_ASM;
@@ -973,7 +972,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 123 "yare.l"
+#line 122 "yare.l"
 {
 	// mul x, 2;
 	return YL::BisonParser::token::MUL_ASM;
@@ -981,63 +980,63 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 128 "yare.l"
+#line 127 "yare.l"
 {
 	return YL::BisonParser::token::WHILE;
 }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 132 "yare.l"
+#line 131 "yare.l"
 {
 	return YL::BisonParser::token::IF;
 }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 136 "yare.l"
+#line 135 "yare.l"
 {
 	return YL::BisonParser::token::ELSE;
 }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 140 "yare.l"
+#line 139 "yare.l"
 {
 	return YL::BisonParser::token::BREAK;
 }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 144 "yare.l"
+#line 143 "yare.l"
 {
 	return YL::BisonParser::token::RAND;
 }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 148 "yare.l"
+#line 147 "yare.l"
 {
 	return YL::BisonParser::token::XOROP;
 }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 152 "yare.l"
+#line 151 "yare.l"
 {
 	return YL::BisonParser::token::MOD_WORD;
 }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 156 "yare.l"
+#line 155 "yare.l"
 /* Expressions with WORDS */	{
 	return YL::BisonParser::token::EXPR_NOT;
 }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 160 "yare.l"
+#line 159 "yare.l"
 {	
 	char *__elemento = strtok(yytext, ".");
 	__elemento = strtok(NULL, ".");
@@ -1054,14 +1053,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 174 "yare.l"
+#line 173 "yare.l"
 {
 	return YL::BisonParser::token::SWAP_OP;
 }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 178 "yare.l"
+#line 177 "yare.l"
 {
 	// Greater or equal:
 	return YL::BisonParser::token::GE;
@@ -1069,7 +1068,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 183 "yare.l"
+#line 182 "yare.l"
 {
 	// Less or equal:
 	return YL::BisonParser::token::LE;
@@ -1077,7 +1076,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 188 "yare.l"
+#line 187 "yare.l"
 {
 	// Equal:
 	return YL::BisonParser::token::EQ;
@@ -1085,7 +1084,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 193 "yare.l"
+#line 192 "yare.l"
 {
 	// Not equal:
 	return YL::BisonParser::token::NE;
@@ -1093,35 +1092,35 @@ YY_RULE_SETUP
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 198 "yare.l"
+#line 197 "yare.l"
 {
 	return YL::BisonParser::token::AND;
 }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 202 "yare.l"
+#line 201 "yare.l"
 {
 	return YL::BisonParser::token::OR;
 }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 206 "yare.l"
+#line 205 "yare.l"
 {
 	return YL::BisonParser::token::OR;
 }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 210 "yare.l"
+#line 209 "yare.l"
 {
 	return YL::BisonParser::token::AND;
 }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 214 "yare.l"
+#line 213 "yare.l"
 {
 	// Equal shell operator
 	return YL::BisonParser::token::EQ;
@@ -1129,7 +1128,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 219 "yare.l"
+#line 218 "yare.l"
 {
 	// Not equal shell operator
 	return YL::BisonParser::token::NE;
@@ -1137,7 +1136,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 223 "yare.l"
+#line 222 "yare.l"
 {
 	//  Less shell operator
 	return YL::BisonParser::token::_LT_;
@@ -1145,84 +1144,84 @@ YY_RULE_SETUP
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 228 "yare.l"
+#line 227 "yare.l"
 {
 	return YL::BisonParser::token::SHIFTLEFT;
 }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 232 "yare.l"
+#line 231 "yare.l"
 {					
 	return YL::BisonParser::token::SHIFTRIGHT; 
 }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 236 "yare.l"
+#line 235 "yare.l"
 {
 	return YL::BisonParser::token::OP_ASIGN_ABR_MAS;
 } 
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 240 "yare.l"
+#line 239 "yare.l"
 {
 	return YL::BisonParser::token::OP_ASIGN_ABR_MENOS;
 }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 244 "yare.l"
+#line 243 "yare.l"
 {
 	return YL::BisonParser::token::OP_ASIGN_ABR_MUL;
 }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 248 "yare.l"
+#line 247 "yare.l"
 {
 	return YL::BisonParser::token::OP_ASIGN_ABR_DIV;
 }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 252 "yare.l"
+#line 251 "yare.l"
 {
 	return YL::BisonParser::token::OP_ASIGN_ABR_MOD;
 }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 256 "yare.l"
+#line 255 "yare.l"
 {
 	return YL::BisonParser::token::OP_ASIGN_ABR_SHIFTLEFT;
 }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 260 "yare.l"
+#line 259 "yare.l"
 {
 	return YL::BisonParser::token::OP_ASIGN_ABR_SHIFTRIGHT;
 }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 264 "yare.l"
+#line 263 "yare.l"
 {
 	return YL::BisonParser::token::OP_ASIGN_ABR_POW;
 }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 268 "yare.l"
+#line 267 "yare.l"
 {
 	return YL::BisonParser::token::PASCAL_ASSIGN;
 }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 272 "yare.l"
+#line 271 "yare.l"
 {
 	// "menor"
 	return YL::BisonParser::token::EXPR_MENOR;
@@ -1230,7 +1229,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 277 "yare.l"
+#line 276 "yare.l"
 {
 	// "menorigual"
 	return YL::BisonParser::token::EXPR_MENORIGUAL;
@@ -1238,7 +1237,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 282 "yare.l"
+#line 281 "yare.l"
 {
 	// "mayor"
 	return YL::BisonParser::token::EXPR_MAYOR;
@@ -1246,7 +1245,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 287 "yare.l"
+#line 286 "yare.l"
 {
 	// "mayorigual"
 	return YL::BisonParser::token::EXPR_MAYORIGUAL;
@@ -1254,70 +1253,70 @@ YY_RULE_SETUP
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 292 "yare.l"
+#line 291 "yare.l"
 {
 	return YL::BisonParser::token::EXPR_ELEVADO;
 }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 296 "yare.l"
+#line 295 "yare.l"
 { BEGIN	STRING; 
 	str_scapes = buf; 
 }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 299 "yare.l"
+#line 298 "yare.l"
 { 
 	*str_scapes++ = '\n'; 
 }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 302 "yare.l"
+#line 301 "yare.l"
 { 
 	*str_scapes++ = '\t'; 
 }
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 305 "yare.l"
+#line 304 "yare.l"
 { 
 	*str_scapes++ = ' ';  
 }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 308 "yare.l"
+#line 307 "yare.l"
 { 
 	*str_scapes++ = '\b'; 
 }
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 311 "yare.l"
+#line 310 "yare.l"
 { 
 	*str_scapes++ = '\r'; 
 }
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 314 "yare.l"
+#line 313 "yare.l"
 { 
 	*str_scapes++ = '\f'; 
 }
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 317 "yare.l"
+#line 316 "yare.l"
 { 
 	*str_scapes++ = '"'; 
 }
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 320 "yare.l"
+#line 319 "yare.l"
 { 
 	/* Caracteres de escape numéricos para saltos de línea */
 	for(int _ii = 0; _ii < (*(yytext + 1) - '0'); _ii++) 
@@ -1326,7 +1325,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 325 "yare.l"
+#line 324 "yare.l"
 {
 	*str_scapes = 0;
 	BEGIN 0; 
@@ -1338,7 +1337,7 @@ YY_RULE_SETUP
 case 67:
 /* rule 67 can match eol */
 YY_RULE_SETUP
-#line 332 "yare.l"
+#line 331 "yare.l"
 { 
 	cout << "Cadena invalida" << endl;
 	exit(EXIT_FAILURE);
@@ -1347,36 +1346,36 @@ YY_RULE_SETUP
 case 68:
 /* rule 68 can match eol */
 YY_RULE_SETUP
-#line 337 "yare.l"
+#line 336 "yare.l"
 {;}		/* Comentarios tipo shell, perl, python, etc */
 	YY_BREAK
 case 69:
 /* rule 69 can match eol */
 YY_RULE_SETUP
-#line 338 "yare.l"
+#line 337 "yare.l"
 {;}		/* Comentarios estilo C++ */
 	YY_BREAK
 case 70:
 /* rule 70 can match eol */
 YY_RULE_SETUP
-#line 339 "yare.l"
+#line 338 "yare.l"
 {;}		/* Comentarios estilo basic */
 	YY_BREAK
 case 71:
 /* rule 71 can match eol */
 YY_RULE_SETUP
-#line 340 "yare.l"
+#line 339 "yare.l"
 {;}		/* Comentarios estilo batch */
 	YY_BREAK
 case 72:
 /* rule 72 can match eol */
 YY_RULE_SETUP
-#line 341 "yare.l"
+#line 340 "yare.l"
 {;}		/* Comentarios estilo SQL */
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 343 "yare.l"
+#line 342 "yare.l"
 {
 	return *yytext;
 }
@@ -1384,50 +1383,50 @@ YY_RULE_SETUP
 case 74:
 /* rule 74 can match eol */
 YY_RULE_SETUP
-#line 347 "yare.l"
+#line 346 "yare.l"
 ;
 	YY_BREAK
 
 case 75:
 YY_RULE_SETUP
-#line 351 "yare.l"
+#line 350 "yare.l"
 BEGIN(IN_COMMENT);
 	YY_BREAK
 
 
 case 76:
 YY_RULE_SETUP
-#line 354 "yare.l"
+#line 353 "yare.l"
 BEGIN(INITIAL);
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 355 "yare.l"
+#line 354 "yare.l"
 // eat comment in chunks
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 356 "yare.l"
+#line 355 "yare.l"
 // eat the lone star
 	YY_BREAK
 case 79:
 /* rule 79 can match eol */
 YY_RULE_SETUP
-#line 357 "yare.l"
+#line 356 "yare.l"
 yylineno++;
 	YY_BREAK
 
 case 80:
 YY_RULE_SETUP
-#line 360 "yare.l"
+#line 359 "yare.l"
 { cout << "Caracter desconocido: '" << yytext << '\'' << endl; }
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 362 "yare.l"
+#line 361 "yare.l"
 ECHO;
 	YY_BREAK
-#line 1431 "lex.yy.cc"
+#line 1430 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(STRING):
 case YY_STATE_EOF(IN_COMMENT):
@@ -2338,7 +2337,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 362 "yare.l"
+#line 361 "yare.l"
 
 
 

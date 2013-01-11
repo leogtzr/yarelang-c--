@@ -60,7 +60,7 @@ a = -12; -- Soy un comentario
 /: División
 ^: Exponenciación
 
-Ejemplos:
+Ejemplos básicos:
 
 <codigo>
 a = 1 + 2 + 3 + 4;

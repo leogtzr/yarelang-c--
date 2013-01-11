@@ -21,7 +21,6 @@
 	using std::endl;
 	using std::cout;
 	using std::cerr;
-
 %}
 %x STRING
 %x IN_COMMENT
