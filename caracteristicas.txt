@@ -1,0 +1,3 @@
+-- Variables globales --
+yare cuenta con 26 variables globales, de la 'a' a la z.
+

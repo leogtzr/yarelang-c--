@@ -37,7 +37,6 @@
 }
 
 %code {
-	// Prototype for the yylex function
 	using std::endl;
 	using std::cout;
 	using std::cerr;
