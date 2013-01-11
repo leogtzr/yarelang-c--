@@ -51,4 +51,38 @@ Comentarios estilo SQL:
 
 a = -12; -- Soy un comentario
 
+-- Operadores --
+-- Operadores aritméticos --
 
++: Suma
+-: Resta
+*: Multilicación
+/: División
+^: Exponenciación
+
+Ejemplos:
+
+<codigo>
+a = 1 + 2 + 3 + 4;
+printn(a); # 10 
+</codigo>
+
+<codigo>
+a = 1 - 2 + 10;
+printn(a);
+</codigo>
+
+<codigo>
+a = 1 + 2 * 3;
+printn(a);
+</codigo>
+
+<codigo>
+a = 5 / 13;
+printn(a); 
+</codigo>
+
+<codigo>
+a = 2 ^ 3;
+printn(a);
+</codigo>
