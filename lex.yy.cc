@@ -1278,6 +1278,7 @@ YY_RULE_SETUP
 	string_final[0] = '\0';
     unsigned i;
 
+    bool upper = false;
     for(i = 0; yytext[i] != '\0'; i++) {
         if(yytext[i] == '\\') {
             switch(yytext[i + 1]) {
@@ -1311,6 +1312,9 @@ YY_RULE_SETUP
                 case '\\':
                 	append_char(string_final, '\\');
                 	i++;
+                case 'u':
+                	upper = true;
+                	i++;
                     break;
                 default:
                     if(isdigit(yytext[i + 1]) == true) {
@@ -1322,7 +1326,12 @@ YY_RULE_SETUP
                     }
             }
         } else {
-            append_char(string_final, yytext[i]);
+            if(upper) {
+            	append_char(string_final, toupper(yytext[i]));
+            	upper = false;
+            } else {
+            	append_char(string_final, yytext[i]);
+            }
         }
     }
     
@@ -1337,36 +1346,36 @@ YY_RULE_SETUP
 case 59:
 /* rule 59 can match eol */
 YY_RULE_SETUP
-#line 372 "yare.l"
+#line 381 "yare.l"
 {;}		/* Comentarios tipo shell, perl, python, etc */
 	YY_BREAK
 case 60:
 /* rule 60 can match eol */
 YY_RULE_SETUP
-#line 373 "yare.l"
+#line 382 "yare.l"
 {;}		/* Comentarios estilo C++ */
 	YY_BREAK
 case 61:
 /* rule 61 can match eol */
 YY_RULE_SETUP
-#line 374 "yare.l"
+#line 383 "yare.l"
 {;}		/* Comentarios estilo basic */
 	YY_BREAK
 case 62:
 /* rule 62 can match eol */
 YY_RULE_SETUP
-#line 375 "yare.l"
+#line 384 "yare.l"
 {;}		/* Comentarios estilo batch */
 	YY_BREAK
 case 63:
 /* rule 63 can match eol */
 YY_RULE_SETUP
-#line 376 "yare.l"
+#line 385 "yare.l"
 {;}		/* Comentarios estilo SQL */
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 378 "yare.l"
+#line 387 "yare.l"
 {
 	return *yytext;
 }
@@ -1374,50 +1383,50 @@ YY_RULE_SETUP
 case 65:
 /* rule 65 can match eol */
 YY_RULE_SETUP
-#line 382 "yare.l"
+#line 391 "yare.l"
 ;
 	YY_BREAK
 
 case 66:
 YY_RULE_SETUP
-#line 385 "yare.l"
+#line 394 "yare.l"
 BEGIN(IN_COMMENT);
 	YY_BREAK
 
 
 case 67:
 YY_RULE_SETUP
-#line 388 "yare.l"
+#line 397 "yare.l"
 BEGIN(INITIAL);
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 389 "yare.l"
+#line 398 "yare.l"
 // eat comment in chunks
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 390 "yare.l"
+#line 399 "yare.l"
 // eat the lone star
 	YY_BREAK
 case 70:
 /* rule 70 can match eol */
 YY_RULE_SETUP
-#line 391 "yare.l"
+#line 400 "yare.l"
 yylineno++;
 	YY_BREAK
 
 case 71:
 YY_RULE_SETUP
-#line 394 "yare.l"
+#line 403 "yare.l"
 { cout << "Caracter desconocido: '" << yytext << '\'' << endl; }
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 396 "yare.l"
+#line 405 "yare.l"
 ECHO;
 	YY_BREAK
-#line 1421 "lex.yy.cc"
+#line 1430 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(STRING):
 case YY_STATE_EOF(IN_COMMENT):
@@ -2328,7 +2337,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 396 "yare.l"
+#line 405 "yare.l"
 
 
 

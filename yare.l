@@ -313,6 +313,7 @@
 	string_final[0] = '\0';
     unsigned i;
 
+    bool upper = false;
     for(i = 0; yytext[i] != '\0'; i++) {
         if(yytext[i] == '\\') {
             switch(yytext[i + 1]) {
@@ -346,6 +347,9 @@
                 case '\\':
                 	append_char(string_final, '\\');
                 	i++;
+                case 'u':
+                	upper = true;
+                	i++;
                     break;
                 default:
                     if(isdigit(yytext[i + 1]) == true) {
@@ -357,7 +361,12 @@
                     }
             }
         } else {
-            append_char(string_final, yytext[i]);
+            if(upper) {
+            	append_char(string_final, toupper(yytext[i]));
+            	upper = false;
+            } else {
+            	append_char(string_final, yytext[i]);
+            }
         }
     }
     
