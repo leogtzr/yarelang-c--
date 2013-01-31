@@ -181,6 +181,7 @@
 %left GE LE EQ NE GT LT ORBITS ANDBITS SHIFTLEFT SHIFTRIGHT
 %left '+' '-'
 %left '*' '/'
+%left '%'
 %left '^'
 %left EXPR_ELEVADO			// expr "elevado" expr <-> expr^expr 
 %nonassoc UMINUS NEGACION 
@@ -292,6 +293,9 @@ stmt:
 	}
 	| PUTS '(' CADENA ')' ';'		{
 		$$ = opr(YL::YareParser::token::PUTS, 1, conStr($3, typeCadena));
+	}
+	| PUTS CADENA ';'		{
+		$$ = opr(YL::YareParser::token::PUTS, 1, conStr($2, typeCadena));
 	}
 	| WHILE	'(' expr ')' stmt	{ 
 		$$ = opr(YL::YareParser::token::WHILE, 2, $3, $5); 
@@ -1211,8 +1215,12 @@ long double run(nodeType *p) {
 					return 0.0L;
 
 				case '%':
-					if((spLoop < 0) || pilaLoop[spLoop])
-						return (long long)run(p->opr.op[0]) % (long long)run(p->opr.op[1]);
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						// cout << "Entra aquí ... \n";
+						//return fmod(run(p->opr.op[0]), run(p->opr.op[1]));
+						// return (long long)run(p->opr.op[0]) % (long long)run(p->opr.op[1]);
+						return (int)run(p->opr.op[0]) % (int)run(p->opr.op[1]);
+					}
 					return 0.0L;
 
 				case YL::YareParser::token::LT:

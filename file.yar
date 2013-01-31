@@ -1,4 +1,10 @@
-puts("\ul\ue\uo\lN");
-print(0x1+0x2*0x3);
-puts("");
+a = 0;
+
+while(a <= 10) {
+	a = a + 1;
+	if(a % 2 == 0) {
+		printn(a);
+	}
+}
+
 .
