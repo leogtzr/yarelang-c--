@@ -314,6 +314,8 @@
     unsigned i;
 
     bool upper = false;
+    bool lower = false;
+
     for(i = 0; yytext[i] != '\0'; i++) {
         if(yytext[i] == '\\') {
             switch(yytext[i + 1]) {
@@ -351,6 +353,11 @@
                 	upper = true;
                 	i++;
                     break;
+
+                case 'l':
+                	lower = true;
+                	i++;
+                    break;
                 default:
                     if(isdigit(yytext[i + 1]) == true) {
                         unsigned n_newline = yytext[i + 1] - '0';
@@ -364,6 +371,9 @@
             if(upper && isalpha(yytext[i])) {
             	append_char(string_final, toupper(yytext[i]));
             	upper = false;
+            } else if (lower && isalpha(yytext[i])){
+            	append_char(string_final, tolower(yytext[i]));
+            	lower = false;
             } else {
             	append_char(string_final, yytext[i]);
             }

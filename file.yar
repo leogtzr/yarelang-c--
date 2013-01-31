@@ -1,4 +1,4 @@
-puts("Ho\ula");
+puts("\ul\ue\uo\lN");
 print(0x1+0x2*0x3);
 puts("");
 .
