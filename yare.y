@@ -3,7 +3,7 @@
 
 %defines
 %define namespace "YL"
-%define parser_class_name "BisonParser"
+%define parser_class_name "YareParser"
 %parse-param { YL::FlexScanner &scanner }
 %lex-param   { YL::FlexScanner &scanner }
 
@@ -38,7 +38,7 @@
 	using std::cout;
 	using std::cerr;
 
-	static int yylex(YL::BisonParser::semantic_type * yylval, YL::FlexScanner &scanner);
+	static int yylex(YL::YareParser::semantic_type * yylval, YL::FlexScanner &scanner);
 	
 	// Node Constants:
 	nodeTypeTag *con(long double);
@@ -222,25 +222,25 @@ stmt:
 		$$ = opr('=', 2, id($4), $2);
 	}
 	| MOVE expr TO ID {
-		$$ = opr(YL::BisonParser::token::ID_ASIGNACION, 2, idS($4), $2);
+		$$ = opr(YL::YareParser::token::ID_ASIGNACION, 2, idS($4), $2);
 	}
 	| MOV_ASM VARIABLE ',' expr ';' {
 		$$ = opr('=', 2, id($2), $4);
 	}
 	| MOV_ASM ID ',' expr ';' {
-		$$ = opr(YL::BisonParser::token::ID_ASIGNACION, 2, idS($2), $4);
+		$$ = opr(YL::YareParser::token::ID_ASIGNACION, 2, idS($2), $4);
 	}
 	| VARIABLE '<''-' expr {
 		$$ = opr('=', 2, id($1), $4);
 	}
 	| ID '<''-' expr {
-		$$ = opr(YL::BisonParser::token::ID_ASIGNACION, 2, idS($1), $4);
+		$$ = opr(YL::YareParser::token::ID_ASIGNACION, 2, idS($1), $4);
 	}
 	| VARIABLE PASCAL_ASSIGN expr {
 		$$ = opr('=', 2, id($1), $3);
 	}
 	| ID PASCAL_ASSIGN expr {
-		$$ = opr(YL::BisonParser::token::ID_ASIGNACION, 2, idS($1), $3);
+		$$ = opr(YL::YareParser::token::ID_ASIGNACION, 2, idS($1), $3);
 	}
 	| LETSET_ASSIGN VARIABLE '=' expr ';' {
 		$$ = opr('=', 2, id($2), $4); 
@@ -249,127 +249,127 @@ stmt:
 		$$ = opr('=', 2, id($2), $4); 
 	}
 	| ID '=' expr ';'					{ 
-		$$ = opr(YL::BisonParser::token::ID_ASIGNACION, 2, idS($1), $3); 
+		$$ = opr(YL::YareParser::token::ID_ASIGNACION, 2, idS($1), $3); 
 	}
 	| ID TO expr ';'					{ 	// :x: to 1 + 2;
-		$$ = opr(YL::BisonParser::token::ID_ASIGNACION, 2, idS($1), $3); 
+		$$ = opr(YL::YareParser::token::ID_ASIGNACION, 2, idS($1), $3); 
 	}
 	| LETSET_ASSIGN ID '=' expr ';'					{ 
-		$$ = opr(YL::BisonParser::token::ID_ASIGNACION, 2, idS($2), $4); 
+		$$ = opr(YL::YareParser::token::ID_ASIGNACION, 2, idS($2), $4); 
 	}
 	| LETSET_ASSIGN ID TO expr ';'					{ 
-		$$ = opr(YL::BisonParser::token::ID_ASIGNACION, 2, idS($2), $4); 
+		$$ = opr(YL::YareParser::token::ID_ASIGNACION, 2, idS($2), $4); 
 	}
 	| VARIABLE '=' '?' ';' {
-		$$ = opr(YL::BisonParser::token::INIT_RANDOM, 1, id($1));
+		$$ = opr(YL::YareParser::token::INIT_RANDOM, 1, id($1));
 	}
 	| ID '=' '?' ';' {
-		$$ = opr(YL::BisonParser::token::INIT_RANDOM, 1, idS($1));
+		$$ = opr(YL::YareParser::token::INIT_RANDOM, 1, idS($1));
 	}
 	| VARIABLE SWAP_OP VARIABLE ';' {
-		$$ = opr(YL::BisonParser::token::SWAP_OP, 2, id($1), id($3));
+		$$ = opr(YL::YareParser::token::SWAP_OP, 2, id($1), id($3));
 	}
 	| ID SWAP_OP VARIABLE ';' {
-		$$ = opr(YL::BisonParser::token::SWAP_OP, 2, idS($1), id($3));
+		$$ = opr(YL::YareParser::token::SWAP_OP, 2, idS($1), id($3));
 	}
 	| VARIABLE SWAP_OP ID ';' {
-		$$ = opr(YL::BisonParser::token::SWAP_OP, 2, id($1), idS($3));
+		$$ = opr(YL::YareParser::token::SWAP_OP, 2, id($1), idS($3));
 	}
 	| ID SWAP_OP ID ';' {
-		$$ = opr(YL::BisonParser::token::SWAP_OP, 2, idS($1), idS($3));
+		$$ = opr(YL::YareParser::token::SWAP_OP, 2, idS($1), idS($3));
 	}
 	| expr ';' 	{ 
 		$$ = $1; 
 	}
 	| PRINTN '(' expr ')'';' {
-		$$ = opr(YL::BisonParser::token::PRINTN, 1, $3); 
+		$$ = opr(YL::YareParser::token::PRINTN, 1, $3); 
 	}
 	| PRINT '(' expr ')'';' {
-		$$ = opr(YL::BisonParser::token::PRINT, 1, $3); 
+		$$ = opr(YL::YareParser::token::PRINT, 1, $3); 
 	}
 	| '{' stmt_list	'}'		{ 
 		$$ = $2; 
 	}
 	| PUTS '(' CADENA ')' ';'		{
-		$$ = opr(YL::BisonParser::token::PUTS, 1, conStr($3, typeCadena));
+		$$ = opr(YL::YareParser::token::PUTS, 1, conStr($3, typeCadena));
 	}
 	| WHILE	'(' expr ')' stmt	{ 
-		$$ = opr(YL::BisonParser::token::WHILE, 2, $3, $5); 
+		$$ = opr(YL::YareParser::token::WHILE, 2, $3, $5); 
 	}
 	| BREAK ';' 			{
-		$$ = opr(YL::BisonParser::token::BREAK, 0);
+		$$ = opr(YL::YareParser::token::BREAK, 0);
 	}
 	| IF '(' expr ')'	stmt %prec	IFX		{ 
-		$$ = opr(YL::BisonParser::token::IF, 2, $3, $5); 
+		$$ = opr(YL::YareParser::token::IF, 2, $3, $5); 
 	}
 	| IF '(' expr ')' stmt ELSE stmt	{ 
-		$$ = opr(YL::BisonParser::token::IF, 3, $3, $5, $7); 
+		$$ = opr(YL::YareParser::token::IF, 3, $3, $5, $7); 
 	}
 	| VARIABLE OP_ASIGN_ABR_MAS expr ';' {
-		$$ = opr(YL::BisonParser::token::OP_ASIGN_ABR_MAS, 2, id($1), $3);
+		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_MAS, 2, id($1), $3);
 	}
 	| ID OP_ASIGN_ABR_MAS expr ';' {
-		$$ = opr(YL::BisonParser::token::OP_ASIGN_ABR_MAS, 2, idS($1), $3);
+		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_MAS, 2, idS($1), $3);
 	}
 	| ADD_ASM VARIABLE ',' expr ';' {
-		$$ = opr(YL::BisonParser::token::OP_ASIGN_ABR_MAS, 2, id($2), $4);
+		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_MAS, 2, id($2), $4);
 	}
 	| ADD_ASM ID ',' expr ';' {
-		$$ = opr(YL::BisonParser::token::OP_ASIGN_ABR_MAS, 2, idS($2), $4);
+		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_MAS, 2, idS($2), $4);
 	}
 	| SUB_ASM VARIABLE ',' expr ';' {
-		$$ = opr(YL::BisonParser::token::OP_ASIGN_ABR_MENOS, 2, id($2), $4);
+		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_MENOS, 2, id($2), $4);
 	}
 	| SUB_ASM ID ',' expr ';' {
-		$$ = opr(YL::BisonParser::token::OP_ASIGN_ABR_MENOS, 2, idS($2), $4);
+		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_MENOS, 2, idS($2), $4);
 	}
 	| MUL_ASM VARIABLE ',' expr ';' {
-		$$ = opr(YL::BisonParser::token::OP_ASIGN_ABR_MUL, 2, id($2), $4);
+		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_MUL, 2, id($2), $4);
 	}
 	| MUL_ASM ID ',' expr ';' {
-		$$ = opr(YL::BisonParser::token::OP_ASIGN_ABR_MUL, 2, idS($2), $4);
+		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_MUL, 2, idS($2), $4);
 	}
 	| VARIABLE OP_ASIGN_ABR_MENOS expr {
-		$$ = opr(YL::BisonParser::token::OP_ASIGN_ABR_MENOS, 2, id($1), $3);
+		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_MENOS, 2, id($1), $3);
 	}
 	| ID OP_ASIGN_ABR_MENOS expr {
-		$$ = opr(YL::BisonParser::token::OP_ASIGN_ABR_MENOS, 2, idS($1), $3);
+		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_MENOS, 2, idS($1), $3);
 	}
 	| VARIABLE OP_ASIGN_ABR_MOD expr {
-		$$ = opr(YL::BisonParser::token::OP_ASIGN_ABR_MOD, 2, id($1), $3);
+		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_MOD, 2, id($1), $3);
 	}
 	| ID OP_ASIGN_ABR_MOD expr {
-		$$ = opr(YL::BisonParser::token::OP_ASIGN_ABR_MOD, 2, idS($1), $3);
+		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_MOD, 2, idS($1), $3);
 	}
 	| VARIABLE OP_ASIGN_ABR_MUL expr {
-		$$ = opr(YL::BisonParser::token::OP_ASIGN_ABR_MUL, 2, id($1), $3);
+		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_MUL, 2, id($1), $3);
 	}
 	| ID OP_ASIGN_ABR_MUL expr {
-		$$ = opr(YL::BisonParser::token::OP_ASIGN_ABR_MUL, 2, idS($1), $3);
+		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_MUL, 2, idS($1), $3);
 	}
 	| VARIABLE OP_ASIGN_ABR_DIV expr {
-		$$ = opr(YL::BisonParser::token::OP_ASIGN_ABR_DIV, 2, id($1), $3);
+		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_DIV, 2, id($1), $3);
 	}
 	| ID OP_ASIGN_ABR_DIV expr {
-		$$ = opr(YL::BisonParser::token::OP_ASIGN_ABR_DIV, 2, idS($1), $3);
+		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_DIV, 2, idS($1), $3);
 	}
 	| VARIABLE OP_ASIGN_ABR_SHIFTRIGHT expr {
-		$$ = opr(YL::BisonParser::token::OP_ASIGN_ABR_SHIFTRIGHT, 2, id($1), $3);
+		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_SHIFTRIGHT, 2, id($1), $3);
 	}
 	| ID OP_ASIGN_ABR_SHIFTRIGHT expr {
-		$$ = opr(YL::BisonParser::token::OP_ASIGN_ABR_SHIFTRIGHT, 2, idS($1), $3);
+		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_SHIFTRIGHT, 2, idS($1), $3);
 	}
 	| VARIABLE OP_ASIGN_ABR_AND expr {
-		$$ = opr(YL::BisonParser::token::OP_ASIGN_ABR_AND, 2, id($1), $3);
+		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_AND, 2, id($1), $3);
 	}
 	| ID OP_ASIGN_ABR_AND expr {
-		$$ = opr(YL::BisonParser::token::OP_ASIGN_ABR_AND, 2, idS($1), $3);
+		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_AND, 2, idS($1), $3);
 	}
 	| VARIABLE OP_ASIGN_ABR_POW expr {
-		$$ = opr(YL::BisonParser::token::OP_ASIGN_ABR_POW, 2, id($1), $3);
+		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_POW, 2, id($1), $3);
 	}
 	| ID OP_ASIGN_ABR_POW expr {
-		$$ = opr(YL::BisonParser::token::OP_ASIGN_ABR_POW, 2, idS($1), $3);
+		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_POW, 2, idS($1), $3);
 	}
 	| {;}
 	;
@@ -402,40 +402,40 @@ expr:
 		$$ = id($1); 
 	}
 	| RAND '('')' 		{
-		$$ = opr(YL::BisonParser::token::RAND, 0);
+		$$ = opr(YL::YareParser::token::RAND, 0);
 	}
 	| DEC '(' ID ')' {
-		$$ = opr(YL::BisonParser::token::DEC, 1, idS($3));
+		$$ = opr(YL::YareParser::token::DEC, 1, idS($3));
 	}
 	| DEC '(' VARIABLE ')' {
-		$$ = opr(YL::BisonParser::token::DEC, 1, id($3));
+		$$ = opr(YL::YareParser::token::DEC, 1, id($3));
 	}
 	| INC '(' ID ')' {
-		$$ = opr(YL::BisonParser::token::INC, 1, idS($3));
+		$$ = opr(YL::YareParser::token::INC, 1, idS($3));
 	}
 	| INC '(' VARIABLE ')' {
-		$$ = opr(YL::BisonParser::token::INC, 1, id($3));
+		$$ = opr(YL::YareParser::token::INC, 1, id($3));
 	}
 	| expr XOROP expr {
-		$$ = opr(YL::BisonParser::token::XOROP, 2, $1, $3);
+		$$ = opr(YL::YareParser::token::XOROP, 2, $1, $3);
 	}
 	| expr RANGE_RANDOM expr {
-		$$ = opr(YL::BisonParser::token::RANGE_RANDOM, 2, $1, $3);
+		$$ = opr(YL::YareParser::token::RANGE_RANDOM, 2, $1, $3);
 	}
 	| expr '+' expr	{ 
 		$$ = opr('+', 2, $1, $3); 
 	}
 	| '-' expr %prec UMINUS				{ 
-		$$ = opr(YL::BisonParser::token::UMINUS, 1, $2); 
+		$$ = opr(YL::YareParser::token::UMINUS, 1, $2); 
 	}
 	| '!' expr %prec NEGACION			{ 
-		$$ = opr(YL::BisonParser::token::NEGACION, 1, $2); 
+		$$ = opr(YL::YareParser::token::NEGACION, 1, $2); 
 	}
 	| '~' expr %prec NEGACION			{ 
-		$$ = opr(YL::BisonParser::token::NEGACION, 1, $2); 
+		$$ = opr(YL::YareParser::token::NEGACION, 1, $2); 
 	}
 	| EXPR_NOT expr %prec NEGACION		{ 
-		$$ = opr(YL::BisonParser::token::NEGACION, 1, $2); 
+		$$ = opr(YL::YareParser::token::NEGACION, 1, $2); 
 	}
 	| expr EXPR_MAS expr				{ 
 		$$ = opr('+', 2, $1, $3); 
@@ -459,22 +459,22 @@ expr:
 		$$ = opr('/', 2, $1, $3); 
 	}
 	| expr '<' expr						{ 
-		$$ = opr(YL::BisonParser::token::LT, 2, $1, $3); 
+		$$ = opr(YL::YareParser::token::LT, 2, $1, $3); 
 	}
 	| expr EXPR_MENOR expr				{ 
-		$$ = opr(YL::BisonParser::token::LT, 2, $1, $3); 
+		$$ = opr(YL::YareParser::token::LT, 2, $1, $3); 
 	}
 	| expr _LT_ expr					{ 
-		$$ = opr(YL::BisonParser::token::LT, 2, $1, $3); 
+		$$ = opr(YL::YareParser::token::LT, 2, $1, $3); 
 	}
 	| expr '>' expr						{ 
-		$$ = opr(YL::BisonParser::token::GT, 2, $1, $3); 
+		$$ = opr(YL::YareParser::token::GT, 2, $1, $3); 
 	}
 	| expr EXPR_MAYOR expr				{ 
-		$$ = opr(YL::BisonParser::token::GT, 2, $1, $3); 
+		$$ = opr(YL::YareParser::token::GT, 2, $1, $3); 
 	}
 	| expr _GT_ expr					{ 
-		$$ = opr(YL::BisonParser::token::GT, 2, $1, $3); 
+		$$ = opr(YL::YareParser::token::GT, 2, $1, $3); 
 	}
 	| expr '^' expr						{ 
 		$$ = opr('^', 2, $1, $3); 
@@ -489,53 +489,53 @@ expr:
 		$$ = opr('%', 2, $1, $3); 
 	}
 	| expr GE expr						{ 
-		$$ = opr(YL::BisonParser::token::GE, 2, $1, $3); 
+		$$ = opr(YL::YareParser::token::GE, 2, $1, $3); 
 	}
 	| expr EXPR_MAYORIGUAL expr			{ 
-		$$ = opr(YL::BisonParser::token::GE, 2, $1, $3); 
+		$$ = opr(YL::YareParser::token::GE, 2, $1, $3); 
 	}
 	| expr LE expr						{ 
-		$$ = opr(YL::BisonParser::token::LE, 2, $1, $3); 
+		$$ = opr(YL::YareParser::token::LE, 2, $1, $3); 
 	}
 	| expr EXPR_MENORIGUAL expr			{ 
-		$$ = opr(YL::BisonParser::token::LE, 2, $1, $3); 
+		$$ = opr(YL::YareParser::token::LE, 2, $1, $3); 
 	}
 	| expr NE expr						{ 
-		$$ = opr(YL::BisonParser::token::NE, 2, $1, $3); 
+		$$ = opr(YL::YareParser::token::NE, 2, $1, $3); 
 	}
 	| expr EQ expr						{ 
-		$$ = opr(YL::BisonParser::token::EQ, 2, $1, $3); 
+		$$ = opr(YL::YareParser::token::EQ, 2, $1, $3); 
 	}
 	| expr AND expr						{ 
-		$$ = opr(YL::BisonParser::token::AND, 2, $1, $3); 
+		$$ = opr(YL::YareParser::token::AND, 2, $1, $3); 
 	}
 	| expr OR expr						{ 
-		$$ = opr(YL::BisonParser::token::OR, 2, $1, $3); 
+		$$ = opr(YL::YareParser::token::OR, 2, $1, $3); 
 	}
 	| expr '&' expr						{ 
-		$$ = opr(YL::BisonParser::token::ANDBITS, 2, $1, $3); 
+		$$ = opr(YL::YareParser::token::ANDBITS, 2, $1, $3); 
 	}
 	| expr '|' expr						{ 
-		$$ = opr(YL::BisonParser::token::ORBITS, 2, $1, $3); 
+		$$ = opr(YL::YareParser::token::ORBITS, 2, $1, $3); 
 	}
 	| '(' expr ')' 						{
 		$$ = $2;
 	}
 	| CALL FUNCNAME {
-		$$ = opr(YL::BisonParser::token::CALL, 1, idS($2));
+		$$ = opr(YL::YareParser::token::CALL, 1, idS($2));
 	}
 	;
 %%
 
 // We have to implement the error function
-void YL::BisonParser::error(const YL::BisonParser::location_type &loc, const std::string &msg) {
+void YL::YareParser::error(const YL::YareParser::location_type &loc, const std::string &msg) {
 	std::cerr << "Error :'(    -> [" << msg << "]" << std::endl;
 }
 
 // Now that we have the Parser declared, we can declare the Scanner and implement
 // the yylex function
 #include "YareScanner.h"
-static int yylex(YL::BisonParser::semantic_type * yylval, YL::FlexScanner &scanner) {
+static int yylex(YL::YareParser::semantic_type * yylval, YL::FlexScanner &scanner) {
 	return scanner.yylex(yylval);
 }
 
@@ -668,7 +668,7 @@ long double run(nodeType *p) {
 		case typeOpr:
 			switch(p->opr.oper) {
 
-				case YL::BisonParser::token::WHILE: 
+				case YL::YareParser::token::WHILE: 
 						spLoop++;
 						pilaLoop[spLoop] = 1;
 
@@ -685,7 +685,7 @@ long double run(nodeType *p) {
 						spLoop--;
 					return 0.0L;
 
-				case YL::BisonParser::token::BREAK:
+				case YL::YareParser::token::BREAK:
 					if(spLoop < 0)	{
 						cerr << "\nWarning: break fuera de ciclo";
 						return 0.0L;
@@ -693,7 +693,7 @@ long double run(nodeType *p) {
 						return (pilaLoop[spLoop] = 0);
 					}
 				
-				case YL::BisonParser::token::IF:
+				case YL::YareParser::token::IF:
 					if(spLoop < 0) {
 						if(run(p->opr.op[0]))
 							run(p->opr.op[1]);
@@ -707,7 +707,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::PRINTN:
+				case YL::YareParser::token::PRINTN:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						// Check if the node is a virtual var:	
 						cout.precision(16);
@@ -719,7 +719,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::PRINT:
+				case YL::YareParser::token::PRINT:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						// Check if the node is a virtual var:	
 						cout.precision(16);
@@ -731,14 +731,14 @@ long double run(nodeType *p) {
 					}
 					return 0.0f;
 
-				case YL::BisonParser::token::PUTS: {
+				case YL::YareParser::token::PUTS: {
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						cout << p->opr.op[0]->con.cadena << endl;
 					}
 					return 0.0f;	
 				}
 
-				case YL::BisonParser::token::CALL:
+				case YL::YareParser::token::CALL:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						// cout << "Intentando ejecutar: " << p->opr.op[0]->id.identificador << endl;
 						if(buscarProc(procs, p->opr.op[0]->id.identificador)) {
@@ -750,17 +750,17 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::RAND:
+				case YL::YareParser::token::RAND:
 					if((spLoop < 0) || pilaLoop[spLoop])
 						return (long double)(rand() % 101);
 					return 0.0L;
 
-				case YL::BisonParser::token::XOROP:
+				case YL::YareParser::token::XOROP:
 					if((spLoop < 0) || pilaLoop[spLoop])
 						return ((long long)run(p->opr.op[0]) ^ (long long)run(p->opr.op[1]));
 					return 0.0L;
 
-				case YL::BisonParser::token::RANGE_RANDOM:
+				case YL::YareParser::token::RANGE_RANDOM:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						inferior = run(p->opr.op[0]);
 						superior = run(p->opr.op[1]);
@@ -773,7 +773,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::SWAP_OP:
+				case YL::YareParser::token::SWAP_OP:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if((p->opr.op[0]->type == typeId) && (p->opr.op[1]->type == typeId)) { //a<->b
 							_temp_swap = sym[p->opr.op[0]->id.i];	
@@ -831,7 +831,7 @@ long double run(nodeType *p) {
 					return 0.0L;
 
 				//////////////////////////////// Asignaciones abreviadas ////////////////////////////////////////
-				case YL::BisonParser::token::OP_ASIGN_ABR_MAS:
+				case YL::YareParser::token::OP_ASIGN_ABR_MAS:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -854,7 +854,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::OP_ASIGN_ABR_MENOS:
+				case YL::YareParser::token::OP_ASIGN_ABR_MENOS:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -877,7 +877,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::OP_ASIGN_ABR_MOD:
+				case YL::YareParser::token::OP_ASIGN_ABR_MOD:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -900,7 +900,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::OP_ASIGN_ABR_SHIFTRIGHT:
+				case YL::YareParser::token::OP_ASIGN_ABR_SHIFTRIGHT:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -923,7 +923,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::OP_ASIGN_ABR_AND:
+				case YL::YareParser::token::OP_ASIGN_ABR_AND:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -946,7 +946,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::OP_ASIGN_ABR_SHIFTLEFT:
+				case YL::YareParser::token::OP_ASIGN_ABR_SHIFTLEFT:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -969,7 +969,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::OP_ASIGN_ABR_POW:
+				case YL::YareParser::token::OP_ASIGN_ABR_POW:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -991,7 +991,7 @@ long double run(nodeType *p) {
 						}
 					}
 					return 0.0L;
-				case YL::BisonParser::token::OP_ASIGN_ABR_MUL:
+				case YL::YareParser::token::OP_ASIGN_ABR_MUL:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -1014,7 +1014,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::OP_ASIGN_ABR_DIV:
+				case YL::YareParser::token::OP_ASIGN_ABR_DIV:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -1037,7 +1037,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::INIT_RANDOM:
+				case YL::YareParser::token::INIT_RANDOM:
 					// x = ? | :x: = ?
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						switch(p->opr.op[0]->type) {
@@ -1057,7 +1057,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::DEC:
+				case YL::YareParser::token::DEC:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -1084,7 +1084,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::INC:
+				case YL::YareParser::token::INC:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -1111,7 +1111,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::INC_CPP:
+				case YL::YareParser::token::INC_CPP:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -1138,7 +1138,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::DEC_CPP:
+				case YL::YareParser::token::DEC_CPP:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -1163,13 +1163,13 @@ long double run(nodeType *p) {
 							}
 						}
 					}
-				case YL::BisonParser::token::UMINUS:
+				case YL::YareParser::token::UMINUS:
 					if((spLoop < 0) || pilaLoop[spLoop])
 						return -run(p->opr.op[0]);
 					return 0.0L;
 
 				////// Creación de identificadores:
-				case YL::BisonParser::token::ID_ASIGNACION:
+				case YL::YareParser::token::ID_ASIGNACION:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(vars == NULL) {
 							vars = new Variables();
@@ -1215,67 +1215,67 @@ long double run(nodeType *p) {
 						return (long long)run(p->opr.op[0]) % (long long)run(p->opr.op[1]);
 					return 0.0L;
 
-				case YL::BisonParser::token::LT:
+				case YL::YareParser::token::LT:
 					if((spLoop < 0) || pilaLoop[spLoop])
 						return run(p->opr.op[0]) < run(p->opr.op[1]);
 					return 0.0L;
 
-				case YL::BisonParser::token::GT:
+				case YL::YareParser::token::GT:
 					if((spLoop < 0) || pilaLoop[spLoop])
 						return run(p->opr.op[0]) > run(p->opr.op[1]);
 					return 0.0L;
 
-				case YL::BisonParser::token::NEGACION:		// "no"|"not"|!|~
+				case YL::YareParser::token::NEGACION:		// "no"|"not"|!|~
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return !run(p->opr.op[0]);
 					return 0.0L;
 				
-				case YL::BisonParser::token::GE:
+				case YL::YareParser::token::GE:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return run(p->opr.op[0]) >= run(p->opr.op[1]);
 					return 0.0L;
 
-				case YL::BisonParser::token::LE:
+				case YL::YareParser::token::LE:
 					if((spLoop < 0) || pilaLoop[spLoop])
 						return run(p->opr.op[0]) <= run(p->opr.op[1]);
 					return 0.0L;
 
-				case YL::BisonParser::token::NE:
+				case YL::YareParser::token::NE:
 					if((spLoop < 0) || pilaLoop[spLoop])
 						return run(p->opr.op[0]) != run(p->opr.op[1]);
 					return 0.0L;
 
-				case YL::BisonParser::token::EQ:
+				case YL::YareParser::token::EQ:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return run(p->opr.op[0]) == run(p->opr.op[1]);
 					return 0.0L;
 				
-				case YL::BisonParser::token::AND:
+				case YL::YareParser::token::AND:
 					if((spLoop < 0) || pilaLoop[spLoop])
 						return run(p->opr.op[0]) && run(p->opr.op[1]);
 					return 0.0L;
 			
-				case YL::BisonParser::token::OR:
+				case YL::YareParser::token::OR:
 					if((spLoop < 0) || pilaLoop[spLoop])
 						return run(p->opr.op[0]) || run(p->opr.op[1]);
 					return 0.0L;
 				
-				case YL::BisonParser::token::ANDBITS:
+				case YL::YareParser::token::ANDBITS:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return (long long)run(p->opr.op[0]) & (long long)run(p->opr.op[1]);
 					return 0.0L;
 
-				case YL::BisonParser::token::ORBITS:
+				case YL::YareParser::token::ORBITS:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return (long long)run(p->opr.op[0]) | (long long)run(p->opr.op[1]);
 					return 0.0L;
 
-				case YL::BisonParser::token::SHIFTLEFT:
+				case YL::YareParser::token::SHIFTLEFT:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return (long long)run(p->opr.op[0]) << (long long)run(p->opr.op[1]);
 					return 0.0L;
 
-				case YL::BisonParser::token::SHIFTRIGHT:
+				case YL::YareParser::token::SHIFTRIGHT:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return (long long)run(p->opr.op[0]) >> (long long)run(p->opr.op[1]);
 					return 0.0L;

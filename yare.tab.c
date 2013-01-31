@@ -75,7 +75,7 @@
 	using std::cout;
 	using std::cerr;
 
-	static int yylex(YL::BisonParser::semantic_type * yylval, YL::FlexScanner &scanner);
+	static int yylex(YL::YareParser::semantic_type * yylval, YL::FlexScanner &scanner);
 	
 	// Node Constants:
 	nodeTypeTag *con(long double);
@@ -212,7 +212,7 @@ namespace YL {
 #line 213 "yare.tab.c"
 
   /// Build a parser object.
-  BisonParser::BisonParser (YL::FlexScanner &scanner_yyarg)
+  YareParser::YareParser (YL::FlexScanner &scanner_yyarg)
     :
 #if YYDEBUG
       yydebug_ (false),
@@ -222,7 +222,7 @@ namespace YL {
   {
   }
 
-  BisonParser::~BisonParser ()
+  YareParser::~YareParser ()
   {
   }
 
@@ -232,7 +232,7 @@ namespace YL {
   `--------------------------------*/
 
   inline void
-  BisonParser::yy_symbol_value_print_ (int yytype,
+  YareParser::yy_symbol_value_print_ (int yytype,
 			   const semantic_type* yyvaluep, const location_type* yylocationp)
   {
     YYUSE (yylocationp);
@@ -246,7 +246,7 @@ namespace YL {
 
 
   void
-  BisonParser::yy_symbol_print_ (int yytype,
+  YareParser::yy_symbol_print_ (int yytype,
 			   const semantic_type* yyvaluep, const location_type* yylocationp)
   {
     *yycdebug_ << (yytype < yyntokens_ ? "token" : "nterm")
@@ -258,7 +258,7 @@ namespace YL {
 #endif
 
   void
-  BisonParser::yydestruct_ (const char* yymsg,
+  YareParser::yydestruct_ (const char* yymsg,
 			   int yytype, semantic_type* yyvaluep, location_type* yylocationp)
   {
     YYUSE (yylocationp);
@@ -276,7 +276,7 @@ namespace YL {
   }
 
   void
-  BisonParser::yypop_ (unsigned int n)
+  YareParser::yypop_ (unsigned int n)
   {
     yystate_stack_.pop (n);
     yysemantic_stack_.pop (n);
@@ -285,45 +285,45 @@ namespace YL {
 
 #if YYDEBUG
   std::ostream&
-  BisonParser::debug_stream () const
+  YareParser::debug_stream () const
   {
     return *yycdebug_;
   }
 
   void
-  BisonParser::set_debug_stream (std::ostream& o)
+  YareParser::set_debug_stream (std::ostream& o)
   {
     yycdebug_ = &o;
   }
 
 
-  BisonParser::debug_level_type
-  BisonParser::debug_level () const
+  YareParser::debug_level_type
+  YareParser::debug_level () const
   {
     return yydebug_;
   }
 
   void
-  BisonParser::set_debug_level (debug_level_type l)
+  YareParser::set_debug_level (debug_level_type l)
   {
     yydebug_ = l;
   }
 #endif
 
   inline bool
-  BisonParser::yy_pact_value_is_default_ (int yyvalue)
+  YareParser::yy_pact_value_is_default_ (int yyvalue)
   {
     return yyvalue == yypact_ninf_;
   }
 
   inline bool
-  BisonParser::yy_table_value_is_error_ (int yyvalue)
+  YareParser::yy_table_value_is_error_ (int yyvalue)
   {
     return yyvalue == yytable_ninf_;
   }
 
   int
-  BisonParser::parse ()
+  YareParser::parse ()
   {
     /// Lookahead and lookahead in internal form.
     int yychar = yyempty_;
@@ -552,7 +552,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 224 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::ID_ASIGNACION, 2, idS((yysemantic_stack_[(4) - (4)].identificador)), (yysemantic_stack_[(4) - (2)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::ID_ASIGNACION, 2, idS((yysemantic_stack_[(4) - (4)].identificador)), (yysemantic_stack_[(4) - (2)].nPtr));
 	}
     break;
 
@@ -570,7 +570,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 230 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::ID_ASIGNACION, 2, idS((yysemantic_stack_[(5) - (2)].identificador)), (yysemantic_stack_[(5) - (4)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::ID_ASIGNACION, 2, idS((yysemantic_stack_[(5) - (2)].identificador)), (yysemantic_stack_[(5) - (4)].nPtr));
 	}
     break;
 
@@ -588,7 +588,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 236 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::ID_ASIGNACION, 2, idS((yysemantic_stack_[(4) - (1)].identificador)), (yysemantic_stack_[(4) - (4)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::ID_ASIGNACION, 2, idS((yysemantic_stack_[(4) - (1)].identificador)), (yysemantic_stack_[(4) - (4)].nPtr));
 	}
     break;
 
@@ -606,7 +606,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 242 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::ID_ASIGNACION, 2, idS((yysemantic_stack_[(3) - (1)].identificador)), (yysemantic_stack_[(3) - (3)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::ID_ASIGNACION, 2, idS((yysemantic_stack_[(3) - (1)].identificador)), (yysemantic_stack_[(3) - (3)].nPtr));
 	}
     break;
 
@@ -633,7 +633,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 251 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::ID_ASIGNACION, 2, idS((yysemantic_stack_[(4) - (1)].identificador)), (yysemantic_stack_[(4) - (3)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::ID_ASIGNACION, 2, idS((yysemantic_stack_[(4) - (1)].identificador)), (yysemantic_stack_[(4) - (3)].nPtr)); 
 	}
     break;
 
@@ -642,7 +642,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 254 "yare.y"
     { 	// :x: to 1 + 2;
-		(yyval.nPtr) = opr(YL::BisonParser::token::ID_ASIGNACION, 2, idS((yysemantic_stack_[(4) - (1)].identificador)), (yysemantic_stack_[(4) - (3)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::ID_ASIGNACION, 2, idS((yysemantic_stack_[(4) - (1)].identificador)), (yysemantic_stack_[(4) - (3)].nPtr)); 
 	}
     break;
 
@@ -651,7 +651,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 257 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::ID_ASIGNACION, 2, idS((yysemantic_stack_[(5) - (2)].identificador)), (yysemantic_stack_[(5) - (4)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::ID_ASIGNACION, 2, idS((yysemantic_stack_[(5) - (2)].identificador)), (yysemantic_stack_[(5) - (4)].nPtr)); 
 	}
     break;
 
@@ -660,7 +660,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 260 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::ID_ASIGNACION, 2, idS((yysemantic_stack_[(5) - (2)].identificador)), (yysemantic_stack_[(5) - (4)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::ID_ASIGNACION, 2, idS((yysemantic_stack_[(5) - (2)].identificador)), (yysemantic_stack_[(5) - (4)].nPtr)); 
 	}
     break;
 
@@ -669,7 +669,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 263 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::INIT_RANDOM, 1, id((yysemantic_stack_[(4) - (1)].sIndex)));
+		(yyval.nPtr) = opr(YL::YareParser::token::INIT_RANDOM, 1, id((yysemantic_stack_[(4) - (1)].sIndex)));
 	}
     break;
 
@@ -678,7 +678,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 266 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::INIT_RANDOM, 1, idS((yysemantic_stack_[(4) - (1)].identificador)));
+		(yyval.nPtr) = opr(YL::YareParser::token::INIT_RANDOM, 1, idS((yysemantic_stack_[(4) - (1)].identificador)));
 	}
     break;
 
@@ -687,7 +687,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 269 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::SWAP_OP, 2, id((yysemantic_stack_[(4) - (1)].sIndex)), id((yysemantic_stack_[(4) - (3)].sIndex)));
+		(yyval.nPtr) = opr(YL::YareParser::token::SWAP_OP, 2, id((yysemantic_stack_[(4) - (1)].sIndex)), id((yysemantic_stack_[(4) - (3)].sIndex)));
 	}
     break;
 
@@ -696,7 +696,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 272 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::SWAP_OP, 2, idS((yysemantic_stack_[(4) - (1)].identificador)), id((yysemantic_stack_[(4) - (3)].sIndex)));
+		(yyval.nPtr) = opr(YL::YareParser::token::SWAP_OP, 2, idS((yysemantic_stack_[(4) - (1)].identificador)), id((yysemantic_stack_[(4) - (3)].sIndex)));
 	}
     break;
 
@@ -705,7 +705,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 275 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::SWAP_OP, 2, id((yysemantic_stack_[(4) - (1)].sIndex)), idS((yysemantic_stack_[(4) - (3)].identificador)));
+		(yyval.nPtr) = opr(YL::YareParser::token::SWAP_OP, 2, id((yysemantic_stack_[(4) - (1)].sIndex)), idS((yysemantic_stack_[(4) - (3)].identificador)));
 	}
     break;
 
@@ -714,7 +714,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 278 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::SWAP_OP, 2, idS((yysemantic_stack_[(4) - (1)].identificador)), idS((yysemantic_stack_[(4) - (3)].identificador)));
+		(yyval.nPtr) = opr(YL::YareParser::token::SWAP_OP, 2, idS((yysemantic_stack_[(4) - (1)].identificador)), idS((yysemantic_stack_[(4) - (3)].identificador)));
 	}
     break;
 
@@ -732,7 +732,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 284 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::PRINTN, 1, (yysemantic_stack_[(5) - (3)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::PRINTN, 1, (yysemantic_stack_[(5) - (3)].nPtr)); 
 	}
     break;
 
@@ -741,7 +741,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 287 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::PRINT, 1, (yysemantic_stack_[(5) - (3)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::PRINT, 1, (yysemantic_stack_[(5) - (3)].nPtr)); 
 	}
     break;
 
@@ -759,7 +759,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 293 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::PUTS, 1, conStr((yysemantic_stack_[(5) - (3)].cadena), typeCadena));
+		(yyval.nPtr) = opr(YL::YareParser::token::PUTS, 1, conStr((yysemantic_stack_[(5) - (3)].cadena), typeCadena));
 	}
     break;
 
@@ -768,7 +768,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 296 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::WHILE, 2, (yysemantic_stack_[(5) - (3)].nPtr), (yysemantic_stack_[(5) - (5)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::WHILE, 2, (yysemantic_stack_[(5) - (3)].nPtr), (yysemantic_stack_[(5) - (5)].nPtr)); 
 	}
     break;
 
@@ -777,7 +777,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 299 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::BREAK, 0);
+		(yyval.nPtr) = opr(YL::YareParser::token::BREAK, 0);
 	}
     break;
 
@@ -786,7 +786,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 302 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::IF, 2, (yysemantic_stack_[(5) - (3)].nPtr), (yysemantic_stack_[(5) - (5)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::IF, 2, (yysemantic_stack_[(5) - (3)].nPtr), (yysemantic_stack_[(5) - (5)].nPtr)); 
 	}
     break;
 
@@ -795,7 +795,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 305 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::IF, 3, (yysemantic_stack_[(7) - (3)].nPtr), (yysemantic_stack_[(7) - (5)].nPtr), (yysemantic_stack_[(7) - (7)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::IF, 3, (yysemantic_stack_[(7) - (3)].nPtr), (yysemantic_stack_[(7) - (5)].nPtr), (yysemantic_stack_[(7) - (7)].nPtr)); 
 	}
     break;
 
@@ -804,7 +804,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 308 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::OP_ASIGN_ABR_MAS, 2, id((yysemantic_stack_[(4) - (1)].sIndex)), (yysemantic_stack_[(4) - (3)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::OP_ASIGN_ABR_MAS, 2, id((yysemantic_stack_[(4) - (1)].sIndex)), (yysemantic_stack_[(4) - (3)].nPtr));
 	}
     break;
 
@@ -813,7 +813,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 311 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::OP_ASIGN_ABR_MAS, 2, idS((yysemantic_stack_[(4) - (1)].identificador)), (yysemantic_stack_[(4) - (3)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::OP_ASIGN_ABR_MAS, 2, idS((yysemantic_stack_[(4) - (1)].identificador)), (yysemantic_stack_[(4) - (3)].nPtr));
 	}
     break;
 
@@ -822,7 +822,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 314 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::OP_ASIGN_ABR_MAS, 2, id((yysemantic_stack_[(5) - (2)].sIndex)), (yysemantic_stack_[(5) - (4)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::OP_ASIGN_ABR_MAS, 2, id((yysemantic_stack_[(5) - (2)].sIndex)), (yysemantic_stack_[(5) - (4)].nPtr));
 	}
     break;
 
@@ -831,7 +831,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 317 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::OP_ASIGN_ABR_MAS, 2, idS((yysemantic_stack_[(5) - (2)].identificador)), (yysemantic_stack_[(5) - (4)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::OP_ASIGN_ABR_MAS, 2, idS((yysemantic_stack_[(5) - (2)].identificador)), (yysemantic_stack_[(5) - (4)].nPtr));
 	}
     break;
 
@@ -840,7 +840,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 320 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::OP_ASIGN_ABR_MENOS, 2, id((yysemantic_stack_[(5) - (2)].sIndex)), (yysemantic_stack_[(5) - (4)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::OP_ASIGN_ABR_MENOS, 2, id((yysemantic_stack_[(5) - (2)].sIndex)), (yysemantic_stack_[(5) - (4)].nPtr));
 	}
     break;
 
@@ -849,7 +849,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 323 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::OP_ASIGN_ABR_MENOS, 2, idS((yysemantic_stack_[(5) - (2)].identificador)), (yysemantic_stack_[(5) - (4)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::OP_ASIGN_ABR_MENOS, 2, idS((yysemantic_stack_[(5) - (2)].identificador)), (yysemantic_stack_[(5) - (4)].nPtr));
 	}
     break;
 
@@ -858,7 +858,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 326 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::OP_ASIGN_ABR_MUL, 2, id((yysemantic_stack_[(5) - (2)].sIndex)), (yysemantic_stack_[(5) - (4)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::OP_ASIGN_ABR_MUL, 2, id((yysemantic_stack_[(5) - (2)].sIndex)), (yysemantic_stack_[(5) - (4)].nPtr));
 	}
     break;
 
@@ -867,7 +867,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 329 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::OP_ASIGN_ABR_MUL, 2, idS((yysemantic_stack_[(5) - (2)].identificador)), (yysemantic_stack_[(5) - (4)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::OP_ASIGN_ABR_MUL, 2, idS((yysemantic_stack_[(5) - (2)].identificador)), (yysemantic_stack_[(5) - (4)].nPtr));
 	}
     break;
 
@@ -876,7 +876,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 332 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::OP_ASIGN_ABR_MENOS, 2, id((yysemantic_stack_[(3) - (1)].sIndex)), (yysemantic_stack_[(3) - (3)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::OP_ASIGN_ABR_MENOS, 2, id((yysemantic_stack_[(3) - (1)].sIndex)), (yysemantic_stack_[(3) - (3)].nPtr));
 	}
     break;
 
@@ -885,7 +885,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 335 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::OP_ASIGN_ABR_MENOS, 2, idS((yysemantic_stack_[(3) - (1)].identificador)), (yysemantic_stack_[(3) - (3)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::OP_ASIGN_ABR_MENOS, 2, idS((yysemantic_stack_[(3) - (1)].identificador)), (yysemantic_stack_[(3) - (3)].nPtr));
 	}
     break;
 
@@ -894,7 +894,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 338 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::OP_ASIGN_ABR_MOD, 2, id((yysemantic_stack_[(3) - (1)].sIndex)), (yysemantic_stack_[(3) - (3)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::OP_ASIGN_ABR_MOD, 2, id((yysemantic_stack_[(3) - (1)].sIndex)), (yysemantic_stack_[(3) - (3)].nPtr));
 	}
     break;
 
@@ -903,7 +903,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 341 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::OP_ASIGN_ABR_MOD, 2, idS((yysemantic_stack_[(3) - (1)].identificador)), (yysemantic_stack_[(3) - (3)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::OP_ASIGN_ABR_MOD, 2, idS((yysemantic_stack_[(3) - (1)].identificador)), (yysemantic_stack_[(3) - (3)].nPtr));
 	}
     break;
 
@@ -912,7 +912,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 344 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::OP_ASIGN_ABR_MUL, 2, id((yysemantic_stack_[(3) - (1)].sIndex)), (yysemantic_stack_[(3) - (3)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::OP_ASIGN_ABR_MUL, 2, id((yysemantic_stack_[(3) - (1)].sIndex)), (yysemantic_stack_[(3) - (3)].nPtr));
 	}
     break;
 
@@ -921,7 +921,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 347 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::OP_ASIGN_ABR_MUL, 2, idS((yysemantic_stack_[(3) - (1)].identificador)), (yysemantic_stack_[(3) - (3)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::OP_ASIGN_ABR_MUL, 2, idS((yysemantic_stack_[(3) - (1)].identificador)), (yysemantic_stack_[(3) - (3)].nPtr));
 	}
     break;
 
@@ -930,7 +930,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 350 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::OP_ASIGN_ABR_DIV, 2, id((yysemantic_stack_[(3) - (1)].sIndex)), (yysemantic_stack_[(3) - (3)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::OP_ASIGN_ABR_DIV, 2, id((yysemantic_stack_[(3) - (1)].sIndex)), (yysemantic_stack_[(3) - (3)].nPtr));
 	}
     break;
 
@@ -939,7 +939,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 353 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::OP_ASIGN_ABR_DIV, 2, idS((yysemantic_stack_[(3) - (1)].identificador)), (yysemantic_stack_[(3) - (3)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::OP_ASIGN_ABR_DIV, 2, idS((yysemantic_stack_[(3) - (1)].identificador)), (yysemantic_stack_[(3) - (3)].nPtr));
 	}
     break;
 
@@ -948,7 +948,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 356 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::OP_ASIGN_ABR_SHIFTRIGHT, 2, id((yysemantic_stack_[(3) - (1)].sIndex)), (yysemantic_stack_[(3) - (3)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::OP_ASIGN_ABR_SHIFTRIGHT, 2, id((yysemantic_stack_[(3) - (1)].sIndex)), (yysemantic_stack_[(3) - (3)].nPtr));
 	}
     break;
 
@@ -957,7 +957,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 359 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::OP_ASIGN_ABR_SHIFTRIGHT, 2, idS((yysemantic_stack_[(3) - (1)].identificador)), (yysemantic_stack_[(3) - (3)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::OP_ASIGN_ABR_SHIFTRIGHT, 2, idS((yysemantic_stack_[(3) - (1)].identificador)), (yysemantic_stack_[(3) - (3)].nPtr));
 	}
     break;
 
@@ -966,7 +966,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 362 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::OP_ASIGN_ABR_AND, 2, id((yysemantic_stack_[(3) - (1)].sIndex)), (yysemantic_stack_[(3) - (3)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::OP_ASIGN_ABR_AND, 2, id((yysemantic_stack_[(3) - (1)].sIndex)), (yysemantic_stack_[(3) - (3)].nPtr));
 	}
     break;
 
@@ -975,7 +975,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 365 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::OP_ASIGN_ABR_AND, 2, idS((yysemantic_stack_[(3) - (1)].identificador)), (yysemantic_stack_[(3) - (3)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::OP_ASIGN_ABR_AND, 2, idS((yysemantic_stack_[(3) - (1)].identificador)), (yysemantic_stack_[(3) - (3)].nPtr));
 	}
     break;
 
@@ -984,7 +984,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 368 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::OP_ASIGN_ABR_POW, 2, id((yysemantic_stack_[(3) - (1)].sIndex)), (yysemantic_stack_[(3) - (3)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::OP_ASIGN_ABR_POW, 2, id((yysemantic_stack_[(3) - (1)].sIndex)), (yysemantic_stack_[(3) - (3)].nPtr));
 	}
     break;
 
@@ -993,7 +993,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 371 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::OP_ASIGN_ABR_POW, 2, idS((yysemantic_stack_[(3) - (1)].identificador)), (yysemantic_stack_[(3) - (3)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::OP_ASIGN_ABR_POW, 2, idS((yysemantic_stack_[(3) - (1)].identificador)), (yysemantic_stack_[(3) - (3)].nPtr));
 	}
     break;
 
@@ -1068,7 +1068,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 404 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::RAND, 0);
+		(yyval.nPtr) = opr(YL::YareParser::token::RAND, 0);
 	}
     break;
 
@@ -1077,7 +1077,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 407 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::DEC, 1, idS((yysemantic_stack_[(4) - (3)].identificador)));
+		(yyval.nPtr) = opr(YL::YareParser::token::DEC, 1, idS((yysemantic_stack_[(4) - (3)].identificador)));
 	}
     break;
 
@@ -1086,7 +1086,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 410 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::DEC, 1, id((yysemantic_stack_[(4) - (3)].sIndex)));
+		(yyval.nPtr) = opr(YL::YareParser::token::DEC, 1, id((yysemantic_stack_[(4) - (3)].sIndex)));
 	}
     break;
 
@@ -1095,7 +1095,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 413 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::INC, 1, idS((yysemantic_stack_[(4) - (3)].identificador)));
+		(yyval.nPtr) = opr(YL::YareParser::token::INC, 1, idS((yysemantic_stack_[(4) - (3)].identificador)));
 	}
     break;
 
@@ -1104,7 +1104,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 416 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::INC, 1, id((yysemantic_stack_[(4) - (3)].sIndex)));
+		(yyval.nPtr) = opr(YL::YareParser::token::INC, 1, id((yysemantic_stack_[(4) - (3)].sIndex)));
 	}
     break;
 
@@ -1113,7 +1113,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 419 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::XOROP, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::XOROP, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr));
 	}
     break;
 
@@ -1122,7 +1122,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 422 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::RANGE_RANDOM, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr));
+		(yyval.nPtr) = opr(YL::YareParser::token::RANGE_RANDOM, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr));
 	}
     break;
 
@@ -1140,7 +1140,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 428 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::UMINUS, 1, (yysemantic_stack_[(2) - (2)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::UMINUS, 1, (yysemantic_stack_[(2) - (2)].nPtr)); 
 	}
     break;
 
@@ -1149,7 +1149,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 431 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::NEGACION, 1, (yysemantic_stack_[(2) - (2)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::NEGACION, 1, (yysemantic_stack_[(2) - (2)].nPtr)); 
 	}
     break;
 
@@ -1158,7 +1158,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 434 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::NEGACION, 1, (yysemantic_stack_[(2) - (2)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::NEGACION, 1, (yysemantic_stack_[(2) - (2)].nPtr)); 
 	}
     break;
 
@@ -1167,7 +1167,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 437 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::NEGACION, 1, (yysemantic_stack_[(2) - (2)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::NEGACION, 1, (yysemantic_stack_[(2) - (2)].nPtr)); 
 	}
     break;
 
@@ -1239,7 +1239,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 461 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::LT, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::LT, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
 	}
     break;
 
@@ -1248,7 +1248,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 464 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::LT, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::LT, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
 	}
     break;
 
@@ -1257,7 +1257,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 467 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::LT, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::LT, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
 	}
     break;
 
@@ -1266,7 +1266,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 470 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::GT, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::GT, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
 	}
     break;
 
@@ -1275,7 +1275,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 473 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::GT, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::GT, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
 	}
     break;
 
@@ -1284,7 +1284,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 476 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::GT, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::GT, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
 	}
     break;
 
@@ -1329,7 +1329,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 491 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::GE, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::GE, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
 	}
     break;
 
@@ -1338,7 +1338,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 494 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::GE, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::GE, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
 	}
     break;
 
@@ -1347,7 +1347,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 497 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::LE, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::LE, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
 	}
     break;
 
@@ -1356,7 +1356,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 500 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::LE, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::LE, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
 	}
     break;
 
@@ -1365,7 +1365,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 503 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::NE, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::NE, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
 	}
     break;
 
@@ -1374,7 +1374,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 506 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::EQ, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::EQ, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
 	}
     break;
 
@@ -1383,7 +1383,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 509 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::AND, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::AND, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
 	}
     break;
 
@@ -1392,7 +1392,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 512 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::OR, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::OR, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
 	}
     break;
 
@@ -1401,7 +1401,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 515 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::ANDBITS, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::ANDBITS, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
 	}
     break;
 
@@ -1410,7 +1410,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 518 "yare.y"
     { 
-		(yyval.nPtr) = opr(YL::BisonParser::token::ORBITS, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
+		(yyval.nPtr) = opr(YL::YareParser::token::ORBITS, 2, (yysemantic_stack_[(3) - (1)].nPtr), (yysemantic_stack_[(3) - (3)].nPtr)); 
 	}
     break;
 
@@ -1428,7 +1428,7 @@ namespace YL {
 /* Line 690 of lalr1.cc  */
 #line 524 "yare.y"
     {
-		(yyval.nPtr) = opr(YL::BisonParser::token::CALL, 1, idS((yysemantic_stack_[(2) - (2)].nameFunction)));
+		(yyval.nPtr) = opr(YL::YareParser::token::CALL, 1, idS((yysemantic_stack_[(2) - (2)].nameFunction)));
 	}
     break;
 
@@ -1613,7 +1613,7 @@ namespace YL {
 
   // Generate an error message.
   std::string
-  BisonParser::yysyntax_error_ (int, int)
+  YareParser::yysyntax_error_ (int, int)
   {
     return YY_("syntax error");
   }
@@ -1621,9 +1621,9 @@ namespace YL {
 
   /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
      STATE-NUM.  */
-  const signed char BisonParser::yypact_ninf_ = -42;
+  const signed char YareParser::yypact_ninf_ = -42;
   const short int
-  BisonParser::yypact_[] =
+  YareParser::yypact_[] =
   {
        -42,    28,   -16,   -42,    -4,   176,   -23,   -42,  1206,   -42,
     2179,   -26,   -12,   -13,   -11,   -10,    -7,    -6,   409,    24,
@@ -1658,7 +1658,7 @@ namespace YL {
      YYTABLE doesn't specify something else to do.  Zero means the
      default is an error.  */
   const unsigned char
-  BisonParser::yydefact_[] =
+  YareParser::yydefact_[] =
   {
          4,     0,     6,     1,     0,     0,     0,    64,    67,    66,
       65,     0,     0,     0,     0,     0,     0,     0,     0,     0,
@@ -1691,14 +1691,14 @@ namespace YL {
 
   /* YYPGOTO[NTERM-NUM].  */
   const short int
-  BisonParser::yypgoto_[] =
+  YareParser::yypgoto_[] =
   {
        -42,   -42,   -42,   -42,    -5,   138,    -8
   };
 
   /* YYDEFGOTO[NTERM-NUM].  */
   const signed char
-  BisonParser::yydefgoto_[] =
+  YareParser::yydefgoto_[] =
   {
         -1,     1,     2,     5,    89,    90,    36
   };
@@ -1706,9 +1706,9 @@ namespace YL {
   /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
      positive, shift that token.  If negative, reduce the rule which
      number is the opposite.  If YYTABLE_NINF_, syntax error.  */
-  const signed char BisonParser::yytable_ninf_ = -1;
+  const signed char YareParser::yytable_ninf_ = -1;
   const unsigned short int
-  BisonParser::yytable_[] =
+  YareParser::yytable_[] =
   {
         35,    77,    80,    78,    81,    82,    84,    83,    85,   166,
       73,    86,   126,    87,   127,    79,   141,   162,   142,   163,
@@ -1942,7 +1942,7 @@ namespace YL {
 
   /* YYCHECK.  */
   const short int
-  BisonParser::yycheck_[] =
+  YareParser::yycheck_[] =
   {
          5,     4,     4,     6,     6,     4,     4,     6,     6,    50,
       18,     4,     4,     6,     6,    23,     4,     4,     6,     6,
@@ -2177,7 +2177,7 @@ namespace YL {
   /* STOS_[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
   const unsigned char
-  BisonParser::yystos_[] =
+  YareParser::yystos_[] =
   {
          0,    96,    97,     0,    46,    98,    47,     3,     4,     5,
        6,     7,     8,     9,    10,    11,    12,    13,    22,    31,
@@ -2212,7 +2212,7 @@ namespace YL {
   /* TOKEN_NUMBER_[YYLEX-NUM] -- Internal symbol number corresponding
      to YYLEX-NUM.  */
   const unsigned short int
-  BisonParser::yytoken_number_[] =
+  YareParser::yytoken_number_[] =
   {
          0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
@@ -2229,7 +2229,7 @@ namespace YL {
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
   const unsigned char
-  BisonParser::yyr1_[] =
+  YareParser::yyr1_[] =
   {
          0,    95,    96,    97,    97,    98,    98,    99,    99,    99,
       99,    99,    99,    99,    99,    99,    99,    99,    99,    99,
@@ -2246,7 +2246,7 @@ namespace YL {
 
   /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
   const unsigned char
-  BisonParser::yyr2_[] =
+  YareParser::yyr2_[] =
   {
          0,     2,     3,     6,     0,     2,     0,     1,     4,     4,
        4,     4,     5,     5,     4,     4,     3,     3,     5,     5,
@@ -2265,7 +2265,7 @@ namespace YL {
   /* YYTNAME[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
      First, the terminals, then, starting at \a yyntokens_, nonterminals.  */
   const char*
-  const BisonParser::yytname_[] =
+  const YareParser::yytname_[] =
   {
     "$end", "error", "$undefined", "NUMERIC", "VARIABLE", "CADENA", "ID",
   "WHILE", "BREAK", "IF", "PRINTN", "PRINT", "PUTS", "RAND", "EXPR_DIV",
@@ -2289,8 +2289,8 @@ namespace YL {
 
 #if YYDEBUG
   /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
-  const BisonParser::rhs_number_type
-  BisonParser::yyrhs_[] =
+  const YareParser::rhs_number_type
+  YareParser::yyrhs_[] =
   {
         96,     0,    -1,    97,    98,    79,    -1,    97,    46,    47,
       80,   100,    81,    -1,    -1,    98,    99,    -1,    -1,    82,
@@ -2344,7 +2344,7 @@ namespace YL {
   /* YYPRHS[YYN] -- Index of the first RHS symbol of rule number YYN in
      YYRHS.  */
   const unsigned short int
-  BisonParser::yyprhs_[] =
+  YareParser::yyprhs_[] =
   {
          0,     0,     3,     7,    14,    15,    18,    19,    21,    26,
       31,    36,    41,    47,    53,    58,    63,    67,    71,    77,
@@ -2361,7 +2361,7 @@ namespace YL {
 
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
   const unsigned short int
-  BisonParser::yyrline_[] =
+  YareParser::yyrline_[] =
   {
          0,   191,   191,   197,   200,   204,   208,   212,   215,   218,
      221,   224,   227,   230,   233,   236,   239,   242,   245,   248,
@@ -2378,7 +2378,7 @@ namespace YL {
 
   // Print the state stack on the debug stream.
   void
-  BisonParser::yystack_print_ ()
+  YareParser::yystack_print_ ()
   {
     *yycdebug_ << "Stack now";
     for (state_stack_type::const_iterator i = yystate_stack_.begin ();
@@ -2389,7 +2389,7 @@ namespace YL {
 
   // Report on the debug stream that the rule \a yyrule is going to be reduced.
   void
-  BisonParser::yy_reduce_print_ (int yyrule)
+  YareParser::yy_reduce_print_ (int yyrule)
   {
     unsigned int yylno = yyrline_[yyrule];
     int yynrhs = yyr2_[yyrule];
@@ -2406,8 +2406,8 @@ namespace YL {
 #endif // YYDEBUG
 
   /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
-  BisonParser::token_number_type
-  BisonParser::yytranslate_ (int t)
+  YareParser::token_number_type
+  YareParser::yytranslate_ (int t)
   {
     static
     const token_number_type
@@ -2453,17 +2453,17 @@ namespace YL {
       return yyundef_token_;
   }
 
-  const int BisonParser::yyeof_ = 0;
-  const int BisonParser::yylast_ = 2276;
-  const int BisonParser::yynnts_ = 7;
-  const int BisonParser::yyempty_ = -2;
-  const int BisonParser::yyfinal_ = 3;
-  const int BisonParser::yyterror_ = 1;
-  const int BisonParser::yyerrcode_ = 256;
-  const int BisonParser::yyntokens_ = 95;
+  const int YareParser::yyeof_ = 0;
+  const int YareParser::yylast_ = 2276;
+  const int YareParser::yynnts_ = 7;
+  const int YareParser::yyempty_ = -2;
+  const int YareParser::yyfinal_ = 3;
+  const int YareParser::yyterror_ = 1;
+  const int YareParser::yyerrcode_ = 256;
+  const int YareParser::yyntokens_ = 95;
 
-  const unsigned int BisonParser::yyuser_token_number_max_ = 328;
-  const BisonParser::token_number_type BisonParser::yyundef_token_ = 2;
+  const unsigned int YareParser::yyuser_token_number_max_ = 328;
+  const YareParser::token_number_type YareParser::yyundef_token_ = 2;
 
 
 /* Line 1136 of lalr1.cc  */
@@ -2479,14 +2479,14 @@ namespace YL {
 
 
 // We have to implement the error function
-void YL::BisonParser::error(const YL::BisonParser::location_type &loc, const std::string &msg) {
+void YL::YareParser::error(const YL::YareParser::location_type &loc, const std::string &msg) {
 	std::cerr << "Error :'(    -> [" << msg << "]" << std::endl;
 }
 
 // Now that we have the Parser declared, we can declare the Scanner and implement
 // the yylex function
 #include "YareScanner.h"
-static int yylex(YL::BisonParser::semantic_type * yylval, YL::FlexScanner &scanner) {
+static int yylex(YL::YareParser::semantic_type * yylval, YL::FlexScanner &scanner) {
 	return scanner.yylex(yylval);
 }
 
@@ -2619,7 +2619,7 @@ long double run(nodeType *p) {
 		case typeOpr:
 			switch(p->opr.oper) {
 
-				case YL::BisonParser::token::WHILE: 
+				case YL::YareParser::token::WHILE: 
 						spLoop++;
 						pilaLoop[spLoop] = 1;
 
@@ -2636,7 +2636,7 @@ long double run(nodeType *p) {
 						spLoop--;
 					return 0.0L;
 
-				case YL::BisonParser::token::BREAK:
+				case YL::YareParser::token::BREAK:
 					if(spLoop < 0)	{
 						cerr << "\nWarning: break fuera de ciclo";
 						return 0.0L;
@@ -2644,7 +2644,7 @@ long double run(nodeType *p) {
 						return (pilaLoop[spLoop] = 0);
 					}
 				
-				case YL::BisonParser::token::IF:
+				case YL::YareParser::token::IF:
 					if(spLoop < 0) {
 						if(run(p->opr.op[0]))
 							run(p->opr.op[1]);
@@ -2658,7 +2658,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::PRINTN:
+				case YL::YareParser::token::PRINTN:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						// Check if the node is a virtual var:	
 						cout.precision(16);
@@ -2670,7 +2670,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::PRINT:
+				case YL::YareParser::token::PRINT:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						// Check if the node is a virtual var:	
 						cout.precision(16);
@@ -2682,14 +2682,14 @@ long double run(nodeType *p) {
 					}
 					return 0.0f;
 
-				case YL::BisonParser::token::PUTS: {
+				case YL::YareParser::token::PUTS: {
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						cout << p->opr.op[0]->con.cadena << endl;
 					}
 					return 0.0f;	
 				}
 
-				case YL::BisonParser::token::CALL:
+				case YL::YareParser::token::CALL:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						// cout << "Intentando ejecutar: " << p->opr.op[0]->id.identificador << endl;
 						if(buscarProc(procs, p->opr.op[0]->id.identificador)) {
@@ -2701,17 +2701,17 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::RAND:
+				case YL::YareParser::token::RAND:
 					if((spLoop < 0) || pilaLoop[spLoop])
 						return (long double)(rand() % 101);
 					return 0.0L;
 
-				case YL::BisonParser::token::XOROP:
+				case YL::YareParser::token::XOROP:
 					if((spLoop < 0) || pilaLoop[spLoop])
 						return ((long long)run(p->opr.op[0]) ^ (long long)run(p->opr.op[1]));
 					return 0.0L;
 
-				case YL::BisonParser::token::RANGE_RANDOM:
+				case YL::YareParser::token::RANGE_RANDOM:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						inferior = run(p->opr.op[0]);
 						superior = run(p->opr.op[1]);
@@ -2724,7 +2724,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::SWAP_OP:
+				case YL::YareParser::token::SWAP_OP:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if((p->opr.op[0]->type == typeId) && (p->opr.op[1]->type == typeId)) { //a<->b
 							_temp_swap = sym[p->opr.op[0]->id.i];	
@@ -2782,7 +2782,7 @@ long double run(nodeType *p) {
 					return 0.0L;
 
 				//////////////////////////////// Asignaciones abreviadas ////////////////////////////////////////
-				case YL::BisonParser::token::OP_ASIGN_ABR_MAS:
+				case YL::YareParser::token::OP_ASIGN_ABR_MAS:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -2805,7 +2805,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::OP_ASIGN_ABR_MENOS:
+				case YL::YareParser::token::OP_ASIGN_ABR_MENOS:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -2828,7 +2828,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::OP_ASIGN_ABR_MOD:
+				case YL::YareParser::token::OP_ASIGN_ABR_MOD:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -2851,7 +2851,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::OP_ASIGN_ABR_SHIFTRIGHT:
+				case YL::YareParser::token::OP_ASIGN_ABR_SHIFTRIGHT:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -2874,7 +2874,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::OP_ASIGN_ABR_AND:
+				case YL::YareParser::token::OP_ASIGN_ABR_AND:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -2897,7 +2897,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::OP_ASIGN_ABR_SHIFTLEFT:
+				case YL::YareParser::token::OP_ASIGN_ABR_SHIFTLEFT:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -2920,7 +2920,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::OP_ASIGN_ABR_POW:
+				case YL::YareParser::token::OP_ASIGN_ABR_POW:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -2942,7 +2942,7 @@ long double run(nodeType *p) {
 						}
 					}
 					return 0.0L;
-				case YL::BisonParser::token::OP_ASIGN_ABR_MUL:
+				case YL::YareParser::token::OP_ASIGN_ABR_MUL:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -2965,7 +2965,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::OP_ASIGN_ABR_DIV:
+				case YL::YareParser::token::OP_ASIGN_ABR_DIV:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -2988,7 +2988,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::INIT_RANDOM:
+				case YL::YareParser::token::INIT_RANDOM:
 					// x = ? | :x: = ?
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						switch(p->opr.op[0]->type) {
@@ -3008,7 +3008,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::DEC:
+				case YL::YareParser::token::DEC:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -3035,7 +3035,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::INC:
+				case YL::YareParser::token::INC:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -3062,7 +3062,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::INC_CPP:
+				case YL::YareParser::token::INC_CPP:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -3089,7 +3089,7 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
-				case YL::BisonParser::token::DEC_CPP:
+				case YL::YareParser::token::DEC_CPP:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
 
@@ -3114,13 +3114,13 @@ long double run(nodeType *p) {
 							}
 						}
 					}
-				case YL::BisonParser::token::UMINUS:
+				case YL::YareParser::token::UMINUS:
 					if((spLoop < 0) || pilaLoop[spLoop])
 						return -run(p->opr.op[0]);
 					return 0.0L;
 
 				////// Creación de identificadores:
-				case YL::BisonParser::token::ID_ASIGNACION:
+				case YL::YareParser::token::ID_ASIGNACION:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(vars == NULL) {
 							vars = new Variables();
@@ -3166,67 +3166,67 @@ long double run(nodeType *p) {
 						return (long long)run(p->opr.op[0]) % (long long)run(p->opr.op[1]);
 					return 0.0L;
 
-				case YL::BisonParser::token::LT:
+				case YL::YareParser::token::LT:
 					if((spLoop < 0) || pilaLoop[spLoop])
 						return run(p->opr.op[0]) < run(p->opr.op[1]);
 					return 0.0L;
 
-				case YL::BisonParser::token::GT:
+				case YL::YareParser::token::GT:
 					if((spLoop < 0) || pilaLoop[spLoop])
 						return run(p->opr.op[0]) > run(p->opr.op[1]);
 					return 0.0L;
 
-				case YL::BisonParser::token::NEGACION:		// "no"|"not"|!|~
+				case YL::YareParser::token::NEGACION:		// "no"|"not"|!|~
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return !run(p->opr.op[0]);
 					return 0.0L;
 				
-				case YL::BisonParser::token::GE:
+				case YL::YareParser::token::GE:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return run(p->opr.op[0]) >= run(p->opr.op[1]);
 					return 0.0L;
 
-				case YL::BisonParser::token::LE:
+				case YL::YareParser::token::LE:
 					if((spLoop < 0) || pilaLoop[spLoop])
 						return run(p->opr.op[0]) <= run(p->opr.op[1]);
 					return 0.0L;
 
-				case YL::BisonParser::token::NE:
+				case YL::YareParser::token::NE:
 					if((spLoop < 0) || pilaLoop[spLoop])
 						return run(p->opr.op[0]) != run(p->opr.op[1]);
 					return 0.0L;
 
-				case YL::BisonParser::token::EQ:
+				case YL::YareParser::token::EQ:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return run(p->opr.op[0]) == run(p->opr.op[1]);
 					return 0.0L;
 				
-				case YL::BisonParser::token::AND:
+				case YL::YareParser::token::AND:
 					if((spLoop < 0) || pilaLoop[spLoop])
 						return run(p->opr.op[0]) && run(p->opr.op[1]);
 					return 0.0L;
 			
-				case YL::BisonParser::token::OR:
+				case YL::YareParser::token::OR:
 					if((spLoop < 0) || pilaLoop[spLoop])
 						return run(p->opr.op[0]) || run(p->opr.op[1]);
 					return 0.0L;
 				
-				case YL::BisonParser::token::ANDBITS:
+				case YL::YareParser::token::ANDBITS:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return (long long)run(p->opr.op[0]) & (long long)run(p->opr.op[1]);
 					return 0.0L;
 
-				case YL::BisonParser::token::ORBITS:
+				case YL::YareParser::token::ORBITS:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return (long long)run(p->opr.op[0]) | (long long)run(p->opr.op[1]);
 					return 0.0L;
 
-				case YL::BisonParser::token::SHIFTLEFT:
+				case YL::YareParser::token::SHIFTLEFT:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return (long long)run(p->opr.op[0]) << (long long)run(p->opr.op[1]);
 					return 0.0L;
 
-				case YL::BisonParser::token::SHIFTRIGHT:
+				case YL::YareParser::token::SHIFTRIGHT:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return (long long)run(p->opr.op[0]) >> (long long)run(p->opr.op[1]);
 					return 0.0L;

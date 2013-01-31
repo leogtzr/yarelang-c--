@@ -21,7 +21,7 @@ namespace YL {
 	class FlexScanner : public yyFlexLexer {
 		public:
 			// save the pointer to yylval so we can change it, and invoke scanner
-			int yylex(YL::BisonParser::semantic_type *lval) { 
+			int yylex(YL::YareParser::semantic_type *lval) { 
 				lexema = lval; 
 				return yylex(); 
 			}
@@ -31,7 +31,7 @@ namespace YL {
 			// of the overloaded method so we can get a pointer to Bison's yylval
 			int yylex();
 			// point to yylval (provided by Bison in overloaded yylex)
-			YL::BisonParser::semantic_type *lexema;
+			YL::YareParser::semantic_type *lexema;
 	};
 }
 

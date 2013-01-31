@@ -82,7 +82,7 @@ namespace YL {
 #line 83 "yare.tab.h"
 
   /// A Bison parser.
-  class BisonParser
+  class YareParser
   {
   public:
     /// Symbol semantic values.
@@ -195,8 +195,8 @@ namespace YL {
     typedef token::yytokentype token_type;
 
     /// Build a parser object.
-    BisonParser (YL::FlexScanner &scanner_yyarg);
-    virtual ~BisonParser ();
+    YareParser (YL::FlexScanner &scanner_yyarg);
+    virtual ~YareParser ();
 
     /// Parse.
     /// \returns  0 iff parsing succeeded.

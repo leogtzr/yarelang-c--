@@ -43,7 +43,7 @@
 
 [0-9]+([.][0-9]+)? 	{
 	lexema->valnum = strtold(yytext, NULL);
-	return YL::BisonParser::token::NUMERIC;
+	return YL::YareParser::token::NUMERIC;
 }
 
 [a-zA-Z] 				{
@@ -52,7 +52,7 @@
 		lexema->sIndex = tolower(*yytext) - 'a';
 	else
 		lexema->sIndex = *yytext - 'a';
-	return YL::BisonParser::token::VARIABLE;
+	return YL::YareParser::token::VARIABLE;
 }
 
 :["'0-9 _#@a-zA-Z\t\+\-\.\^\|\(\)\\/]+: 	{
@@ -60,115 +60,115 @@
 	for(unsigned _i_ = 0; _i_ < strlen(lexema->identificador); _i_++)
 		if(isalpha(lexema->identificador[_i_]) && isupper(lexema->identificador[_i_]))
 			lexema->identificador[_i_] = tolower(lexema->identificador[_i_]);
-	return YL::BisonParser::token::ID;
+	return YL::YareParser::token::ID;
 }
 
 [$].+[$]	{
 	strcpy(lexema->nameFunction, yytext);
 	lexema->nameFunction[strlen(lexema->nameFunction)] = '\0';
-	return YL::BisonParser::token::FUNCNAME;
+	return YL::YareParser::token::FUNCNAME;
 }
 
 0[xX][0-9a-fA-F]+	{
 	lexema->valnum = strtold(yytext, NULL);
-	return YL::BisonParser::token::NUMERIC;
+	return YL::YareParser::token::NUMERIC;
 }
 
 [.][.][.]([.]+)?[?] {
 	// 676 ...? 8729834, expr ...? expr
-	return YL::BisonParser::token::RANGE_RANDOM;
+	return YL::YareParser::token::RANGE_RANDOM;
 }
 
 [pP][rR][oO][cC] {
-	return YL::BisonParser::token::PROC;
+	return YL::YareParser::token::PROC;
 }
 
 [cC][aA][lL][lL] {
-	return YL::BisonParser::token::CALL;
+	return YL::YareParser::token::CALL;
 }
 
 [pP][rR][iI][nN][tT][nN]	{
-	return YL::BisonParser::token::PRINTN;
+	return YL::YareParser::token::PRINTN;
 }
 
 [pP][rR][iI][nN][tT] {
-	return YL::BisonParser::token::PRINT;
+	return YL::YareParser::token::PRINT;
 }
 
 [pP][uU][tT][sS] {
-	return YL::BisonParser::token::PUTS;	
+	return YL::YareParser::token::PUTS;	
 }
 
 [iI][nN][cC] {
-	return YL::BisonParser::token::INC;
+	return YL::YareParser::token::INC;
 }
 
 [dD][eE][cC] {
-	return YL::BisonParser::token::DEC;
+	return YL::YareParser::token::DEC;
 }
 
 [lLsS][eE][tT] {
-	return YL::BisonParser::token::LETSET_ASSIGN;
+	return YL::YareParser::token::LETSET_ASSIGN;
 }
 
 [tT][oO] {
-	return YL::BisonParser::token::TO;
+	return YL::YareParser::token::TO;
 }
 
 [mM][oO][vV][eE] {
-	return YL::BisonParser::token::MOVE;
+	return YL::YareParser::token::MOVE;
 }
 
 [mM][oO][vV] {
 	// mov x, 1 + 2;
-	return YL::BisonParser::token::MOV_ASM;
+	return YL::YareParser::token::MOV_ASM;
 }
 
 [aA][dD][dD] {
 	// dd x, 1+ 2 * 3;
-	return YL::BisonParser::token::ADD_ASM;
+	return YL::YareParser::token::ADD_ASM;
 }
 
 [sS][uU][bB] {
 	// add x, 1+ 2 * 3;
-	return YL::BisonParser::token::SUB_ASM;
+	return YL::YareParser::token::SUB_ASM;
 }
 
 [mM][uU][lL] {
 	// mul x, 2;
-	return YL::BisonParser::token::MUL_ASM;
+	return YL::YareParser::token::MUL_ASM;
 }
 
 [wW][hH][iI][lL][eE] {
-	return YL::BisonParser::token::WHILE;
+	return YL::YareParser::token::WHILE;
 }
 
 [iI][fF] {
-	return YL::BisonParser::token::IF;
+	return YL::YareParser::token::IF;
 }
 
 [eE][lL][sS][eE] {
-	return YL::BisonParser::token::ELSE;
+	return YL::YareParser::token::ELSE;
 }
 
 [bB][rR][eE][aA][kK] {
-	return YL::BisonParser::token::BREAK;
+	return YL::YareParser::token::BREAK;
 }
 
 [rR][aA][nN][dD] {
-	return YL::BisonParser::token::RAND;
+	return YL::YareParser::token::RAND;
 }
 
 [xX][oO][rR] {
-	return YL::BisonParser::token::XOROP;
+	return YL::YareParser::token::XOROP;
 }
 
 [Mm][oO][dD] {
-	return YL::BisonParser::token::MOD_WORD;
+	return YL::YareParser::token::MOD_WORD;
 }
 
 [nN][oO][tT]? /* Expressions with WORDS */	{
-	return YL::BisonParser::token::EXPR_NOT;
+	return YL::YareParser::token::EXPR_NOT;
 }
 
 [cC][oO][nN][sS][tT][.][a-zA-Z]+ {	
@@ -178,7 +178,7 @@
 	for(unsigned i = 0; i < N_CONST; i++) 
 		if(strcmp(__elemento, consts[i].const_str) == 0) {
 			lexema->valnum  = consts[i].value;
-			return YL::BisonParser::token::NUMERIC; 
+			return YL::YareParser::token::NUMERIC; 
 		} else {
 		cerr << "Error, constante no identificada 'const." << __elemento << "'\n";
 		exit(EXIT_FAILURE);
@@ -186,125 +186,125 @@
 }
 
 "<->" {
-	return YL::BisonParser::token::SWAP_OP;
+	return YL::YareParser::token::SWAP_OP;
 }
 
 ">="	{
 	// Greater or equal:
-	return YL::BisonParser::token::GE;
+	return YL::YareParser::token::GE;
 }
 
 "<=" {
 	// Less or equal:
-	return YL::BisonParser::token::LE;
+	return YL::YareParser::token::LE;
 }
 
 "==" {
 	// Equal:
-	return YL::BisonParser::token::EQ;
+	return YL::YareParser::token::EQ;
 }
 
 "!=" {
 	// Not equal:
-	return YL::BisonParser::token::NE;
+	return YL::YareParser::token::NE;
 }
 
 "&&" {
-	return YL::BisonParser::token::AND;
+	return YL::YareParser::token::AND;
 }
 
 "||" {
-	return YL::BisonParser::token::OR;
+	return YL::YareParser::token::OR;
 }
 
 [oO][rR]	 {
-	return YL::BisonParser::token::OR;
+	return YL::YareParser::token::OR;
 }
 
 [aA][nN][dD] {
-	return YL::BisonParser::token::AND;
+	return YL::YareParser::token::AND;
 }
 
 "-eq" {
 	// Equal shell operator
-	return YL::BisonParser::token::EQ;
+	return YL::YareParser::token::EQ;
 }
 
 "-neq" {
 	// Not equal shell operator
-	return YL::BisonParser::token::NE;
+	return YL::YareParser::token::NE;
 }
 "-lt" {
 	//  Less shell operator
-	return YL::BisonParser::token::_LT_;
+	return YL::YareParser::token::_LT_;
 }
 
 "<<" {
-	return YL::BisonParser::token::SHIFTLEFT;
+	return YL::YareParser::token::SHIFTLEFT;
 }
 
 ">>" {					
-	return YL::BisonParser::token::SHIFTRIGHT; 
+	return YL::YareParser::token::SHIFTRIGHT; 
 }
 
 "+=" {
-	return YL::BisonParser::token::OP_ASIGN_ABR_MAS;
+	return YL::YareParser::token::OP_ASIGN_ABR_MAS;
 } 
 
 "-=" {
-	return YL::BisonParser::token::OP_ASIGN_ABR_MENOS;
+	return YL::YareParser::token::OP_ASIGN_ABR_MENOS;
 }
 
 "*=" {
-	return YL::BisonParser::token::OP_ASIGN_ABR_MUL;
+	return YL::YareParser::token::OP_ASIGN_ABR_MUL;
 }
 
 "/=" {
-	return YL::BisonParser::token::OP_ASIGN_ABR_DIV;
+	return YL::YareParser::token::OP_ASIGN_ABR_DIV;
 }
 
 "%=" {
-	return YL::BisonParser::token::OP_ASIGN_ABR_MOD;
+	return YL::YareParser::token::OP_ASIGN_ABR_MOD;
 }
 
 "<<=" {
-	return YL::BisonParser::token::OP_ASIGN_ABR_SHIFTLEFT;
+	return YL::YareParser::token::OP_ASIGN_ABR_SHIFTLEFT;
 }
 
 ">>=" {
-	return YL::BisonParser::token::OP_ASIGN_ABR_SHIFTRIGHT;
+	return YL::YareParser::token::OP_ASIGN_ABR_SHIFTRIGHT;
 }
 
 "^=" {
-	return YL::BisonParser::token::OP_ASIGN_ABR_POW;
+	return YL::YareParser::token::OP_ASIGN_ABR_POW;
 }
 
 ":=" {
-	return YL::BisonParser::token::PASCAL_ASSIGN;
+	return YL::YareParser::token::PASCAL_ASSIGN;
 }
 
 [mM][eE][nN][oO][rR] {
 	// "menor"
-	return YL::BisonParser::token::EXPR_MENOR;
+	return YL::YareParser::token::EXPR_MENOR;
 }
 
 [mM][eE][nN][oO][rR][iI][gG][uU][aA][lL] {
 	// "menorigual"
-	return YL::BisonParser::token::EXPR_MENORIGUAL;
+	return YL::YareParser::token::EXPR_MENORIGUAL;
 }
 
 [mM][aA][yY][oO][rR] {
 	// "mayor"
-	return YL::BisonParser::token::EXPR_MAYOR;
+	return YL::YareParser::token::EXPR_MAYOR;
 }
 
 [mM][aA][yY][oO][rR][iI][gG][uU][aA][lL] {
 	// "mayorigual"
-	return YL::BisonParser::token::EXPR_MAYORIGUAL;
+	return YL::YareParser::token::EXPR_MAYORIGUAL;
 }
 
 [eE][lL][eE][vV][aA][dD][oO] {
-	return YL::BisonParser::token::EXPR_ELEVADO;
+	return YL::YareParser::token::EXPR_ELEVADO;
 }
 
 \"([^\\\"]|\\.)*\"  {
@@ -343,6 +343,9 @@
                 case 'q':
                     append_char(string_final, '"');
                     i++;
+                case '\\':
+                	append_char(string_final, '\\');
+                	i++;
                     break;
                 default:
                     if(isdigit(yytext[i + 1]) == true) {
@@ -363,7 +366,7 @@
 
     strncpy(lexema->cadena, string_final, strlen(string_final));
 
-	return YL::BisonParser::token::CADENA;
+	return YL::YareParser::token::CADENA;
 }
 
 #.*\n				{;}		/* Comentarios tipo shell, perl, python, etc */

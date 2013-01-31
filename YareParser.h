@@ -15,7 +15,7 @@ namespace YL {
 
 		private:
 			YL::FlexScanner scanner;
-			YL::BisonParser parser;
+			YL::YareParser parser;
 	};
 }
 
