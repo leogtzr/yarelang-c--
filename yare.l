@@ -318,21 +318,27 @@
             switch(yytext[i + 1]) {
                 case 'n':
                     append_char(string_final, '\n');
+                    i++;
                     break;
                 case 't':
                     append_char(string_final, '\t');
+                    i++;
                     break;
                 case 's':
                     append_char(string_final, ' ');
+                    i++;
                     break;
                 case 'b':
                     append_char(string_final, '\b');
+                    i++;
                     break;
                 case 'r':
                     append_char(string_final, '\r');
+                    i++;
                     break;
                 case 'f':
                     append_char(string_final, '\f');
+                    i++;
                     break;
                 case 'q':
                     append_char(string_final, '"');
