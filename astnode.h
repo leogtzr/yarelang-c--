@@ -1,4 +1,4 @@
-/* Leo Gutiérrez Ramírez, leorocko13@hotmail.com */
+// Leo Gutiérrez Ramírez, leorocko13@hotmail.com
 #ifndef ASTNODE_H_INCLUDED
 #define ASTNODE_H_INCLUDED
 
@@ -17,14 +17,14 @@ typedef enum {
 	typeSystem 			/* system("command"); */
 } nodeEnumType;
 
-/* constants */
+// constants
 typedef struct {
 	nodeEnumType type;		/* type of node */
 	double value;			/* value of constant */
 	char cadena[1000];			/* value of constat string */
 } conNodeType;
 
-/* identifiers */
+// identifiers
 typedef struct {
 	nodeEnumType type;		/* type of node */
 	/* La variable i puede ser de cualquier otro tipo, lo ponemos char para
@@ -35,7 +35,7 @@ typedef struct {
 	char identificador[100];
 } idNodeType;
 
-/* operators */
+// operators 
 typedef struct {
 	nodeEnumType type;		/* type of node */
 	int oper;			/* operator */

@@ -1,6 +1,6 @@
 all:
-	bison -d yare.y
-	flex yare.l
+	bison -d yare.y 
+	flex yare.l 
 	g++ lex.yy.cc yare.tab.c Main.cpp -o yare -lm 
 	@echo 
 	@echo ---------------------------------------------

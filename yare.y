@@ -25,12 +25,9 @@
 	Variables *vars = NULL;
 	struct proc *procs = NULL;
 	std::stack<long double> pilaVirtual;
-
 %}
 
 %code requires {
-	// Forward-declare the Scanner class; the Parser needs to be assigned a 
-	// Scanner, but the Scanner can't be declared without the Parser
 	namespace YL {
 		class FlexScanner;
 	}
@@ -45,6 +42,9 @@
 	
 	// Node Constants:
 	nodeTypeTag *con(long double);
+	
+	// Node Strings ... 
+	nodeType *conStr(char [], short);
 	
 	// Node Operators:
 	nodeType *opr(int oper, unsigned short nops, ...);
@@ -93,11 +93,10 @@
 	union nodeTypeTag *nPtr;
 }
 
-/********************** Data types and var's ***********************/
+// ********************* Data types and var's ***********************/
 %token NUMERIC
-%token CADENA
-%token STRING
 %token VARIABLE
+%token CADENA
 %token ID		// :id:
 
 /********************** Sentences *********************************/
@@ -108,6 +107,7 @@
 ///////////////////////////// Simple sentences: //////////////////
 %token PRINTN 		// @todo printn(expr), prints out the expression with new line
 %token PRINT		// Without new line
+%token PUTS 		// PUTS sentence, to write strings to console.
 %token RAND			// rand(expr);
 ///////////// Expressions operators with words //////////////////////////////
 %token EXPR_DIV				// "entre"
@@ -164,14 +164,13 @@
 %token MUL_ASM					// mul x, expr;	| mul :id:, expr DONE
 
 %type <valnum> NUMERIC 
-%type <cadena> CADENA
-%type <str> STRING
 %type <nPtr> expr
 %type <nPtr> cuerpo
 %type <nPtr> stmt
 %type <nPtr> stmt_list
 %type <sIndex> VARIABLE
 %type <identificador> ID
+%type <cadena> CADENA
 %type <nameFunction> FUNCNAME
 
 %nonassoc IFX
@@ -291,10 +290,13 @@ stmt:
 	| '{' stmt_list	'}'		{ 
 		$$ = $2; 
 	}
+	| PUTS '(' CADENA ')' ';'		{
+		$$ = opr(YL::BisonParser::token::PUTS, 1, conStr($3, typeCadena));
+	}
 	| WHILE	'(' expr ')' stmt	{ 
 		$$ = opr(YL::BisonParser::token::WHILE, 2, $3, $5); 
 	}
-	| BREAK ';' 		{
+	| BREAK ';' 			{
 		$$ = opr(YL::BisonParser::token::BREAK, 0);
 	}
 	| IF '(' expr ')'	stmt %prec	IFX		{ 
@@ -392,6 +394,9 @@ expr:
 		} else {
 			$$ = idS($1);	
 		}
+	}
+	| CADENA {
+		$$ = conStr($1, typeCadena);
 	}
 	| VARIABLE							{ 
 		$$ = id($1); 
@@ -524,7 +529,7 @@ expr:
 
 // We have to implement the error function
 void YL::BisonParser::error(const YL::BisonParser::location_type &loc, const std::string &msg) {
-	std::cerr << "Error: " << msg << std::endl;
+	std::cerr << "Error :'(    -> [" << msg << "]" << std::endl;
 }
 
 // Now that we have the Parser declared, we can declare the Scanner and implement
@@ -546,7 +551,6 @@ nodeTypeTag *con(long double value) {
 	p->con.value = value;
 	return p;
 }
-
 
 nodeType *opr(int oper, unsigned short nops, ...) {
 	va_list ap;
@@ -581,6 +585,18 @@ nodeType *id(char i) {
 	/* copy information */
 	p->type = typeId;
 	p->id.i = i;
+	return p;
+}
+
+nodeType *conStr(char valueString[], short type) {
+	nodeType *p = NULL;
+	if((p = (nodeTypeTag *)malloc(sizeof(conNodeType))) == NULL) {
+		cerr << "Memoria insuficiente para este programa" << endl;
+		exit(EXIT_FAILURE);
+	}
+	// Assign the type:
+	p->type = typeCadena;
+	strcpy(p->con.cadena, valueString);
 	return p;
 }
 
@@ -713,6 +729,14 @@ long double run(nodeType *p) {
 							cout << run(p->opr.op[0]) << endl;
 						return 0.0L;
 					}
+					return 0.0f;
+
+				case YL::BisonParser::token::PUTS: {
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						cout << p->opr.op[0]->con.cadena << endl;
+					}
+					return 0.0f;	
+				}
 
 				case YL::BisonParser::token::CALL:
 					if((spLoop < 0) || pilaLoop[spLoop]) {

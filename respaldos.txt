@@ -1,0 +1,49 @@
+# Code to detect string literals:
+
+\"([^\\\"]|\\.)*\"  {
+	std::cout << yytext << endl;
+}
+
+
+# Old code for process string literals with scape chars:
+
+\"	{ BEGIN	STRING; 
+	str_scapes = buf; 
+}
+<STRING>\\n			{ 
+	*str_scapes++ = '\n'; 
+}
+<STRING>\\t			{ 
+	*str_scapes++ = '\t'; 
+}
+<STRING>\\s			{ 
+	*str_scapes++ = ' ';  
+}
+<STRING>\\b			{ 
+	*str_scapes++ = '\b'; 
+}
+<STRING>\\r			{ 
+	*str_scapes++ = '\r'; 
+}
+<STRING>\\f			{ 
+	*str_scapes++ = '\f'; 
+}
+<STRING>\\q			{ 
+	*str_scapes++ = '"'; 
+}
+
+<STRING>\"			{
+	*str_scapes = 0;
+	BEGIN 0; 
+	/* REGRESAR EL STRING Y ASIGNARLO AQUÍ */
+	cout << "Se encontró está cadena: " << buf << std::endl;
+	// strcpy(lexema->cadena, buf);
+
+	return YL::BisonParser::token::CADENA;
+}
+<STRING>\n			{ 
+	cout << "Cadena invalida" << endl;
+	exit(EXIT_FAILURE);
+}
+
+

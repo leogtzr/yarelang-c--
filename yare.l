@@ -1,4 +1,3 @@
-
 %{
 	#include "yare.tab.h"
 	#include "YareScanner.h"
@@ -9,19 +8,31 @@
 	#include <cstdlib>
 	#include <iostream>
 	#include <cstdio>
+	#include <cstring>
+
+	void append_char(char *s, char c) {
+    	unsigned int length = strlen(s);
+    	s[length] = c;
+    	s[length + 1] = '\0';
+	}
+
+	void remove_first_char(char *s) {
+    	memmove(s, s + 1, strlen(s));
+	}
+
+	void remove_last_char(char *s) {
+    	s[strlen(s) - 1] = '\0';
+	}
 
 	// Opvar:
 	extern char opVar[4];
 	// Número de línea:
 	extern unsigned int lineno;
-	// variable buffer temporal para manejo de strings.
-	char buf[100];
-	// Acumula los caracteres de escape
-	char *str_scapes;			/* Puntero para ir acumulando caracteres de escape */
 	using std::endl;
 	using std::cout;
 	using std::cerr;
 %}
+
 %x STRING
 %x IN_COMMENT
 
@@ -82,6 +93,10 @@
 
 [pP][rR][iI][nN][tT] {
 	return YL::BisonParser::token::PRINT;
+}
+
+[pP][uU][tT][sS] {
+	return YL::BisonParser::token::PUTS;	
 }
 
 [iI][nN][cC] {
@@ -292,45 +307,57 @@
 	return YL::BisonParser::token::EXPR_ELEVADO;
 }
 
-\"	{ BEGIN	STRING; 
-	str_scapes = buf; 
-}
-<STRING>\\n			{ 
-	*str_scapes++ = '\n'; 
-}
-<STRING>\\t			{ 
-	*str_scapes++ = '\t'; 
-}
-<STRING>\\s			{ 
-	*str_scapes++ = ' ';  
-}
-<STRING>\\b			{ 
-	*str_scapes++ = '\b'; 
-}
-<STRING>\\r			{ 
-	*str_scapes++ = '\r'; 
-}
-<STRING>\\f			{ 
-	*str_scapes++ = '\f'; 
-}
-<STRING>\\q			{ 
-	*str_scapes++ = '"'; 
-}
-<STRING>\\[0-9]		{ 
-	/* Caracteres de escape numéricos para saltos de línea */
-	for(int _ii = 0; _ii < (*(yytext + 1) - '0'); _ii++) 
-		*str_scapes++ = '\n';	
-}
-<STRING>\"			{
-	*str_scapes = 0;
-	BEGIN 0; 
-	/* REGRESAR EL STRING Y ASIGNARLO AQUÍ */
-	strcpy(lexema->cadena, buf);
+\"([^\\\"]|\\.)*\"  {
+	// std::cout << "String found: '" << yytext << "'" << endl;
+	char *string_final = (char *)malloc(strlen(yytext) + 1);
+	string_final[0] = '\0';
+    unsigned i;
+
+    for(i = 0; yytext[i] != '\0'; i++) {
+        if(yytext[i] == '\\') {
+            switch(yytext[i + 1]) {
+                case 'n':
+                    append_char(string_final, '\n');
+                    break;
+                case 't':
+                    append_char(string_final, '\t');
+                    break;
+                case 's':
+                    append_char(string_final, ' ');
+                    break;
+                case 'b':
+                    append_char(string_final, '\b');
+                    break;
+                case 'r':
+                    append_char(string_final, '\r');
+                    break;
+                case 'f':
+                    append_char(string_final, '\f');
+                    break;
+                case 'q':
+                    append_char(string_final, '"');
+                    i++;
+                    break;
+                default:
+                    if(isdigit(yytext[i + 1]) == true) {
+                        unsigned n_newline = yytext[i + 1] - '0';
+                        unsigned _k = 0;
+                        for(_k = 0; _k < n_newline; _k++)
+                            append_char(string_final, '\n');
+                            i++;
+                    }
+            }
+        } else {
+            append_char(string_final, yytext[i]);
+        }
+    }
+    
+    remove_first_char(string_final);
+    remove_last_char(string_final);
+
+    strncpy(lexema->cadena, string_final, strlen(string_final));
+
 	return YL::BisonParser::token::CADENA;
-}
-<STRING>\n			{ 
-	cout << "Cadena invalida" << endl;
-	exit(EXIT_FAILURE);
 }
 
 #.*\n				{;}		/* Comentarios tipo shell, perl, python, etc */
@@ -345,7 +372,6 @@
 
 [ \t\n]			;
 
-
 <INITIAL>{
      "/*"              BEGIN(IN_COMMENT);
      }
@@ -359,5 +385,3 @@
 .		{ cout << "Caracter desconocido: '" << yytext << '\'' << endl; }
 
 %%
-
-

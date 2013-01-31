@@ -9,9 +9,8 @@ using std::cerr;
 using std::endl;
 using YL::Parser;
 
-// Entry Point
 int main(void) {
-	srand((unsigned)time(0));	
+	srand((unsigned)time(NULL));	
 	Parser parser;
 	return parser.parse();
 }

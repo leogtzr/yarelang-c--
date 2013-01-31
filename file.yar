@@ -1,7 +1,3 @@
-# Ejemplo de archivo de código fuente en lenguaje yare.
-# Leo Gutiérrez R.
-
-a = 2^3^3;
-printn(a);
-
+puts("Ho\2la");
+print(1+2*3);
 .

@@ -3,14 +3,12 @@
 
 #include <cmath>
 
-// Número de constantes:
+// Constants number:
 #define N_CONST     9
 
 struct constantes {
-
     const char *const_str;
     double value;
-
 // TODO Pueden agregarse más constantes, lo único que hay que hacer es
 // modificarse la constante simbólica (N_CONST) por el número
 // de constantes en la estructura */
