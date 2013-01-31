@@ -1219,7 +1219,7 @@ long double run(nodeType *p) {
 						// cout << "Entra aquí ... \n";
 						//return fmod(run(p->opr.op[0]), run(p->opr.op[1]));
 						// return (long long)run(p->opr.op[0]) % (long long)run(p->opr.op[1]);
-						return (int)run(p->opr.op[0]) % (int)run(p->opr.op[1]);
+						return (long long)run(p->opr.op[0]) % (long long)run(p->opr.op[1]);
 					}
 					return 0.0L;
 
