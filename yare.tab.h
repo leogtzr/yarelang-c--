@@ -38,10 +38,8 @@
 /* "%code requires" blocks.  */
 
 /* Line 35 of lalr1.cc  */
-#line 31 "yare.y"
+#line 30 "yare.y"
 
-	// Forward-declare the Scanner class; the Parser needs to be assigned a 
-	// Scanner, but the Scanner can't be declared without the Parser
 	namespace YL {
 		class FlexScanner;
 	}
@@ -49,7 +47,7 @@
 
 
 /* Line 35 of lalr1.cc  */
-#line 53 "yare.tab.h"
+#line 51 "yare.tab.h"
 
 
 #include <string>
@@ -81,7 +79,7 @@
 namespace YL {
 
 /* Line 35 of lalr1.cc  */
-#line 85 "yare.tab.h"
+#line 83 "yare.tab.h"
 
   /// A Bison parser.
   class BisonParser
@@ -107,7 +105,7 @@ namespace YL {
 
 
 /* Line 35 of lalr1.cc  */
-#line 111 "yare.tab.h"
+#line 109 "yare.tab.h"
     };
 #else
     typedef YYSTYPE semantic_type;
@@ -120,15 +118,15 @@ namespace YL {
       /* Tokens.  */
    enum yytokentype {
      NUMERIC = 258,
-     CADENA = 259,
-     STRING = 260,
-     VARIABLE = 261,
-     ID = 262,
-     WHILE = 263,
-     BREAK = 264,
-     IF = 265,
-     PRINTN = 266,
-     PRINT = 267,
+     VARIABLE = 259,
+     CADENA = 260,
+     ID = 261,
+     WHILE = 262,
+     BREAK = 263,
+     IF = 264,
+     PRINTN = 265,
+     PRINT = 266,
+     PUTS = 267,
      RAND = 268,
      EXPR_DIV = 269,
      EXPR_MAS = 270,
@@ -283,7 +281,7 @@ namespace YL {
     /// Zero means the default is an error.
     static const unsigned char yydefact_[];
 
-    static const signed char yypgoto_[];
+    static const short int yypgoto_[];
     static const signed char yydefgoto_[];
 
     /// What to do in a state.
@@ -368,7 +366,7 @@ namespace YL {
 } // YL
 
 /* Line 35 of lalr1.cc  */
-#line 372 "yare.tab.h"
+#line 370 "yare.tab.h"
 
 
 
