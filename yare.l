@@ -361,7 +361,7 @@
                     }
             }
         } else {
-            if(upper) {
+            if(upper && isalpha(yytext[i])) {
             	append_char(string_final, toupper(yytext[i]));
             	upper = false;
             } else {
