@@ -317,6 +317,26 @@
 	return YL::YareParser::token::EXPR_ELEVADO;
 }
 
+[aA][bB][sS] {
+	return YL::YareParser::token::ABS;	
+}
+
+[sS][qQ][rR][tT]					{
+	return YL::YareParser::token::SQRT;
+}
+
+[aA][cC][oO][sS] {
+	return YL::YareParser::token::ACOS;	
+}
+
+[aA][sS][iI][nN]	{
+	return YL::YareParser::token::ASIN;	
+}
+
+[aA][tT][aA][nN]	{
+	return YL::YareParser::token::ATAN;	
+}
+
 \"([^\\\"]|\\.)*\"  {
 	// std::cout << "String found: '" << yytext << "'" << endl;
 	char *string_final = (char *)malloc(strlen(yytext) + 1);

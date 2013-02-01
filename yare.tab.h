@@ -171,23 +171,40 @@ namespace YL {
      SUB_ASM = 309,
      ADD_ASM = 310,
      MUL_ASM = 311,
-     IFX = 312,
-     ELSE = 313,
-     OR = 314,
-     AND = 315,
-     SHIFTRIGHT = 316,
-     SHIFTLEFT = 317,
-     ANDBITS = 318,
-     ORBITS = 319,
-     LT = 320,
-     GT = 321,
-     NE = 322,
-     EQ = 323,
-     LE = 324,
-     GE = 325,
-     EXPR_ELEVADO = 326,
-     NEGACION = 327,
-     UMINUS = 328
+     ABS = 312,
+     FACTORIAL = 313,
+     SUMATORIA = 314,
+     SQRT = 315,
+     ACOS = 316,
+     ASIN = 317,
+     ATAN = 318,
+     CEIL = 319,
+     COS = 320,
+     COSH = 321,
+     EXP = 322,
+     FLOOR = 323,
+     LN = 324,
+     SIN = 325,
+     SINH = 326,
+     TAN = 327,
+     TANH = 328,
+     IFX = 329,
+     ELSE = 330,
+     OR = 331,
+     AND = 332,
+     SHIFTRIGHT = 333,
+     SHIFTLEFT = 334,
+     ANDBITS = 335,
+     ORBITS = 336,
+     LT = 337,
+     GT = 338,
+     NE = 339,
+     EQ = 340,
+     LE = 341,
+     GE = 342,
+     EXPR_ELEVADO = 343,
+     NEGACION = 344,
+     UMINUS = 345
    };
 
     };
@@ -281,7 +298,7 @@ namespace YL {
     /// Zero means the default is an error.
     static const unsigned char yydefact_[];
 
-    static const short int yypgoto_[];
+    static const signed char yypgoto_[];
     static const signed char yydefgoto_[];
 
     /// What to do in a state.
@@ -366,7 +383,7 @@ namespace YL {
 } // YL
 
 /* Line 35 of lalr1.cc  */
-#line 370 "yare.tab.h"
+#line 387 "yare.tab.h"
 
 
 

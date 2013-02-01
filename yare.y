@@ -163,6 +163,25 @@
 %token ADD_ASM					// add x, expr; | add :id:, expr DONE
 %token MUL_ASM					// mul x, expr;	| mul :id:, expr DONE
 
+//////////// Funciones trigonométricas //////////////////////////////////
+%token ABS
+%token FACTORIAL 
+%token SUMATORIA
+%token SQRT
+%token ACOS
+%token ASIN
+%token ATAN
+%token CEIL
+%token COS
+%token COSH
+%token EXP
+%token FLOOR
+%token LN
+%token SIN
+%token SINH
+%token TAN
+%token TANH
+
 %type <valnum> NUMERIC 
 %type <nPtr> expr
 %type <nPtr> cuerpo
@@ -413,6 +432,21 @@ expr:
 	}
 	| RAND '('')' 		{
 		$$ = opr(YL::YareParser::token::RAND, 0);
+	}
+	| ABS '(' expr ')' {
+		$$ = opr(YL::YareParser::token::ABS, 1, $3);	
+	}
+	| SQRT '(' expr ')' {
+		$$ = opr(YL::YareParser::token::SQRT, 1, $3);	
+	}
+	| ACOS '(' expr ')' {
+		$$ = opr(YL::YareParser::token::ACOS, 1, $3);	
+	}
+	| ASIN '(' expr ')' {
+		$$ = opr(YL::YareParser::token::ASIN, 1, $3);	
+	}
+	| ATAN '(' expr ')' {
+		$$ = opr(YL::YareParser::token::ATAN, 1, $3);	
 	}
 	| DEC '(' ID ')' {
 		$$ = opr(YL::YareParser::token::DEC, 1, idS($3));
@@ -1296,6 +1330,26 @@ long double run(nodeType *p) {
 				case YL::YareParser::token::SHIFTRIGHT:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return (long long)run(p->opr.op[0]) >> (long long)run(p->opr.op[1]);
+					return 0.0L;
+				case YL::YareParser::token::ABS:
+					if((spLoop < 0) || pilaLoop[spLoop]) 
+						return fabs(run(p->opr.op[0]));
+					return 0.0L;
+				case YL::YareParser::token::SQRT:
+					if((spLoop < 0) || pilaLoop[spLoop]) 
+						return sqrt(run(p->opr.op[0]));
+					return 0.0L;
+				case YL::YareParser::token::ACOS:
+					if((spLoop < 0) || pilaLoop[spLoop]) 
+						return acos(run(p->opr.op[0]));
+					return 0.0L;
+				case YL::YareParser::token::ASIN:
+					if((spLoop < 0) || pilaLoop[spLoop]) 
+						return asin(run(p->opr.op[0]));
+					return 0.0L;
+				case YL::YareParser::token::ATAN:
+					if((spLoop < 0) || pilaLoop[spLoop]) 
+						return atan(run(p->opr.op[0]));
 					return 0.0L;
 			}
 	}
