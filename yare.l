@@ -47,7 +47,7 @@
 }
 
 [a-zA-Z] 				{
-						/* TODO Revisar esto con calma */
+						// TODO Revisar esto con calma
 	if(isupper(*yytext))
 		lexema->sIndex = tolower(*yytext) - 'a';
 	else

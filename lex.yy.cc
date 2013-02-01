@@ -842,7 +842,7 @@ case 2:
 YY_RULE_SETUP
 #line 49 "yare.l"
 {
-						/* TODO Revisar esto con calma */
+						// TODO Revisar esto con calma
 	if(isupper(*yytext))
 		lexema->sIndex = tolower(*yytext) - 'a';
 	else

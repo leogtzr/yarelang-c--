@@ -728,9 +728,9 @@ long double run(nodeType *p) {
 						// Check if the node is a virtual var:	
 						cout.precision(16);
 						if(p->opr.op[0]->type == typeId) 
-							cout << sym[p->opr.op[0]->id.i] << endl;
+							cout << sym[p->opr.op[0]->id.i];
 						 else 
-							cout << run(p->opr.op[0]) << endl;
+							cout << run(p->opr.op[0]);
 						return 0.0L;
 					}
 					return 0.0f;

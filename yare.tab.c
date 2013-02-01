@@ -2689,9 +2689,9 @@ long double run(nodeType *p) {
 						// Check if the node is a virtual var:	
 						cout.precision(16);
 						if(p->opr.op[0]->type == typeId) 
-							cout << sym[p->opr.op[0]->id.i] << endl;
+							cout << sym[p->opr.op[0]->id.i];
 						 else 
-							cout << run(p->opr.op[0]) << endl;
+							cout << run(p->opr.op[0]);
 						return 0.0L;
 					}
 					return 0.0f;
@@ -3180,7 +3180,7 @@ long double run(nodeType *p) {
 						// cout << "Entra aquí ... \n";
 						//return fmod(run(p->opr.op[0]), run(p->opr.op[1]));
 						// return (long long)run(p->opr.op[0]) % (long long)run(p->opr.op[1]);
-						return (int)run(p->opr.op[0]) % (int)run(p->opr.op[1]);
+						return (long long)run(p->opr.op[0]) % (long long)run(p->opr.op[1]);
 					}
 					return 0.0L;
 
