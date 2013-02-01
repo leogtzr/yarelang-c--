@@ -1348,7 +1348,7 @@ YY_RULE_SETUP
     remove_first_char(string_final);
     remove_last_char(string_final);
 
-    strncpy(lexema->cadena, string_final, strlen(string_final));
+    strncpy(lexema->cadena, string_final, strlen(string_final) + 1);
 
 	return YL::YareParser::token::CADENA;
 }
