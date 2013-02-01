@@ -178,7 +178,7 @@
 
 %left OR
 %left AND
-%left GE LE EQ NE GT LT ORBITS ANDBITS SHIFTLEFT SHIFTRIGHT
+%left GE LE EQ NE GT LT _LT_ _GT_ ORBITS ANDBITS SHIFTLEFT SHIFTRIGHT
 %left '+' '-'
 %left '*' '/'
 %left '%' MOD_WORD

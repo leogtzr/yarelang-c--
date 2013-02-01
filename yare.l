@@ -171,18 +171,18 @@
 	return YL::YareParser::token::EXPR_NOT;
 }
 
-[cC][oO][nN][sS][tT][.][a-zA-Z]+ {	
+[cC][oO][nN][sS][tT][.][a-zA-Z0-9]+ {	
 	char *__elemento = strtok(yytext, ".");
 	__elemento = strtok(NULL, ".");
 
-	for(unsigned i = 0; i < N_CONST; i++) 
+	for(unsigned i = 0; i < N_CONST; i++) {
 		if(strcmp(__elemento, consts[i].const_str) == 0) {
 			lexema->valnum  = consts[i].value;
 			return YL::YareParser::token::NUMERIC; 
-		} else {
-		cerr << "Error, constante no identificada 'const." << __elemento << "'\n";
-		exit(EXIT_FAILURE);
+		}
 	}
+	cerr << "Error, constante no identificada 'const." << __elemento << "'\n";
+	exit(EXIT_FAILURE);
 }
 
 "<->" {
@@ -226,17 +226,23 @@
 }
 
 "-eq" {
-	// Equal shell operator
+	// Equal shell operator ==
 	return YL::YareParser::token::EQ;
 }
 
 "-neq" {
-	// Not equal shell operator
+	// Not equal shell operator !=
 	return YL::YareParser::token::NE;
 }
+
 "-lt" {
-	//  Less shell operator
+	//  Less shell operator <
 	return YL::YareParser::token::_LT_;
+}
+
+"-gt" {
+	//  Great shell operator >
+	return YL::YareParser::token::_GT_;
 }
 
 "<<" {
@@ -362,6 +368,7 @@
                 	lower = true;
                 	i++;
                     break;
+
                 default:
                     if(isdigit(yytext[i + 1]) == true) {
                         unsigned n_newline = yytext[i + 1] - '0';
