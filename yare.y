@@ -181,7 +181,7 @@
 %left GE LE EQ NE GT LT ORBITS ANDBITS SHIFTLEFT SHIFTRIGHT
 %left '+' '-'
 %left '*' '/'
-%left '%'
+%left '%' MOD_WORD
 %left '^'
 %left EXPR_ELEVADO			// expr "elevado" expr <-> expr^expr 
 %nonassoc UMINUS NEGACION 
@@ -345,6 +345,12 @@ stmt:
 	| ID OP_ASIGN_ABR_MOD expr {
 		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_MOD, 2, idS($1), $3);
 	}
+	| VARIABLE OP_ASIGN_ABR_SHIFTLEFT expr {
+		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_SHIFTLEFT, 2, id($1), $3);			
+	}
+	| ID OP_ASIGN_ABR_SHIFTLEFT expr {
+		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_SHIFTLEFT, 2, idS($1), $3);			
+	}
 	| VARIABLE OP_ASIGN_ABR_MUL expr {
 		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_MUL, 2, id($1), $3);
 	}
@@ -437,6 +443,9 @@ expr:
 	}
 	| '~' expr %prec NEGACION			{ 
 		$$ = opr(YL::YareParser::token::NEGACION, 1, $2); 
+	}
+	| VARIABLE '-''@' ';' {
+		$$ = opr(YL::YareParser::token::DEC_CPP, 1, id($1)); 	
 	}
 	| EXPR_NOT expr %prec NEGACION		{ 
 		$$ = opr(YL::YareParser::token::NEGACION, 1, $2); 

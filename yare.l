@@ -275,6 +275,10 @@
 	return YL::YareParser::token::OP_ASIGN_ABR_SHIFTRIGHT;
 }
 
+"&=" {
+	return YL::YareParser::token::OP_ASIGN_ABR_AND;
+}
+
 "^=" {
 	return YL::YareParser::token::OP_ASIGN_ABR_POW;
 }
