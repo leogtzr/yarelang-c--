@@ -12,6 +12,7 @@ using std::endl;
 using std::ostream;
 
 class Var {
+    
     private:
         string id;
         long double longValue;

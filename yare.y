@@ -1179,6 +1179,7 @@ long double run(nodeType *p) {
 							vars = new Variables();
 							vars->add(*(new Var(p->opr.op[0]->id.identificador, run(p->opr.op[1]))));
 						} else {
+
 							if(vars->isDefined(p->opr.op[0]->id.identificador)) {
 								vars->getVarByIndex(vars->getIndex(p->opr.op[0]->id.identificador)).setLongValue(run(p->opr.op[1]));
 							} else {
