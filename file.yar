@@ -1,4 +1,6 @@
-printn(atan(0.02));
-printn(atan(0.5));
-printn(atan(0.7));
+x = 0.0;
+while(x <= 10.0) {
+	printn(tanh(x));
+	x += 1.0;
+}
 .

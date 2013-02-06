@@ -1,7 +1,7 @@
 all:
 	bison -d yare.y 
 	flex yare.l 
-	g++ lex.yy.cc yare.tab.c Main.cpp -o yare -lm 
+	g++ lex.yy.cc yare.tab.c Main.cpp -o yare -lm -O2
 	@echo 
 	@echo ---------------------------------------------
 	@echo "| Ok ...... ...				    |"

@@ -448,6 +448,36 @@ expr:
 	| ATAN '(' expr ')' {
 		$$ = opr(YL::YareParser::token::ATAN, 1, $3);	
 	}
+	| CEIL '(' expr ')' {
+		$$ = opr(YL::YareParser::token::CEIL, 1, $3);	
+	}
+	| COS '(' expr ')' {
+		$$ = opr(YL::YareParser::token::COS, 1, $3);	
+	}
+	| COSH '(' expr ')' {
+		$$ = opr(YL::YareParser::token::COSH, 1, $3);	
+	}
+	| EXP '(' expr ')' {
+		$$ = opr(YL::YareParser::token::EXP, 1, $3);	
+	}
+	| FLOOR '(' expr ')' {
+		$$ = opr(YL::YareParser::token::FLOOR, 1, $3);	
+	}
+	| LN '(' expr ')' {
+		$$ = opr(YL::YareParser::token::LN, 1, $3);	
+	}
+	| SIN '(' expr ')' {
+		$$ = opr(YL::YareParser::token::SIN, 1, $3);	
+	}
+	| SINH '(' expr ')' {
+		$$ = opr(YL::YareParser::token::SINH, 1, $3);	
+	}
+	| TAN '(' expr ')' {
+		$$ = opr(YL::YareParser::token::TAN, 1, $3);	
+	}
+	| TANH '(' expr ')' {
+		$$ = opr(YL::YareParser::token::TANH, 1, $3);	
+	}
 	| DEC '(' ID ')' {
 		$$ = opr(YL::YareParser::token::DEC, 1, idS($3));
 	}
@@ -1347,10 +1377,57 @@ long double run(nodeType *p) {
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return asin(run(p->opr.op[0]));
 					return 0.0L;
-				case YL::YareParser::token::ATAN:
+				case YL::YareParser::token::CEIL:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
-						return atan(run(p->opr.op[0]));
+						return ceil(run(p->opr.op[0]));
 					return 0.0L;
+				case YL::YareParser::token::COS:
+					if((spLoop < 0) || pilaLoop[spLoop]) 
+						return cos(run(p->opr.op[0]));
+					return 0.0L;
+				case YL::YareParser::token::COSH:
+					if((spLoop < 0) || pilaLoop[spLoop]) 
+						return cosh(run(p->opr.op[0]));
+					return 0.0L;
+				case YL::YareParser::token::EXP:
+					if((spLoop < 0) || pilaLoop[spLoop]) 
+						return exp(run(p->opr.op[0]));
+					return 0.0L;
+				case YL::YareParser::token::FLOOR:
+					if((spLoop < 0) || pilaLoop[spLoop]) 
+						return floor(run(p->opr.op[0]));
+					else
+						return 0.0f;
+				case YL::YareParser::token::LN:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						if(run(p->opr.op[0]) <= 0.0) {
+							cerr << "Aviso: cuando x tiende a 0 se vuelve infinito ...\n";
+							return 0.0f;
+						}
+						return log(run(p->opr.op[0]));
+					} else
+						return 0.0f;
+				case YL::YareParser::token::SIN:
+					if((spLoop < 0) || pilaLoop[spLoop]) 
+						return sin(run(p->opr.op[0]));
+					else
+						return 0.0f;
+				case YL::YareParser::token::SINH:
+					if((spLoop < 0) || pilaLoop[spLoop]) 
+						return sinh(run(p->opr.op[0]));
+					else
+						return 0.0f;
+				case YL::YareParser::token::TAN:
+					if((spLoop < 0) || pilaLoop[spLoop]) 
+						return tan(run(p->opr.op[0]));
+					else
+						return 0.0f;
+				case YL::YareParser::token::TANH:
+					if((spLoop < 0) || pilaLoop[spLoop]) 
+						return tanh(run(p->opr.op[0]));
+					else
+						return 0.0f;
+				
 			}
 	}
 }
