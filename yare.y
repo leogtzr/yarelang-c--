@@ -13,6 +13,7 @@
 	#include <cstring>
 	#include "Variables.h"
 	#include "procs.h"
+	#include "mymath.h"
 	// #include "Funciones.h"
 	#include <cmath>
 	#include <stack>
@@ -478,6 +479,12 @@ expr:
 	| TANH '(' expr ')' {
 		$$ = opr(YL::YareParser::token::TANH, 1, $3);	
 	}
+	| SUMATORIA '(' expr ',' expr ')' {
+		$$ = opr(YL::YareParser::token::SUMATORIA, 2, $3, $5);	
+	}
+	| FACTORIAL '(' expr ')' {
+		$$ = opr(YL::YareParser::token::FACTORIAL, 1, $3);	
+	}
 	| DEC '(' ID ')' {
 		$$ = opr(YL::YareParser::token::DEC, 1, idS($3));
 	}
@@ -508,8 +515,11 @@ expr:
 	| '~' expr %prec NEGACION			{ 
 		$$ = opr(YL::YareParser::token::NEGACION, 1, $2); 
 	}
-	| VARIABLE '-''@' ';' {
+	| VARIABLE '-''@' {
 		$$ = opr(YL::YareParser::token::DEC_CPP, 1, id($1)); 	
+	}
+	| VARIABLE '+''@' {
+		$$ = opr(YL::YareParser::token::INC_CPP, 1, id($1)); 	
 	}
 	| EXPR_NOT expr %prec NEGACION		{ 
 		$$ = opr(YL::YareParser::token::NEGACION, 1, $2); 
@@ -1130,6 +1140,8 @@ long double run(nodeType *p) {
 										vars->getVarByIndex(vars->getIndex(p->opr.op[0]->id.identificador)).setLongValue(rand() % 100);
 								}
 								break;
+							default:
+								break;
 						}
 					}
 					return 0.0L;
@@ -1427,9 +1439,21 @@ long double run(nodeType *p) {
 						return tanh(run(p->opr.op[0]));
 					else
 						return 0.0f;
-				
+				case YL::YareParser::token::SUMATORIA:
+					if((spLoop < 0) || pilaLoop[spLoop]) 
+						return sumatoria((short)run(p->opr.op[0]), (short)run(p->opr.op[1]));
+					else
+						return 0.0f;
+				case YL::YareParser::token::FACTORIAL:
+					if((spLoop < 0) || pilaLoop[spLoop]) 
+						return factorial((long)run(p->opr.op[0]));
+					else
+						return 0.0f;
 			}
+			default:
+					break;
 	}
+	return 0.0f;
 }
 
 void swap(nodeType *p) {

@@ -377,6 +377,13 @@
 	   return YL::YareParser::token::TANH;
 }
 
+[fF][aA][cC][tT][oO][rR][iI][aA][lL]	{
+	return YL::YareParser::token::FACTORIAL;
+}
+[sS][uU][mM][aA][tT][oO][rR][iI][aA]	{
+	return YL::YareParser::token::SUMATORIA;
+}
+
 \"([^\\\"]|\\.)*\"  {
 	// std::cout << "String found: '" << yytext << "'" << endl;
 	char *string_final = (char *)malloc(strlen(yytext) + 1);
