@@ -37,7 +37,7 @@
 %x IN_COMMENT
 
 %option yyclass="FlexScanner" noyywrap c++ 
-%option yylineno 
+%option yylineno
 
 %%
 
@@ -308,6 +308,10 @@
 	return YL::YareParser::token::EXPR_MAYOR;
 }
 
+[mM][aA][sS] {
+	return YL::YareParser::token::EXPR_MAS;	
+}
+
 [mM][aA][yY][oO][rR][iI][gG][uU][aA][lL] {
 	// "mayorigual"
 	return YL::YareParser::token::EXPR_MAYORIGUAL;
@@ -380,8 +384,17 @@
 [fF][aA][cC][tT][oO][rR][iI][aA][lL]	{
 	return YL::YareParser::token::FACTORIAL;
 }
+
 [sS][uU][mM][aA][tT][oO][rR][iI][aA]	{
 	return YL::YareParser::token::SUMATORIA;
+}
+
+[pP][uU][sS][hH] {
+	return YL::YareParser::token::PUSH;	
+}
+
+[pP][oO][pP] {
+	return YL::YareParser::token::POP;	
 }
 
 \"([^\\\"]|\\.)*\"  {
@@ -476,7 +489,8 @@
 	return *yytext;
 }
 
-[ \t\n]			;
+[ \t]			{;}
+[\n] { ; }
 
 <INITIAL>{
      "/*"              BEGIN(IN_COMMENT);

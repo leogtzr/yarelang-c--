@@ -12,20 +12,18 @@
 	#include <cstdarg>
 	#include <cstring>
 	#include "Variables.h"
+	#include "Pila.hh"
 	#include "procs.h"
 	#include "mymath.h"
-	// #include "Funciones.h"
+	#include "Pila.hh"
 	#include <cmath>
-	#include <stack>
-	
-	// Needed 'usings'
-	using std::stack;
 	
 	// The symbol table:
 	long double sym[26];
 	Variables *vars = NULL;
+	Pila *pila = NULL;
 	struct proc *procs = NULL;
-	std::stack<long double> pilaVirtual;
+	unsigned int lineno = 0;
 %}
 
 %code requires {
@@ -183,6 +181,10 @@
 %token TAN
 %token TANH
 
+/////////// FUNCIONES DE PILA ///////////////////////////////////////////
+%token PUSH
+%token POP
+
 %type <valnum> NUMERIC 
 %type <nPtr> expr
 %type <nPtr> cuerpo
@@ -210,6 +212,12 @@
 
 program:
 	funciones cuerpo '.' {
+	if(vars != NULL) {
+		delete(vars);
+	}
+	if(pila != NULL) {
+		delete(pila);
+	}
 	exit(EXIT_SUCCESS);
 }
 ;
@@ -225,6 +233,7 @@ cuerpo:
 	cuerpo stmt		{ 
 		run($2);			/* Ejecutar los nodos */ 
 		freeNode($2); 	/* Liberar los nodos */
+
 	}
 	| {;}
 	;
@@ -401,6 +410,9 @@ stmt:
 	| ID OP_ASIGN_ABR_POW expr {
 		$$ = opr(YL::YareParser::token::OP_ASIGN_ABR_POW, 2, idS($1), $3);
 	}
+	| PUSH expr {
+		$$ = opr(YL::YareParser::token::PUSH, 1, $2);	
+	}
 	| {;}
 	;
 
@@ -431,81 +443,6 @@ expr:
 	| VARIABLE							{ 
 		$$ = id($1); 
 	}
-	| RAND '('')' 		{
-		$$ = opr(YL::YareParser::token::RAND, 0);
-	}
-	| ABS '(' expr ')' {
-		$$ = opr(YL::YareParser::token::ABS, 1, $3);	
-	}
-	| SQRT '(' expr ')' {
-		$$ = opr(YL::YareParser::token::SQRT, 1, $3);	
-	}
-	| ACOS '(' expr ')' {
-		$$ = opr(YL::YareParser::token::ACOS, 1, $3);	
-	}
-	| ASIN '(' expr ')' {
-		$$ = opr(YL::YareParser::token::ASIN, 1, $3);	
-	}
-	| ATAN '(' expr ')' {
-		$$ = opr(YL::YareParser::token::ATAN, 1, $3);	
-	}
-	| CEIL '(' expr ')' {
-		$$ = opr(YL::YareParser::token::CEIL, 1, $3);	
-	}
-	| COS '(' expr ')' {
-		$$ = opr(YL::YareParser::token::COS, 1, $3);	
-	}
-	| COSH '(' expr ')' {
-		$$ = opr(YL::YareParser::token::COSH, 1, $3);	
-	}
-	| EXP '(' expr ')' {
-		$$ = opr(YL::YareParser::token::EXP, 1, $3);	
-	}
-	| FLOOR '(' expr ')' {
-		$$ = opr(YL::YareParser::token::FLOOR, 1, $3);	
-	}
-	| LN '(' expr ')' {
-		$$ = opr(YL::YareParser::token::LN, 1, $3);	
-	}
-	| SIN '(' expr ')' {
-		$$ = opr(YL::YareParser::token::SIN, 1, $3);	
-	}
-	| SINH '(' expr ')' {
-		$$ = opr(YL::YareParser::token::SINH, 1, $3);	
-	}
-	| TAN '(' expr ')' {
-		$$ = opr(YL::YareParser::token::TAN, 1, $3);	
-	}
-	| TANH '(' expr ')' {
-		$$ = opr(YL::YareParser::token::TANH, 1, $3);	
-	}
-	| SUMATORIA '(' expr ',' expr ')' {
-		$$ = opr(YL::YareParser::token::SUMATORIA, 2, $3, $5);	
-	}
-	| FACTORIAL '(' expr ')' {
-		$$ = opr(YL::YareParser::token::FACTORIAL, 1, $3);	
-	}
-	| DEC '(' ID ')' {
-		$$ = opr(YL::YareParser::token::DEC, 1, idS($3));
-	}
-	| DEC '(' VARIABLE ')' {
-		$$ = opr(YL::YareParser::token::DEC, 1, id($3));
-	}
-	| INC '(' ID ')' {
-		$$ = opr(YL::YareParser::token::INC, 1, idS($3));
-	}
-	| INC '(' VARIABLE ')' {
-		$$ = opr(YL::YareParser::token::INC, 1, id($3));
-	}
-	| expr XOROP expr {
-		$$ = opr(YL::YareParser::token::XOROP, 2, $1, $3);
-	}
-	| expr RANGE_RANDOM expr {
-		$$ = opr(YL::YareParser::token::RANGE_RANDOM, 2, $1, $3);
-	}
-	| expr '+' expr	{ 
-		$$ = opr('+', 2, $1, $3); 
-	}
 	| '-' expr %prec UMINUS				{ 
 		$$ = opr(YL::YareParser::token::UMINUS, 1, $2); 
 	}
@@ -515,16 +452,10 @@ expr:
 	| '~' expr %prec NEGACION			{ 
 		$$ = opr(YL::YareParser::token::NEGACION, 1, $2); 
 	}
-	| VARIABLE '-''@' {
-		$$ = opr(YL::YareParser::token::DEC_CPP, 1, id($1)); 	
-	}
-	| VARIABLE '+''@' {
-		$$ = opr(YL::YareParser::token::INC_CPP, 1, id($1)); 	
-	}
 	| EXPR_NOT expr %prec NEGACION		{ 
 		$$ = opr(YL::YareParser::token::NEGACION, 1, $2); 
 	}
-	| expr EXPR_MAS expr				{ 
+	| expr '+' expr	{ 
 		$$ = opr('+', 2, $1, $3); 
 	}
 	| expr '-' expr						{ 
@@ -608,6 +539,90 @@ expr:
 	| '(' expr ')' 						{
 		$$ = $2;
 	}
+	| RAND '('')' 		{
+		$$ = opr(YL::YareParser::token::RAND, 0);
+	}
+	| POP {
+		$$ = opr(YL::YareParser::token::POP, 0);
+	}
+	| ABS '(' expr ')' {
+		$$ = opr(YL::YareParser::token::ABS, 1, $3);	
+	}
+	| SQRT '(' expr ')' {
+		$$ = opr(YL::YareParser::token::SQRT, 1, $3);	
+	}
+	| ACOS '(' expr ')' {
+		$$ = opr(YL::YareParser::token::ACOS, 1, $3);	
+	}
+	| ASIN '(' expr ')' {
+		$$ = opr(YL::YareParser::token::ASIN, 1, $3);	
+	}
+	| ATAN '(' expr ')' {
+		$$ = opr(YL::YareParser::token::ATAN, 1, $3);	
+	}
+	| CEIL '(' expr ')' {
+		$$ = opr(YL::YareParser::token::CEIL, 1, $3);	
+	}
+	| COS '(' expr ')' {
+		$$ = opr(YL::YareParser::token::COS, 1, $3);	
+	}
+	| COSH '(' expr ')' {
+		$$ = opr(YL::YareParser::token::COSH, 1, $3);	
+	}
+	| EXP '(' expr ')' {
+		$$ = opr(YL::YareParser::token::EXP, 1, $3);	
+	}
+	| FLOOR '(' expr ')' {
+		$$ = opr(YL::YareParser::token::FLOOR, 1, $3);	
+	}
+	| LN '(' expr ')' {
+		$$ = opr(YL::YareParser::token::LN, 1, $3);	
+	}
+	| SIN '(' expr ')' {
+		$$ = opr(YL::YareParser::token::SIN, 1, $3);	
+	}
+	| SINH '(' expr ')' {
+		$$ = opr(YL::YareParser::token::SINH, 1, $3);	
+	}
+	| TAN '(' expr ')' {
+		$$ = opr(YL::YareParser::token::TAN, 1, $3);	
+	}
+	| TANH '(' expr ')' {
+		$$ = opr(YL::YareParser::token::TANH, 1, $3);	
+	}
+	| SUMATORIA '(' expr ',' expr ')' {
+		$$ = opr(YL::YareParser::token::SUMATORIA, 2, $3, $5);	
+	}
+	| FACTORIAL '(' expr ')' {
+		$$ = opr(YL::YareParser::token::FACTORIAL, 1, $3);	
+	}
+	| DEC '(' ID ')' {
+		$$ = opr(YL::YareParser::token::DEC, 1, idS($3));
+	}
+	| DEC '(' VARIABLE ')' {
+		$$ = opr(YL::YareParser::token::DEC, 1, id($3));
+	}
+	| INC '(' ID ')' {
+		$$ = opr(YL::YareParser::token::INC, 1, idS($3));
+	}
+	| INC '(' VARIABLE ')' {
+		$$ = opr(YL::YareParser::token::INC, 1, id($3));
+	}
+	| expr XOROP expr {
+		$$ = opr(YL::YareParser::token::XOROP, 2, $1, $3);
+	}
+	| expr RANGE_RANDOM expr {
+		$$ = opr(YL::YareParser::token::RANGE_RANDOM, 2, $1, $3);
+	}
+	| VARIABLE '@''-' {
+		$$ = opr(YL::YareParser::token::DEC_CPP, 1, id($1)); 	
+	}
+	| VARIABLE '@''+' {
+		$$ = opr(YL::YareParser::token::INC_CPP, 1, id($1)); 	
+	}
+	| expr EXPR_MAS expr				{ 
+		$$ = opr('+', 2, $1, $3); 
+	}
 	| CALL FUNCNAME {
 		$$ = opr(YL::YareParser::token::CALL, 1, idS($2));
 	}
@@ -616,7 +631,8 @@ expr:
 
 // We have to implement the error function
 void YL::YareParser::error(const YL::YareParser::location_type &loc, const std::string &msg) {
-	std::cerr << "Error :'(    -> [" << msg << "]" << std::endl;
+	std::cerr << "Error :'(    -> [" << msg << "]" << lineno << std::endl;
+	
 }
 
 // Now that we have the Parser declared, we can declare the Scanner and implement
@@ -710,10 +726,10 @@ void freeNode(nodeType *p) {
 	if (!p) 
 		return;
 	if (p->type == typeOpr) {
-		for (i = 0; i < p->opr.nops; i++)
+		for (i = 0; i < p->opr.nops; i++) 
 			freeNode(p->opr.op[i]);
 	}
-	free (p);
+	free(p);
 }
 
 // The run method executing the AST nodes:
@@ -741,6 +757,7 @@ long double run(nodeType *p) {
 			if(vars->isDefined(p->id.identificador)) {
 				return vars->getLongValueById(p->id.identificador);
 			} else {
+				cerr << "La variable '" << p->id.identificador << "' no está definida\n";
 				return 0.0L;
 			}
 		
@@ -1449,6 +1466,34 @@ long double run(nodeType *p) {
 						return factorial((long)run(p->opr.op[0]));
 					else
 						return 0.0f;
+
+				////// Código para la pila Virtual:
+				case YL::YareParser::token::PUSH:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						if(pila == NULL) {
+							pila = new Pila();
+							// pila->mostrar();
+							pila->add(run(p->opr.op[0]));
+						} else {
+							pila->add(run(p->opr.op[0]));
+							// pila->mostrar();
+						}
+						return 0.0f;
+					}
+					return 0.0f;
+				case YL::YareParser::token::POP:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						if(pila == NULL) {
+							cout << "Pila vacía 0x1" << endl;
+						} else {
+							if(pila->size() > 0) {
+								return pila->pop();
+							} else {
+								cout << "Pila vacía 0x2" << endl;
+							}
+						}
+					}
+					return 0.0f;
 			}
 			default:
 					break;

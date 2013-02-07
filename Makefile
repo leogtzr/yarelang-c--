@@ -15,7 +15,6 @@ clean:
 	@echo
 	rm -rf yare.tab.c yare.tab.h y.tab.c y.tab.h location.hh position.hh stack.hh
 	rm -rf lex.yy.cc
-	rm -rf waffleshop
 	@echo
 
 help:

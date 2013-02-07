@@ -38,7 +38,7 @@
 /* "%code requires" blocks.  */
 
 /* Line 35 of lalr1.cc  */
-#line 30 "yare.y"
+#line 29 "yare.y"
 
 	namespace YL {
 		class FlexScanner;
@@ -91,7 +91,7 @@ namespace YL {
     {
 
 /* Line 35 of lalr1.cc  */
-#line 85 "yare.y"
+#line 84 "yare.y"
 
 	long double valnum;
 	char cadena[1000];
@@ -188,23 +188,25 @@ namespace YL {
      SINH = 326,
      TAN = 327,
      TANH = 328,
-     IFX = 329,
-     ELSE = 330,
-     OR = 331,
-     AND = 332,
-     SHIFTRIGHT = 333,
-     SHIFTLEFT = 334,
-     ANDBITS = 335,
-     ORBITS = 336,
-     LT = 337,
-     GT = 338,
-     NE = 339,
-     EQ = 340,
-     LE = 341,
-     GE = 342,
-     EXPR_ELEVADO = 343,
-     NEGACION = 344,
-     UMINUS = 345
+     PUSH = 329,
+     POP = 330,
+     IFX = 331,
+     ELSE = 332,
+     OR = 333,
+     AND = 334,
+     SHIFTRIGHT = 335,
+     SHIFTLEFT = 336,
+     ANDBITS = 337,
+     ORBITS = 338,
+     LT = 339,
+     GT = 340,
+     NE = 341,
+     EQ = 342,
+     LE = 343,
+     GE = 344,
+     EXPR_ELEVADO = 345,
+     NEGACION = 346,
+     UMINUS = 347
    };
 
     };
@@ -298,8 +300,8 @@ namespace YL {
     /// Zero means the default is an error.
     static const unsigned char yydefact_[];
 
-    static const signed char yypgoto_[];
-    static const signed char yydefgoto_[];
+    static const short int yypgoto_[];
+    static const short int yydefgoto_[];
 
     /// What to do in a state.
     /// \a yytable_[yypact_[s]]: what to do in state \a s.
@@ -383,7 +385,7 @@ namespace YL {
 } // YL
 
 /* Line 35 of lalr1.cc  */
-#line 387 "yare.tab.h"
+#line 389 "yare.tab.h"
 
 
 

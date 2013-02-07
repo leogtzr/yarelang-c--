@@ -3,8 +3,8 @@
 #define ASTNODE_H_INCLUDED
 
 #include "Variables.h"
+#include "Pila.hh"
 #include "procs.h"
-#include <stack>
 
 typedef enum { 
 	typeCon, 
@@ -27,9 +27,8 @@ typedef struct {
 // identifiers
 typedef struct {
 	nodeEnumType type;		/* type of node */
-	/* La variable i puede ser de cualquier otro tipo, lo ponemos char para
-		ahorrar espacio */
-	char i;				/* subscript to ident array */
+	
+	char i;
 	/* FIXME Por ahora solo identificadores de no menos de 100 id's */
 	char idArray[100];
 	char identificador[100];
@@ -61,6 +60,6 @@ extern double val_temp;
 extern struct gigante *gigantes;
 // Variables definidas por el usuario:
 extern Variables *vars;
-// Pila virtual: 
-extern std::stack<long double> pilaVirtual;
+// Pila virtusal: 
+extern Pila *pila;
 #endif
