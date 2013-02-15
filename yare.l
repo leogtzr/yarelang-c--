@@ -26,8 +26,6 @@
 
 	// Opvar:
 	extern char opVar[4];
-	// Número de línea:
-	extern unsigned int lineno;
 	using std::endl;
 	using std::cout;
 	using std::cerr;
@@ -308,13 +306,29 @@
 	return YL::YareParser::token::EXPR_MAYOR;
 }
 
+[mM][aA][yY][oO][rR][iI][gG][uU][aA][lL] {
+	// "mayorigual"
+	return YL::YareParser::token::EXPR_MAYORIGUAL;
+}
+
+[iI][gG][uU][aA][lL] {
+	return YL::YareParser::token::EXPR_IGUAL;	
+}
+
 [mM][aA][sS] {
 	return YL::YareParser::token::EXPR_MAS;	
 }
 
-[mM][aA][yY][oO][rR][iI][gG][uU][aA][lL] {
-	// "mayorigual"
-	return YL::YareParser::token::EXPR_MAYORIGUAL;
+[mM][eE][nN][oO][sS] {
+	return YL::YareParser::token::EXPR_MENOS;		
+}
+
+[pP][oO][rR] {
+	return YL::YareParser::token::EXPR_MUL;			
+}
+
+[eE][nN][tT][rR][eE] {
+	return YL::YareParser::token::EXPR_DIV;			
 }
 
 [eE][lL][eE][vV][aA][dD][oO] {
@@ -395,6 +409,18 @@
 
 [pP][oO][pP] {
 	return YL::YareParser::token::POP;	
+}
+
+":)"	{
+	return YL::YareParser::token::FACE_HAPPY;
+}
+
+":("	{
+	return YL::YareParser::token::FACE_SAD;
+}
+
+":|"	{
+	return YL::YareParser::token::FACE_NO;
 }
 
 \"([^\\\"]|\\.)*\"  {

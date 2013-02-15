@@ -23,7 +23,6 @@
 	Variables *vars = NULL;
 	Pila *pila = NULL;
 	struct proc *procs = NULL;
-	unsigned int lineno = 0;
 %}
 
 %code requires {
@@ -57,7 +56,6 @@
 	void freeNode(nodeType *);
 	long double run(nodeType *);
 
-	void swap(nodeType *p);
 	unsigned short int getAscii(long long);
 	int i_pila = 0;
 	void ver_pila(short);
@@ -117,6 +115,7 @@
 %token EXPR_MENORIGUAL		// "menorigual"
 %token EXPR_MENOS			// "menos"
 %token EXPR_MUL				// "por"
+%token EXPR_IGUAL           // "igual"
 %token EXPR_NOT				// "not" | "no"
 %token MOD_WORD				// expr "mod" expr
 //////////// Shell expressions operators (-lt) (-gt) ... ////////////////////
@@ -181,6 +180,12 @@
 %token TAN
 %token TANH
 
+///////////// Smileys
+
+%token FACE_HAPPY		// :)
+%token FACE_SAD			// :(
+%token FACE_NO			// :|
+
 /////////// FUNCIONES DE PILA ///////////////////////////////////////////
 %token PUSH
 %token POP
@@ -200,9 +205,9 @@
 
 %left OR
 %left AND
-%left GE LE EQ NE GT LT _LT_ _GT_ ORBITS ANDBITS SHIFTLEFT SHIFTRIGHT
-%left '+' '-'
-%left '*' '/'
+%left GE EXPR_MAYORIGUAL LE EXPR_MENORIGUAL EQ EXPR_IGUAL NE GT EXPR_MAYOR LT EXPR_MENOR _LT_ _GT_ ORBITS ANDBITS SHIFTLEFT SHIFTRIGHT
+%left '+' EXPR_MAS '-' EXPR_MENOS
+%left '*' EXPR_MUL '/' EXPR_DIV
 %left '%' MOD_WORD
 %left '^'
 %left EXPR_ELEVADO			// expr "elevado" expr <-> expr^expr 
@@ -311,6 +316,12 @@ stmt:
 	| expr ';' 	{ 
 		$$ = $1; 
 	}
+	| VARIABLE '=' FACE_HAPPY ';'		{ $$ = opr(YL::YareParser::token::FACE_HAPPY, 1, id($1)); }
+	| VARIABLE '=' FACE_SAD ';'			{ $$ = opr(YL::YareParser::token::FACE_SAD, 1, id($1)); }
+	| VARIABLE '=' FACE_NO ';'			{ $$ = opr(YL::YareParser::token::FACE_NO, 1, id($1)); }
+	| ID '=' FACE_HAPPY ';'		{ $$ = opr(YL::YareParser::token::FACE_HAPPY, 1, idS($1)); }
+	| ID '=' FACE_SAD ';'			{ $$ = opr(YL::YareParser::token::FACE_SAD, 1, idS($1)); }
+	| ID '=' FACE_NO ';'			{ $$ = opr(YL::YareParser::token::FACE_NO, 1, idS($1)); }
 	| PRINTN '(' expr ')'';' {
 		$$ = opr(YL::YareParser::token::PRINTN, 1, $3); 
 	}
@@ -464,6 +475,9 @@ expr:
 	| expr EXPR_MENOS expr				{ 
 		$$ = opr('-', 2, $1, $3); 
 	}
+	| expr EXPR_MAS expr				{ 
+		$$ = opr('+', 2, $1, $3); 
+	}
 	| expr '*' expr						{ 
 		$$ = opr('*', 2, $1, $3); 
 	}
@@ -522,6 +536,9 @@ expr:
 		$$ = opr(YL::YareParser::token::NE, 2, $1, $3); 
 	}
 	| expr EQ expr						{ 
+		$$ = opr(YL::YareParser::token::EQ, 2, $1, $3); 
+	}
+	| expr EXPR_IGUAL expr						{ 
 		$$ = opr(YL::YareParser::token::EQ, 2, $1, $3); 
 	}
 	| expr AND expr						{ 
@@ -620,23 +637,17 @@ expr:
 	| VARIABLE '@''+' {
 		$$ = opr(YL::YareParser::token::INC_CPP, 1, id($1)); 	
 	}
-	| expr EXPR_MAS expr				{ 
-		$$ = opr('+', 2, $1, $3); 
-	}
 	| CALL FUNCNAME {
 		$$ = opr(YL::YareParser::token::CALL, 1, idS($2));
 	}
 	;
 %%
 
-// We have to implement the error function
 void YL::YareParser::error(const YL::YareParser::location_type &loc, const std::string &msg) {
-	std::cerr << "Error :'(    -> [" << msg << "]" << lineno << std::endl;
+	std::cerr << "Error :'(    -> [" << msg << "]" << std::endl;
 	
 }
 
-// Now that we have the Parser declared, we can declare the Scanner and implement
-// the yylex function
 #include "YareScanner.h"
 static int yylex(YL::YareParser::semantic_type * yylval, YL::FlexScanner &scanner) {
 	return scanner.yylex(yylval);
@@ -742,12 +753,6 @@ long double run(nodeType *p) {
 		case typeCon:
 			return p->con.value;
 
-		case typeCadena:
-			/*if((spLoop < 0) || pilaLoop[spLoop]) {
-				printf("%s", p->con.cadena);
-			}*/
-			return 0.0L; //(double)strlen(p->con.cadena);
-
 		case typeId:
 			if((spLoop < 0) || pilaLoop[spLoop]) 
 				return sym[p->id.i];
@@ -760,13 +765,6 @@ long double run(nodeType *p) {
 				cerr << "La variable '" << p->id.identificador << "' no está definida\n";
 				return 0.0L;
 			}
-		
-		/*case typeStrlen:
-			return (double)strlen(p->con.cadena);*/
-
-		case typeSystem:
-			/*if((spLoop < 0) || pilaLoop[spLoop])
-				system(p->con.cadena);*/
 			return 0.0L;
 
 		case typeOpr:
@@ -929,7 +927,6 @@ long double run(nodeType *p) {
 						return 0.0L;
 
 				case '=':
-					// PENDIENTE Verificar que funcione:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return sym[p->opr.op[0]->id.i] = run(p->opr.op[1]);	
 					return 0.0L;
@@ -1095,6 +1092,7 @@ long double run(nodeType *p) {
 						}
 					}
 					return 0.0L;
+
 				case YL::YareParser::token::OP_ASIGN_ABR_MUL:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
@@ -1269,6 +1267,7 @@ long double run(nodeType *p) {
 							}
 						}
 					}
+
 				case YL::YareParser::token::UMINUS:
 					if((spLoop < 0) || pilaLoop[spLoop])
 						return -run(p->opr.op[0]);
@@ -1436,31 +1435,37 @@ long double run(nodeType *p) {
 						return log(run(p->opr.op[0]));
 					} else
 						return 0.0f;
+
 				case YL::YareParser::token::SIN:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return sin(run(p->opr.op[0]));
 					else
 						return 0.0f;
+
 				case YL::YareParser::token::SINH:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return sinh(run(p->opr.op[0]));
 					else
 						return 0.0f;
+
 				case YL::YareParser::token::TAN:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return tan(run(p->opr.op[0]));
 					else
 						return 0.0f;
+
 				case YL::YareParser::token::TANH:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return tanh(run(p->opr.op[0]));
 					else
 						return 0.0f;
+
 				case YL::YareParser::token::SUMATORIA:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return sumatoria((short)run(p->opr.op[0]), (short)run(p->opr.op[1]));
 					else
 						return 0.0f;
+
 				case YL::YareParser::token::FACTORIAL:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return factorial((long)run(p->opr.op[0]));
@@ -1481,6 +1486,7 @@ long double run(nodeType *p) {
 						return 0.0f;
 					}
 					return 0.0f;
+
 				case YL::YareParser::token::POP:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(pila == NULL) {
@@ -1494,16 +1500,59 @@ long double run(nodeType *p) {
 						}
 					}
 					return 0.0f;
+				case YL::YareParser::token::FACE_HAPPY:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						if(p->opr.op[0]->type == typeId) {
+							return sym[p->opr.op[0]->id.i] = 1.0f;
+						} else if(p->opr.op[0]->type == typeVar) {
+							if(vars == NULL) {
+								cerr << "La variable '" << p->opr.op[0]->id.identificador << "' no se encuentra declarada.\n";
+								exit(EXIT_FAILURE);
+							} else {
+								if(vars->isDefined(p->opr.op[0]->id.identificador)) {
+									vars->getVarByIndex(vars->getIndex(p->opr.op[0]->id.identificador)).setLongValue(1.0f);
+								}
+							}
+						}
+					}
+					return 0.0f;
+
+				case YL::YareParser::token::FACE_SAD:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						if(p->opr.op[0]->type == typeId) {
+							return sym[p->opr.op[0]->id.i] = -1.0f;
+						} else if(p->opr.op[0]->type == typeVar) {
+							if(vars == NULL) {
+								cerr << "La variable '" << p->opr.op[0]->id.identificador << "' no se encuentra declarada.\n";
+								exit(EXIT_FAILURE);
+							} else {
+								if(vars->isDefined(p->opr.op[0]->id.identificador)) {
+									vars->getVarByIndex(vars->getIndex(p->opr.op[0]->id.identificador)).setLongValue(-1.0f);
+								}
+							}
+						}
+					}
+					return 0.0f;
+
+				case YL::YareParser::token::FACE_NO:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						if(p->opr.op[0]->type == typeId) {
+							return sym[p->opr.op[0]->id.i] = 0.0f;
+						} else if(p->opr.op[0]->type == typeVar) {
+							if(vars == NULL) {
+								cerr << "La variable '" << p->opr.op[0]->id.identificador << "' no se encuentra declarada.\n";
+								exit(EXIT_FAILURE);
+							} else {
+								if(vars->isDefined(p->opr.op[0]->id.identificador)) {
+									vars->getVarByIndex(vars->getIndex(p->opr.op[0]->id.identificador)).setLongValue(0.0f);
+								}
+							}
+						}
+					}
+					return 0.0f;
 			}
 			default:
 					break;
 	}
 	return 0.0f;
 }
-
-void swap(nodeType *p) {
-	int temp = sym[p->opr.op[0]->id.i];
-	sym[p->opr.op[0]->id.i] = sym[p->opr.op[1]->id.i];
-	sym[p->opr.op[1]->id.i] = temp;
-}
-	

@@ -1,4 +1,5 @@
 // Leo Gutiérrez Ramírez, leorocko13@hotmail.com
+
 #ifndef ASTNODE_H_INCLUDED
 #define ASTNODE_H_INCLUDED
 
@@ -10,17 +11,16 @@ typedef enum {
 	typeCon, 
 	typeId,			// Variable virtual a...z 
 	typeVar, 		// Variable definida por el usuario :id: 
-	typeArray,			/* Tipo arreglo */
+	typeArray,		// Tipo arreglo
 	typeOpr, 
 	typeCadena,
-	typeCall,
-	typeSystem 			/* system("command"); */
+	typeCall
 } nodeEnumType;
 
 // constants
 typedef struct {
 	nodeEnumType type;		/* type of node */
-	double value;			/* value of constant */
+	long double value;			/* value of constant */
 	char cadena[1000];			/* value of constat string */
 } conNodeType;
 
