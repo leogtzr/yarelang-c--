@@ -141,6 +141,10 @@
 	return YL::YareParser::token::WHILE;
 }
 
+[dD][oO] {
+	return YL::YareParser::token::DO;	
+}
+
 [iI][fF] {
 	return YL::YareParser::token::IF;
 }

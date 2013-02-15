@@ -1,4 +1,3 @@
-:x: = 0;
-:x: = :(;
-printn(:x:);
+x = 0;
+do printn(x@+); while(x <= 10);
 .

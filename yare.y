@@ -99,6 +99,8 @@
 /********************** Sentences *********************************/
 // Control structures and more:
 %token WHILE	// @todo while|mientras
+%token DO_WHILE	// do stmt while();
+%token DO 		// token DO para el ciclo while
 %token BREAK	// "break";
 %token IF		// "si" | "if"
 ///////////////////////////// Simple sentences: //////////////////
@@ -339,6 +341,9 @@ stmt:
 	}
 	| WHILE	'(' expr ')' stmt	{ 
 		$$ = opr(YL::YareParser::token::WHILE, 2, $3, $5); 
+	}
+	| DO stmt WHILE '(' expr ')'';' {
+		$$ = opr(YL::YareParser::token::DO_WHILE, 2, $2, $5);
 	}
 	| BREAK ';' 			{
 		$$ = opr(YL::YareParser::token::BREAK, 0);
@@ -1549,6 +1554,23 @@ long double run(nodeType *p) {
 							}
 						}
 					}
+				case YL::YareParser::token::DO_WHILE:
+					spLoop++;
+					pilaLoop[spLoop] = 1;
+
+					if(spLoop == 0) {
+						 while(run(p->opr.op[1]) && pilaLoop[spLoop]) {
+							run(p->opr.op[0]);
+						}
+					} else if(spLoop > 0) {
+						while((pilaLoop[spLoop - 1] && pilaLoop[spLoop]) && run(p->opr.op[1])) {
+							run(p->opr.op[0]);
+						}
+					}
+					pilaLoop[spLoop] = 0;
+					spLoop--;
+					return 0.0f;
+
 					return 0.0f;
 			}
 			default:
