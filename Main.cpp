@@ -9,9 +9,21 @@ using std::cerr;
 using std::endl;
 using YL::Parser;
 
-int main(void) {
-	srand((unsigned)time(NULL));	
-	Parser parser;
-	return parser.parse();
+int main(int argc, char **argv) {
+	
+	if(argc <= 1) {
+		
+		srand((unsigned)time(NULL));		
+		Parser parser;
+		return parser.parse_interact();
+
+	} else {
+
+		srand((unsigned)time(NULL));		
+		Parser parser(argv[1]);
+		return parser.parse();
+
+	}
+
 }
 

@@ -157,6 +157,10 @@
 	return YL::YareParser::token::BREAK;
 }
 
+[rR][eE][aA][dD] {
+	return YL::YareParser::token::READ;	
+}
+
 [rR][aA][nN][dD] {
 	return YL::YareParser::token::RAND;
 }
@@ -535,3 +539,5 @@
 .		{ cout << "Caracter desconocido: '" << yytext << '\'' << endl; }
 
 %%
+
+int yywrap( void ) { return 1; }

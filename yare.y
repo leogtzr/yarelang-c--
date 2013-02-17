@@ -17,6 +17,25 @@
 	#include "mymath.h"
 	#include "Pila.hh"
 	#include <cmath>
+	#include <sstream>
+	#include <cstdio>
+	#include <fstream>
+
+	FILE *yyin;
+
+#define YY_INPUT(buf, result, max_size)           \
+  do {                                            \
+    val c = nil;                                  \
+    size_t n;                                     \
+    int ch = '*';                                 \
+    for (n = 0; n < max_size &&                   \
+                (c = get_byte(yyin_stream)) &&    \
+                (ch = c_num(c)) != '\n'; ++n)     \
+      buf[n] = (char) ch;                         \
+    if (ch == '\n')                               \
+      buf[n++] = (char) ch;                       \
+    result = n;                                   \
+  } while (0)
 	
 	// The symbol table:
 	long double sym[26];
@@ -35,6 +54,7 @@
 	using std::endl;
 	using std::cout;
 	using std::cerr;
+	using std::cin;
 
 	static int yylex(YL::YareParser::semantic_type * yylval, YL::FlexScanner &scanner);
 	
@@ -55,6 +75,8 @@
 
 	void freeNode(nodeType *);
 	long double run(nodeType *);
+
+	long double validateInput(char *, bool &);
 
 	unsigned short int getAscii(long long);
 	int i_pila = 0;
@@ -77,6 +99,12 @@
 	long double inferior;
 	long double superior;
 	long double _dec_inc_return;
+
+	long double check(char *s, char **end) {
+	    long double temp = strtold(s, end);
+	    return temp;
+	}
+	
 }
 
 %union {
@@ -103,6 +131,7 @@
 %token DO 		// token DO para el ciclo while
 %token BREAK	// "break";
 %token IF		// "si" | "if"
+%token READ
 ///////////////////////////// Simple sentences: //////////////////
 %token PRINTN 		// @todo printn(expr), prints out the expression with new line
 %token PRINT		// Without new line
@@ -560,6 +589,9 @@ expr:
 	}
 	| '(' expr ')' 						{
 		$$ = $2;
+	}
+	| READ '('')' {
+		$$ = opr(YL::YareParser::token::READ, 0);
 	}
 	| RAND '('')' 		{
 		$$ = opr(YL::YareParser::token::RAND, 0);
@@ -1571,10 +1603,48 @@ long double run(nodeType *p) {
 					spLoop--;
 					return 0.0f;
 
+				case YL::YareParser::token::READ:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						
+						char _temp[100];
+						char *_end;
+						unsigned short _index = 0;
+						unsigned char _c;
+						// SHIT
+						long double _resultado;
+						
+						while((_c = getchar()) != '\n') 
+							_temp[_index++] = _c;
+						
+						_temp[_index] = '\0';
+	
+						_resultado = check(_temp, &_end);
+						if(*_end != '\0') {
+							return -1.0f;//(sym[p->opr.op[0]->id.i] = -1);
+						} else {
+							return _resultado; //(sym[p->opr.op[0]->id.i] = _resultado);
+						}
+					}
+					
 					return 0.0f;
 			}
 			default:
 					break;
 	}
 	return 0.0f;
+}
+
+long double validateInput(char *s, bool &result) {
+    std::istringstream test(s);
+
+    long double value;
+    std::string rest;
+
+    if (!(test >> value) || (test >> rest)) {
+        result = false;
+        return 0.0f;
+    } else {
+        result = true;
+        return value;
+    }
 }

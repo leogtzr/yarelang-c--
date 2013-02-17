@@ -1,1 +1,3 @@
-do printn(x@+); while(x <= 10);.
+x = read();
+printn(x);
+.
