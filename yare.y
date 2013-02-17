@@ -132,6 +132,7 @@
 %token BREAK	// "break";
 %token IF		// "si" | "if"
 %token READ
+%token READP 	// read("holix");
 ///////////////////////////// Simple sentences: //////////////////
 %token PRINTN 		// @todo printn(expr), prints out the expression with new line
 %token PRINT		// Without new line
@@ -592,6 +593,9 @@ expr:
 	}
 	| READ '('')' {
 		$$ = opr(YL::YareParser::token::READ, 0);
+	}
+	| READP '(' CADENA ')' {
+		$$ = opr(YL::YareParser::token::READP, 1, conStr($3, typeCadena));
 	}
 	| RAND '('')' 		{
 		$$ = opr(YL::YareParser::token::RAND, 0);
@@ -1623,6 +1627,31 @@ long double run(nodeType *p) {
 							return -1.0f;//(sym[p->opr.op[0]->id.i] = -1);
 						} else {
 							return _resultado; //(sym[p->opr.op[0]->id.i] = _resultado);
+						}
+					}
+				case YL::YareParser::token::READP:
+					
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						
+						cout << p->opr.op[0]->con.cadena;
+
+						char _temp[100];
+						char *_end;
+						unsigned short _index = 0;
+						unsigned char _c;
+						// SHIT
+						long double _resultado;
+						
+						while((_c = getchar()) != '\n') 
+							_temp[_index++] = _c;
+						
+						_temp[_index] = '\0';
+	
+						_resultado = check(_temp, &_end);
+						if(*_end != '\0') {
+							return -1.0f;
+						} else {
+							return _resultado;
 						}
 					}
 					
