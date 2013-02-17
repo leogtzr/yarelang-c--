@@ -20,6 +20,7 @@
 	#include <sstream>
 	#include <cstdio>
 	#include <fstream>
+	#include <cstdlib>
 
 	// The symbol table:
 	long double sym[26];
@@ -115,6 +116,7 @@
 %token DO_WHILE	// do stmt while();
 %token FOREACH	// FOREACH
 %token ELIPSIS
+%token SYSTEM
 %token DO 		// token DO para el ciclo while
 %token BREAK	// "break";
 %token IF		// "si" | "if"
@@ -593,6 +595,9 @@ expr:
 	}
 	| READP '(' CADENA ')' {
 		$$ = opr(YL::YareParser::token::READP, 1, conStr($3, typeCadena));
+	}
+	| SYSTEM '(' CADENA ')' {
+		$$ = opr(YL::YareParser::token::SYSTEM, 1, conStr($3, typeCadena));	
 	}
 	| RAND '('')' 		{
 		$$ = opr(YL::YareParser::token::RAND, 0);
@@ -1653,6 +1658,7 @@ long double run(nodeType *p) {
 						}
 					}
 					return 0.0f;
+
 				case YL::YareParser::token::PRASCII:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						std::cout << (char)getAscii(run(p->opr.op[0]));
@@ -1680,7 +1686,12 @@ long double run(nodeType *p) {
 						}
 						pilaLoop[spLoop] = 0;
 						spLoop--;
+					return 0.0f;
 
+				case YL::YareParser::token::SYSTEM:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						int ____x = system(p->opr.op[0]->con.cadena);
+					}
 					return 0.0f;
 			}
 			default:

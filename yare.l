@@ -173,6 +173,10 @@
 	return YL::YareParser::token::ELIPSIS;
 }
 
+[sS][yY][sS][tT][eE][mM] {
+	return YL::YareParser::token::SYSTEM;	
+}
+
 [iI][fF] {
 	return YL::YareParser::token::IF;
 }
