@@ -116,7 +116,8 @@
 %token DO_WHILE	// do stmt while();
 %token FOREACH	// FOREACH
 %token ELIPSIS
-%token SYSTEM
+%token SYSTEM 	// system("cadena");
+%token EXIT
 %token DO 		// token DO para el ciclo while
 %token BREAK	// "break";
 %token IF		// "si" | "if"
@@ -377,6 +378,12 @@ stmt:
 	| BREAK ';' 			{
 		$$ = opr(YL::YareParser::token::BREAK, 0);
 	}
+	| SYSTEM '(' CADENA ')'';' {
+		$$ = opr(YL::YareParser::token::SYSTEM, 1, conStr($3, typeCadena));	
+	}
+	| EXIT '(' expr ')'';' {
+		$$ = opr(YL::YareParser::token::EXIT, 1, $3);		
+	}
 	| IF '(' expr ')'	stmt %prec	IFX		{ 
 		$$ = opr(YL::YareParser::token::IF, 2, $3, $5); 
 	}
@@ -595,9 +602,6 @@ expr:
 	}
 	| READP '(' CADENA ')' {
 		$$ = opr(YL::YareParser::token::READP, 1, conStr($3, typeCadena));
-	}
-	| SYSTEM '(' CADENA ')' {
-		$$ = opr(YL::YareParser::token::SYSTEM, 1, conStr($3, typeCadena));	
 	}
 	| RAND '('')' 		{
 		$$ = opr(YL::YareParser::token::RAND, 0);
@@ -1626,9 +1630,9 @@ long double run(nodeType *p) {
 	
 						_resultado = check(_temp, &_end);
 						if(*_end != '\0') {
-							return -1.0f;//(sym[p->opr.op[0]->id.i] = -1);
+							return -1.0f;
 						} else {
-							return _resultado; //(sym[p->opr.op[0]->id.i] = _resultado);
+							return _resultado;
 						}
 					}
 
@@ -1691,6 +1695,22 @@ long double run(nodeType *p) {
 				case YL::YareParser::token::SYSTEM:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						int ____x = system(p->opr.op[0]->con.cadena);
+					}
+					return 0.0f;
+
+				case YL::YareParser::token::EXIT:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+
+						if(vars != NULL) {
+							delete(vars);
+						}
+						if(pila != NULL) {
+							delete(pila);
+						}
+
+						_exit_return_ = run(p->opr.op[0]);
+						freeNode(p);
+						exit(_exit_return_);
 					}
 					return 0.0f;
 			}

@@ -177,6 +177,10 @@
 	return YL::YareParser::token::SYSTEM;	
 }
 
+[eE][xX][iI][tT] {
+	return YL::YareParser::token::EXIT;		
+}
+
 [iI][fF] {
 	return YL::YareParser::token::IF;
 }

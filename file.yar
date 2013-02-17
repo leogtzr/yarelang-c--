@@ -1,3 +1,4 @@
-system("touch hello_world.txt");
-
+puts("Hola");
+exit(23);
+puts("jijij");
 .
