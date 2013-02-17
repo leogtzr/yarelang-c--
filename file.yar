@@ -1,4 +1,4 @@
-while(x <= 144b) {
+while x <= 144o {
 	printn(x@+);
 }
 

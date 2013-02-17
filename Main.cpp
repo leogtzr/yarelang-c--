@@ -12,7 +12,7 @@ using YL::Parser;
 int main(int argc, char **argv) {
 	
 	if(argc <= 1) {
-		
+
 		srand((unsigned)time(NULL));		
 		Parser parser;
 		return parser.parse_interact();
@@ -20,8 +20,15 @@ int main(int argc, char **argv) {
 	} else {
 
 		srand((unsigned)time(NULL));		
-		Parser parser(argv[1]);
-		return parser.parse();
+
+		std::string fn(argv[1]);
+  		if(fn.substr(fn.find_last_of(".") + 1) == "yar") {
+    		Parser parser(argv[1]);
+			return parser.parse();
+  		} else {
+    		std::cout << "El archivo de código fuente debe poseer la extensión '.yar'" << std::endl;
+    		exit(EXIT_FAILURE);
+  		}	
 
 	}
 

@@ -21,22 +21,6 @@
 	#include <cstdio>
 	#include <fstream>
 
-	FILE *yyin;
-
-#define YY_INPUT(buf, result, max_size)           \
-  do {                                            \
-    val c = nil;                                  \
-    size_t n;                                     \
-    int ch = '*';                                 \
-    for (n = 0; n < max_size &&                   \
-                (c = get_byte(yyin_stream)) &&    \
-                (ch = c_num(c)) != '\n'; ++n)     \
-      buf[n] = (char) ch;                         \
-    if (ch == '\n')                               \
-      buf[n++] = (char) ch;                       \
-    result = n;                                   \
-  } while (0)
-	
 	// The symbol table:
 	long double sym[26];
 	Variables *vars = NULL;
@@ -376,6 +360,9 @@ stmt:
 	}
 	| WHILE	'(' expr ')' stmt	{ 
 		$$ = opr(YL::YareParser::token::WHILE, 2, $3, $5); 
+	}
+	| WHILE expr stmt	{ 
+		$$ = opr(YL::YareParser::token::WHILE, 2, $2, $3); 
 	}
 	| DO stmt WHILE '(' expr ')'';' {
 		$$ = opr(YL::YareParser::token::DO_WHILE, 2, $2, $5);
