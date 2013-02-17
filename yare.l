@@ -9,6 +9,8 @@
 	#include <iostream>
 	#include <cstdio>
 	#include <cstring>
+	#include <bitset>
+	#include <limits>
 
 	void append_char(char *s, char c) {
     	unsigned int length = strlen(s);
@@ -41,6 +43,16 @@
 
 [0-9]+([.][0-9]+)? 	{
 	lexema->valnum = strtold(yytext, NULL);
+	return YL::YareParser::token::NUMERIC;
+}
+
+[0|1]+[bB] {
+	
+	yytext[strlen(yytext) - 1] = '\0';
+	std::string _str(yytext);
+	unsigned long long _binary = std::bitset<std::numeric_limits<unsigned long long>::digits>(_str).to_ulong();
+	lexema->valnum = _binary;
+
 	return YL::YareParser::token::NUMERIC;
 }
 
