@@ -165,6 +165,14 @@
 	return YL::YareParser::token::DO;	
 }
 
+[fF][oO][rR][eE][aA][cC][hH] {
+	return YL::YareParser::token::FOREACH;		
+}
+
+[\.][\.][\.]([\.]+)?	{
+	return YL::YareParser::token::ELIPSIS;
+}
+
 [iI][fF] {
 	return YL::YareParser::token::IF;
 }

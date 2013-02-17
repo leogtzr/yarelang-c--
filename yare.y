@@ -113,6 +113,8 @@
 // Control structures and more:
 %token WHILE	// @todo while|mientras
 %token DO_WHILE	// do stmt while();
+%token FOREACH	// FOREACH
+%token ELIPSIS
 %token DO 		// token DO para el ciclo while
 %token BREAK	// "break";
 %token IF		// "si" | "if"
@@ -366,6 +368,9 @@ stmt:
 	}
 	| DO stmt WHILE '(' expr ')'';' {
 		$$ = opr(YL::YareParser::token::DO_WHILE, 2, $2, $5);
+	}
+	| FOREACH '(' expr ELIPSIS expr ',' VARIABLE ')' stmt {
+		$$ = opr(YL::YareParser::token::FOREACH, 4, $3, $5, id($7), $9);
 	}
 	| BREAK ';' 			{
 		$$ = opr(YL::YareParser::token::BREAK, 0);
@@ -1652,6 +1657,30 @@ long double run(nodeType *p) {
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						std::cout << (char)getAscii(run(p->opr.op[0]));
 					}
+					return 0.0f;
+
+				case YL::YareParser::token::FOREACH:
+					std::cout << "Entra aquí ... " << std::endl;
+					spLoop++;
+					pilaLoop[spLoop] = 1;
+
+
+					if(spLoop == 0) {
+							for(sym[p->opr.op[2]->id.i] = run(p->opr.op[0]);
+								(sym[p->opr.op[2]->id.i] <= run(p->opr.op[1]));
+								sym[p->opr.op[2]->id.i]++) {
+									run(p->opr.op[3]);
+							}
+						} else if(spLoop > 0) {
+							for(sym[p->opr.op[2]->id.i] = run(p->opr.op[0]);
+								(pilaLoop[spLoop - 1] && pilaLoop[spLoop]) && (sym[p->opr.op[2]->id.i] <= run(p->opr.op[1]));
+								sym[p->opr.op[2]->id.i]++) {
+									run(p->opr.op[3]);
+							}
+						}
+						pilaLoop[spLoop] = 0;
+						spLoop--;
+
 					return 0.0f;
 			}
 			default:

@@ -1,5 +1,6 @@
-while x <= 144o {
-	printn(x@+);
+foreach(2 ..... 20, x) {
+	printn(x);
+	break;
 }
 
 .

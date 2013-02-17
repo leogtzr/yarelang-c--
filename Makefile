@@ -1,13 +1,12 @@
 all:
-	bison -d yare.y 
-	flex yare.l 
-	g++ lex.yy.cc yare.tab.c Main.cpp -o yare -lm -O3
+	@bison -d yare.y &> /dev/null 
+	@flex yare.l 
+	@g++ lex.yy.cc yare.tab.c Main.cpp -o yare -lm -O3
 	@echo 
 	@echo ---------------------------------------------
 	@echo "| Ok ...... ...				    |"
 	@echo ---------------------------------------------
 	@echo
-	@echo "\a"
 	
 clean:
 	@echo
@@ -18,4 +17,4 @@ clean:
 	@echo
 
 help:
-	@echo "yare < file.yar"
+	@echo "yare file.yar"

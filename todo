@@ -1,0 +1,11 @@
+- Sentencia foreach de la forma:
+	foreach(1 ... expr final, var) {
+	}
+- Ver como crear una manpage para yare
+- Crear una mejor -v o -version
+- Función exit
+- Función system
+- Ir pensando en la notación de los arrays
+- Bases personalizadas
+- Función write
+- Actualizar features

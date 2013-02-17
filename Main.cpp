@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
 
 		std::string okStr(argv[1]);
 		if(okStr.compare("-v") == 0 || okStr.compare("-version") == 0) {
-			cout << "yare v1.0\n\nautor: Leonardo Gutiérrez R <leorocko13@hotmail.com>\n\n";
+			cout << "yare v1.0\n\nautor: Leonardo Gutiérrez R <leorocko13@hotmail.com> (2013)\n\n";
 			exit(EXIT_SUCCESS);
 		}
 
