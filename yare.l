@@ -56,6 +56,14 @@
 	return YL::YareParser::token::NUMERIC;
 }
 
+[0-7]+[oO] {
+	yytext[strlen(yytext) - 1] = '\0';
+	char *end;
+	unsigned long _octal = strtoul(yytext, &end, 8);
+	lexema->valnum = _octal;
+	return YL::YareParser::token::NUMERIC;
+}
+
 [a-zA-Z] 				{
 						// TODO Revisar esto con calma
 	if(isupper(*yytext))
