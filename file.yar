@@ -1,4 +1,6 @@
-x = readp("Ingresa un número: ");
-puts("Ingresaste: ");
-printn(x);
+x = 32;
+while(x <= 128) {
+	prascii(x);
+	x = x + 1;
+}
 .

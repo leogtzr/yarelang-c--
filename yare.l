@@ -165,6 +165,10 @@
 	return YL::YareParser::token::READP;	
 }
 
+[Pp][rR][aA][sS][cC][iI][iI] {
+	return YL::YareParser::token::PRASCII;
+}
+
 [rR][aA][nN][dD] {
 	return YL::YareParser::token::RAND;
 }

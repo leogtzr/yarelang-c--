@@ -57,6 +57,7 @@
 	using std::cin;
 
 	static int yylex(YL::YareParser::semantic_type * yylval, YL::FlexScanner &scanner);
+	unsigned short int getAscii(long long);
 	
 	// Node Constants:
 	nodeTypeTag *con(long double);
@@ -133,6 +134,7 @@
 %token IF		// "si" | "if"
 %token READ
 %token READP 	// read("holix");
+%token PRASCII 	// prascii("holix");
 ///////////////////////////// Simple sentences: //////////////////
 %token PRINTN 		// @todo printn(expr), prints out the expression with new line
 %token PRINT		// Without new line
@@ -356,6 +358,9 @@ stmt:
 	| ID '=' FACE_NO ';'			{ $$ = opr(YL::YareParser::token::FACE_NO, 1, idS($1)); }
 	| PRINTN '(' expr ')'';' {
 		$$ = opr(YL::YareParser::token::PRINTN, 1, $3); 
+	}
+	| PRASCII '(' expr ')' ';' {
+		$$ = opr(YL::YareParser::token::PRASCII, 1, $3);
 	}
 	| PRINT '(' expr ')'';' {
 		$$ = opr(YL::YareParser::token::PRINT, 1, $3); 
@@ -1629,6 +1634,7 @@ long double run(nodeType *p) {
 							return _resultado; //(sym[p->opr.op[0]->id.i] = _resultado);
 						}
 					}
+
 				case YL::YareParser::token::READP:
 					
 					if((spLoop < 0) || pilaLoop[spLoop]) {
@@ -1654,7 +1660,11 @@ long double run(nodeType *p) {
 							return _resultado;
 						}
 					}
-					
+					return 0.0f;
+				case YL::YareParser::token::PRASCII:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						std::cout << (char)getAscii(run(p->opr.op[0]));
+					}
 					return 0.0f;
 			}
 			default:
@@ -1676,4 +1686,12 @@ long double validateInput(char *s, bool &result) {
         result = true;
         return value;
     }
+}
+
+unsigned short int getAscii(long long valor) {
+	/* PENDIENTE Ponerlo en forma sexy: */
+	if((valor >= 0) && (valor <= 255))
+		return valor;
+	else
+		return (valor % 255);
 }
