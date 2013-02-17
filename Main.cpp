@@ -19,6 +19,12 @@ int main(int argc, char **argv) {
 
 	} else {
 
+		std::string okStr(argv[1]);
+		if(okStr.compare("-v") == 0 || okStr.compare("-version") == 0) {
+			cout << "yare v1.0\n\nautor: Leonardo Gutiérrez R <leorocko13@hotmail.com>\n\n";
+			exit(EXIT_SUCCESS);
+		}
+
 		srand((unsigned)time(NULL));		
 
 		std::string fn(argv[1]);
