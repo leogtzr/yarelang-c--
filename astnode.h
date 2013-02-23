@@ -4,6 +4,7 @@
 #define ASTNODE_H_INCLUDED
 
 #include "Variables.h"
+#include "Arrays.h"
 #include "Pila.hh"
 #include "procs.h"
 
@@ -62,4 +63,7 @@ extern struct gigante *gigantes;
 extern Variables *vars;
 // Pila virtusal: 
 extern Pila *pila;
+// Arrays:
+extern Arrays *arrays;
+
 #endif

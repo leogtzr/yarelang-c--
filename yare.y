@@ -27,6 +27,7 @@
 	Variables *vars = NULL;
 	Pila *pila = NULL;
 	struct proc *procs = NULL;
+	Arrays *arrays = NULL;
 %}
 
 %code requires {
@@ -58,6 +59,9 @@
 
 	// Node User defined variables:	
 	nodeType *idS(char *s);
+
+	// Node User defined arrays:
+	nodeType *idA(char *arrayStr);
 
 	void freeNode(nodeType *);
 	long double run(nodeType *);
@@ -109,6 +113,10 @@
 %token VARIABLE
 %token CADENA
 %token ID		// :id:
+%token ARRAY_ID
+
+/// Arrays tokens:
+%token ARRAY_C			// array_c(id_array);
 
 /********************** Sentences *********************************/
 // Control structures and more:
@@ -220,6 +228,7 @@
 %type <nPtr> stmt_list
 %type <sIndex> VARIABLE
 %type <identificador> ID
+%type <identificador> ARRAY_ID
 %type <cadena> CADENA
 %type <nameFunction> FUNCNAME
 
@@ -245,6 +254,9 @@ program:
 	}
 	if(pila != NULL) {
 		delete(pila);
+	}
+	if(arrays != NULL) {
+		delete(arrays);
 	}
 	exit(EXIT_SUCCESS);
 }
@@ -464,6 +476,10 @@ stmt:
 	}
 	| PUSH expr {
 		$$ = opr(YL::YareParser::token::PUSH, 1, $2);	
+	}
+	| ARRAY_C '(' ARRAY_ID ')' ';' {
+		// std::cout << "Aqui ... " << std::endl;
+		$$ = opr(YL::YareParser::token::ARRAY_C, 1, idA($3));
 	}
 	| {;}
 	;
@@ -772,6 +788,22 @@ nodeType *idS(char *s) {
 	p->type = typeVar;
 	/* Copiar el id: */
 	strcpy(p->id.identificador, s);
+	return p;
+}
+
+nodeType *idA(char *arrayStr) {
+	nodeType *p;
+
+	/* allocate node */
+	if ((p = (nodeTypeTag *)malloc(sizeof(idNodeType))) == NULL) {
+		cerr << "Memoria insuficiente para este programa." << endl;
+		exit(EXIT_FAILURE);
+	}
+	// copy information:
+	p->type = typeArray;
+	// Copiar el id:
+	strcpy(p->id.identificador, arrayStr);
+
 	return p;
 }
 
@@ -1713,6 +1745,36 @@ long double run(nodeType *p) {
 						exit(_exit_return_);
 					}
 					return 0.0f;
+				case YL::YareParser::token::ARRAY_C:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						// std::cout << "Crear este identificador: '" << p->opr.op[0]->id.identificador << "'" << std::endl;
+
+						if(arrays == NULL) {
+							// Crear el objeto de arrays
+							arrays = new Arrays();
+
+							if(arrays->isDefined(p->opr.op[0]->id.identificador)) {
+								cout << "El array '" << p->opr.op[0]->id.identificador << "' ya está declarado" << endl;
+							} else {
+								arrays->add(*(new Array(p->opr.op[0]->id.identificador, 0.0f)));
+							}
+							
+							// arrays->mostrar();
+							return 0.0f;
+						} else {
+
+							if(arrays->isDefined(p->opr.op[0]->id.identificador)) {
+								cout << "El array '" << p->opr.op[0]->id.identificador << "' ya está declarado" << endl;
+							} else {
+								arrays->add(*(new Array(p->opr.op[0]->id.identificador, 0.0f)));
+							}
+
+							// arrays->mostrar();
+							return 0.0L;
+						}
+
+					}
+					return 0.0f;					
 			}
 			default:
 					break;

@@ -29,6 +29,11 @@ class Array {
             this->id = id;
         }
 
+        Array(string id, double x) {
+            this->id = id;
+            lista.push_back(x);
+        }
+
         ~Array(void) {
             // limpiar la lista:
             if(!lista.empty())

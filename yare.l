@@ -56,6 +56,7 @@
 	return YL::YareParser::token::NUMERIC;
 }
 
+
 [0-7]+[oO] {
 	yytext[strlen(yytext) - 1] = '\0';
 	char *end;
@@ -71,6 +72,22 @@
 	else
 		lexema->sIndex = *yytext - 'a';
 	return YL::YareParser::token::VARIABLE;
+}
+
+@[a-zA-Z0-9"':\t #]+ {
+
+	// std::cout << "Array detected" << yytext << std::endl;
+
+	strcpy(lexema->identificador, yytext);
+	for(unsigned _i_ = 0; _i_ < strlen(lexema->identificador); _i_++)
+		if(isalpha(lexema->identificador[_i_]) && isupper(lexema->identificador[_i_]))
+			lexema->identificador[_i_] = tolower(lexema->identificador[_i_]);
+	return YL::YareParser::token::ARRAY_ID;
+	;
+}
+
+[aA][rR][rR][aA][yY] {
+	return YL::YareParser::token::ARRAY_C;
 }
 
 :["'0-9 _#@a-zA-Z\t\+\-\.\^\|\(\)\\/]+: 	{
