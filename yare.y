@@ -63,6 +63,9 @@
 	// Node User defined arrays:
 	nodeType *idA(char *arrayStr);
 
+	// Node User defined arrays with Index:
+	nodeType *idA_Index(char *arrayStr, nodeTypeTag *node);
+
 	void freeNode(nodeType *);
 	long double run(nodeType *);
 
@@ -114,6 +117,11 @@
 %token CADENA
 %token ID		// :id:
 %token ARRAY_ID
+%token ARRAY_ASSIGN			// @id
+%token ARRAY_ADD_ELEMENT 	// @a.add(expr)
+%token ARRAY_PUT			// @a.put(expr);
+%token ARRAY_SIZE			// @a.size();
+%token ARRAY_SHIT			// @a.size();
 
 /// Arrays tokens:
 %token ARRAY_C			// array_c(id_array);
@@ -477,9 +485,14 @@ stmt:
 	| PUSH expr {
 		$$ = opr(YL::YareParser::token::PUSH, 1, $2);	
 	}
+	| ARRAY_ID '[' expr ']' '=' expr ';' {
+		$$ = opr(YL::YareParser::token::ARRAY_ASSIGN, 3, idA($1), $3, $6);
+	}
 	| ARRAY_C '(' ARRAY_ID ')' ';' {
-		// std::cout << "Aqui ... " << std::endl;
 		$$ = opr(YL::YareParser::token::ARRAY_C, 1, idA($3));
+	}
+	| ARRAY_ID '.' ARRAY_PUT '(' expr ')' ';' {
+		$$ = opr(YL::YareParser::token::ARRAY_PUT, 2, idA($1), $5);
 	}
 	| {;}
 	;
@@ -510,6 +523,14 @@ expr:
 	}
 	| VARIABLE							{ 
 		$$ = id($1); 
+	}
+	| ARRAY_ID '[' expr ']' {
+		// cout << "_" << (int)run($3) << "\n";
+		//cout << "puto" << endl;
+		$$ = opr(YL::YareParser::token::ARRAY_SHIT, 2, idA($1), $3);
+	}
+	| ARRAY_ID '.' ARRAY_SIZE '(' ')' {
+		$$ = opr(YL::YareParser::token::ARRAY_SIZE, 1, idA($1));
 	}
 	| '-' expr %prec UMINUS				{ 
 		$$ = opr(YL::YareParser::token::UMINUS, 1, $2); 
@@ -807,6 +828,23 @@ nodeType *idA(char *arrayStr) {
 	return p;
 }
 
+nodeType *idA_Index(char *arrayStr, nodeTypeTag *node) {
+	nodeType *p;
+
+	/* allocate node */
+	if ((p = (nodeTypeTag *)malloc(sizeof(idNodeType))) == NULL) {
+		cerr << "Memoria insuficiente para este programa." << endl;
+		exit(EXIT_FAILURE);
+	}
+	// copy information:
+	p->type = typeArray;
+	p->id.index_array = 2;
+	// Copiar el id:
+	strcpy(p->id.identificador, arrayStr);
+
+	return p;	
+}
+
 void yyerror(char *s) {
 	cout << s << ", probable antes de la línea %d.\n" << endl;
 }
@@ -829,6 +867,7 @@ long double run(nodeType *p) {
 		return 0.0L;
 
 	switch(p->type) {
+
 		case typeCon:
 			return p->con.value;
 
@@ -842,6 +881,33 @@ long double run(nodeType *p) {
 				return vars->getLongValueById(p->id.identificador);
 			} else {
 				cerr << "La variable '" << p->id.identificador << "' no está definida\n";
+				return 0.0L;
+			}
+			return 0.0L;
+
+		case typeArray:
+			if(arrays != NULL) {
+
+				if(arrays->isDefined(p->id.identificador) == false) {
+					cerr << "El array '" << p->id.identificador << "' no está declarado\n";
+					return 0.0L;	
+				} else {
+					// cout << "mmm" << p->id.identificador << "\n";
+					int __index = p->id.index_array;
+					
+					if(__index >= arrays->getListById(p->id.identificador).size()) {
+						cout << "El índice " << __index << " excede la cantidad de elementos del array '" <<
+								p->id.identificador << "'" << endl;
+						return 0.0L;
+					} else {
+						long double val_return = arrays->getListById(p->id.identificador).getList().at(__index);
+						cout << "Kaka" << val_return << "\n";
+						return val_return;
+					}
+
+				}
+			} else {
+				cerr << "El array '" << p->id.identificador << "' no está declarado\n";
 				return 0.0L;
 			}
 			return 0.0L;
@@ -1744,11 +1810,10 @@ long double run(nodeType *p) {
 						freeNode(p);
 						exit(_exit_return_);
 					}
-					return 0.0f;
+					return 0.0L;
+
 				case YL::YareParser::token::ARRAY_C:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
-						// std::cout << "Crear este identificador: '" << p->opr.op[0]->id.identificador << "'" << std::endl;
-
 						if(arrays == NULL) {
 							// Crear el objeto de arrays
 							arrays = new Arrays();
@@ -1756,25 +1821,122 @@ long double run(nodeType *p) {
 							if(arrays->isDefined(p->opr.op[0]->id.identificador)) {
 								cout << "El array '" << p->opr.op[0]->id.identificador << "' ya está declarado" << endl;
 							} else {
-								arrays->add(*(new Array(p->opr.op[0]->id.identificador, 0.0f)));
+								arrays->add(*(new Array(p->opr.op[0]->id.identificador, 0.0L)));
 							}
-							
-							// arrays->mostrar();
-							return 0.0f;
+							//arrays->mostrar();
+							return 0.0L;
 						} else {
 
 							if(arrays->isDefined(p->opr.op[0]->id.identificador)) {
 								cout << "El array '" << p->opr.op[0]->id.identificador << "' ya está declarado" << endl;
 							} else {
-								arrays->add(*(new Array(p->opr.op[0]->id.identificador, 0.0f)));
+								arrays->add(*(new Array(p->opr.op[0]->id.identificador, 0.0L)));
 							}
-
 							// arrays->mostrar();
 							return 0.0L;
 						}
-
 					}
-					return 0.0f;					
+					return 0.0L;
+
+				case YL::YareParser::token::ARRAY_ASSIGN:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+
+						if(arrays != NULL) {
+
+							if(arrays->isDefined(p->opr.op[0]->id.identificador) == false) {
+								cout << "El array '" << p->opr.op[0]->id.identificador << "' no se ha declarado." << endl;
+								return 0.0L;
+							} else {
+
+								long double __index_array = run(p->opr.op[1]);
+
+								if(__index_array >= arrays->getListById(p->opr.op[0]->id.identificador).size()) {
+									cout << "El índice " << __index_array << " excede la cantidad de elementos del array '" <<
+										p->opr.op[0]->id.identificador << "'" << endl;
+										return 0.0L;
+								} else {
+
+									arrays->getListById(p->opr.op[0]->id.identificador).getList().at(__index_array) = 
+										run(p->opr.op[2]);
+									// arrays->mostrar();
+									return 0.0L;
+								}
+
+							}
+
+						} else {
+							cout << "Error, no se ha declarado el array '" << p->opr.op[0]->id.identificador << "'" << endl;
+							return 0.0L;
+						}
+					}
+					return 0.0L;
+
+				case YL::YareParser::token::ARRAY_PUT:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						if(arrays != NULL) {
+							if(arrays->isDefined(p->opr.op[0]->id.identificador) == false) {
+								cout << "El array '" << p->opr.op[0]->id.identificador << "' no se ha declarado." << endl;
+								return 0.0L;
+							} else {
+								arrays->getListById(p->opr.op[0]->id.identificador).add(run(p->opr.op[1]));
+								// arrays->mostrar();
+								return 0.0L;
+							}
+						} else {
+							cout << "Error, no se ha declarado el array '" << p->opr.op[0]->id.identificador << "'" << endl;
+							return 0.0L;
+						}
+					}
+					return 0.0L;
+
+				case YL::YareParser::token::ARRAY_SIZE:
+					// p->opr.op[0]->con.cadena
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						if(arrays != NULL) {
+							if(arrays->isDefined(p->opr.op[0]->id.identificador) == false) {
+								cout << "El array '" << p->opr.op[0]->id.identificador << "' no se ha declarado." << endl;
+								return 0.0L;
+							} else {
+								int __size = arrays->getListById(p->opr.op[0]->id.identificador).size();
+								return __size;
+							}
+						} else {
+							cout << "Error, no se ha declarado el array '" << p->opr.op[0]->id.identificador << "'" << endl;
+							return 0.0L;
+						}
+					}
+					return 0.0L;
+
+				case YL::YareParser::token::ARRAY_SHIT:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						if(arrays != NULL) {
+							if(arrays->isDefined(p->opr.op[0]->id.identificador) == false) {
+								cout << "El array '" << p->opr.op[0]->id.identificador << "' no se ha declarado." << endl;
+								return 0.0L;
+							} else {
+								
+								long double __index_array = run(p->opr.op[1]);
+
+								if(__index_array >= arrays->getListById(p->opr.op[0]->id.identificador).size()) {
+									cout << "El índice " << __index_array << " excede la cantidad de elementos del array '" <<
+										p->opr.op[0]->id.identificador << "'" << endl;
+										return 0.0L;
+								} else {
+
+									return arrays->getListById(p->opr.op[0]->id.identificador).getList().at(__index_array);
+									// arrays->mostrar();
+									// return 0.0L;
+								}
+
+
+							}
+						} else {
+							cout << "Error, no se ha declarado el array '" << p->opr.op[0]->id.identificador << "'" << endl;
+							return 0.0L;
+						}
+					}
+					return 0.0L;
+
 			}
 			default:
 					break;

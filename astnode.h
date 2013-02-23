@@ -31,6 +31,7 @@ typedef struct {
 	
 	char i;
 	/* FIXME Por ahora solo identificadores de no menos de 100 id's */
+	int index_array;
 	char idArray[100];
 	char identificador[100];
 } idNodeType;
