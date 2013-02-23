@@ -1,4 +1,3 @@
-puts("Hola");
-exit(23);
-puts("jijij");
+push 1 + 2;
+printn(pop);
 .

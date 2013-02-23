@@ -1620,7 +1620,7 @@ long double run(nodeType *p) {
 						char *_end;
 						unsigned short _index = 0;
 						unsigned char _c;
-						// SHIT
+
 						long double _resultado;
 						
 						while((_c = getchar()) != '\n') 
@@ -1646,7 +1646,7 @@ long double run(nodeType *p) {
 						char *_end;
 						unsigned short _index = 0;
 						unsigned char _c;
-						// SHIT
+
 						long double _resultado;
 						
 						while((_c = getchar()) != '\n') 
