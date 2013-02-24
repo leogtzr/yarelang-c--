@@ -56,7 +56,6 @@
 	return YL::YareParser::token::NUMERIC;
 }
 
-
 [0-7]+[oO] {
 	yytext[strlen(yytext) - 1] = '\0';
 	char *end;
@@ -482,6 +481,10 @@
 
 [pP][oO][pP] {
 	return YL::YareParser::token::POP;	
+}
+
+[sS][tT][aA][cC][kK][sS][iI][zZ][eE] {
+	return YL::YareParser::token::STACK_SIZE;		
 }
 
 ":)"	{

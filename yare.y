@@ -228,6 +228,7 @@
 /////////// FUNCIONES DE PILA ///////////////////////////////////////////
 %token PUSH
 %token POP
+%token STACK_SIZE
 
 %type <valnum> NUMERIC 
 %type <nPtr> expr
@@ -645,6 +646,9 @@ expr:
 	}
 	| POP {
 		$$ = opr(YL::YareParser::token::POP, 0);
+	}
+	| STACK_SIZE {
+		$$ = opr(YL::YareParser::token::STACK_SIZE, 0);
 	}
 	| ABS '(' expr ')' {
 		$$ = opr(YL::YareParser::token::ABS, 1, $3);	
@@ -1933,6 +1937,15 @@ long double run(nodeType *p) {
 						} else {
 							cout << "Error, no se ha declarado el array '" << p->opr.op[0]->id.identificador << "'" << endl;
 							return 0.0L;
+						}
+					}
+					return 0.0L;
+				case YL::YareParser::token::STACK_SIZE:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						if(pila == NULL) {
+							return 0.0L;
+						} else {
+							return pila->size();
 						}
 					}
 					return 0.0L;
