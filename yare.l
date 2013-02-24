@@ -89,6 +89,10 @@
 	return YL::YareParser::token::ARRAY_PUT;	
 }
 
+[sS][oO][rR][tT] {
+	return YL::YareParser::token::ARRAY_SORT;	
+}
+
 [sS][iI][zZ][eE] {
 	return YL::YareParser::token::ARRAY_SIZE;		
 }

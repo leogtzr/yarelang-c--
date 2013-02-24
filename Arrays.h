@@ -8,12 +8,21 @@
 #include <vector>
 #include <cstdlib>
 #include <iostream>
+#include <algorithm>
 
 using std::vector;
 using std::string;
 using std::cout;
 using std::endl;
 using std::ostream;
+
+inline bool ordMenor(long double x, long double y) {
+    return (x < y);
+}
+
+inline bool ordMayor(long double x, long double y) {
+    return (x > y);
+}
 
 class Array {
 
@@ -62,6 +71,14 @@ class Array {
 
         bool isEmpty(void) const {
             return lista.empty();
+        }
+
+        void ordenar(bool order) {
+            if(order) {
+                std::sort(lista.begin(), lista.end(), ordMayor);
+            } else {
+                std::sort(lista.begin(), lista.end(), ordMenor);
+            }
         }
 
         void eliminarN(unsigned int &n) {
