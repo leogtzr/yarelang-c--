@@ -3,19 +3,25 @@ rem Leo Gtz R.
 
 array(@a);
 
-while(x < 10) {
-	@a.put(rand());
-	x to x + 1;
-}
+@a.put(1);
+@a.put(2);
+@a.put(3);
 
 x to 0;
 
-@a.sort(!1);
-
 while(x < @a.size()) {
-	printn(@a[x]);
-	x to x + 1;
+	printn(@a[x@+]);
 }
 
+puts("----------------\n");
+
+@a.del(2);
+@a.del(-1);
+
+x to 0;
+
+while(x < @a.size()) {
+	printn(@a[x@+]);
+}
 
 .

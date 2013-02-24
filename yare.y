@@ -123,6 +123,7 @@
 %token ARRAY_SIZE			// @a.size();
 %token ARRAY_SHIT			// @a.size();
 %token ARRAY_SORT			// @a.sort(true);
+%token ARRAY_DEL 			// @a.del(expr);
 
 /// Arrays tokens:
 %token ARRAY_C			// array_c(id_array);
@@ -505,6 +506,9 @@ stmt:
 	}
 	| ARRAY_ID '.' ARRAY_SORT '(' expr ')' ';' {
 		$$ = opr(YL::YareParser::token::ARRAY_SORT, 2, idA($1), $5);
+	}
+	| ARRAY_ID '.' ARRAY_DEL '(' expr ')' ';' {
+		$$ = opr(YL::YareParser::token::ARRAY_DEL, 2, idA($1), $5);
 	}
 	| {;}
 	;
@@ -1920,6 +1924,36 @@ long double run(nodeType *p) {
 							} else {
 								arrays->getListById(p->opr.op[0]->id.identificador).ordenar(run(p->opr.op[1]));
 								return 0.0L;
+							}
+						} else {
+							cout << "Error, no se ha declarado el array '" << p->opr.op[0]->id.identificador << "'" << endl;
+							return 0.0L;
+						}
+					}
+					return 0.0L;
+
+				case YL::YareParser::token::ARRAY_DEL:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						if(arrays != NULL) {
+							if(arrays->isDefined(p->opr.op[0]->id.identificador) == false) {
+								cout << "El array '" << p->opr.op[0]->id.identificador << "' no se ha declarado." << endl;
+								return 0.0L;
+							} else {
+								
+								int __index_del = (int)run(p->opr.op[1]);
+								if(__index_del < 0) {
+									cout << "Error, no existe un elemento con índice negativo." << endl;
+									return 0.0L;
+								}
+
+								if(__index_del >= arrays->getListById(p->opr.op[0]->id.identificador).size()) {
+									cout << "Error, se intenta eliminar un elemento del array que no existe." << endl;
+									return 0.0L;
+								} else {
+									arrays->getListById(p->opr.op[0]->id.identificador).eliminarN(__index_del);
+									return 0.0L;
+								}
+								
 							}
 						} else {
 							cout << "Error, no se ha declarado el array '" << p->opr.op[0]->id.identificador << "'" << endl;

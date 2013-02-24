@@ -50,7 +50,6 @@ class Array {
         }
 
         friend ostream& operator <<(ostream& out, Array &arr) {
-
             for(vector<long double>::iterator it = arr.lista.begin(); it != arr.lista.end(); ++it)
                 cout << "\t" << *it << endl;
 
@@ -81,7 +80,7 @@ class Array {
             }
         }
 
-        void eliminarN(unsigned int &n) {
+        void eliminarN(int &n) {
             if(lista.empty())
                 return;
             lista.erase(lista.begin() + n);

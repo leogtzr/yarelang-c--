@@ -93,6 +93,10 @@
 	return YL::YareParser::token::ARRAY_SORT;	
 }
 
+[dD][eE][lL] {
+	return YL::YareParser::token::ARRAY_DEL;
+}
+
 [sS][iI][zZ][eE] {
 	return YL::YareParser::token::ARRAY_SIZE;		
 }
