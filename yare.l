@@ -97,6 +97,14 @@
 	return YL::YareParser::token::ARRAY_DEL;
 }
 
+[cC][lL][eE][aA][rR] {
+	return YL::YareParser::token::ARRAY_CLEAR;	
+}
+
+[fF][iI][lL][lL] {
+	return YL::YareParser::token::ARRAY_FILL;	
+}
+
 [sS][iI][zZ][eE] {
 	return YL::YareParser::token::ARRAY_SIZE;		
 }

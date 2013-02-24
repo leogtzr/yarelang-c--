@@ -3,25 +3,14 @@ rem Leo Gtz R.
 
 array(@a);
 
-@a.put(1);
-@a.put(2);
-@a.put(3);
+@a.fill(12);
 
-x to 0;
-
-while(x < @a.size()) {
+while(x < @a.size) {
 	printn(@a[x@+]);
 }
 
-puts("----------------\n");
+@a.clear();
 
-@a.del(2);
-@a.del(-1);
-
-x to 0;
-
-while(x < @a.size()) {
-	printn(@a[x@+]);
-}
+printn(@a.size);
 
 .

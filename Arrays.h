@@ -80,6 +80,14 @@ class Array {
             }
         }
 
+        void fill(int n) {
+            srand((unsigned)time(NULL));
+
+            for(int i = 0; i < n; i++)
+                add(((double) rand() / (RAND_MAX)));
+
+        }
+
         void eliminarN(int &n) {
             if(lista.empty())
                 return;

@@ -124,6 +124,8 @@
 %token ARRAY_SHIT			// @a.size();
 %token ARRAY_SORT			// @a.sort(true);
 %token ARRAY_DEL 			// @a.del(expr);
+%token ARRAY_FILL			// @a.fill(expr);
+%token ARRAY_CLEAR			// @a.clear();
 
 /// Arrays tokens:
 %token ARRAY_C			// array_c(id_array);
@@ -510,6 +512,12 @@ stmt:
 	| ARRAY_ID '.' ARRAY_DEL '(' expr ')' ';' {
 		$$ = opr(YL::YareParser::token::ARRAY_DEL, 2, idA($1), $5);
 	}
+	| ARRAY_ID '.' ARRAY_FILL '(' expr ')' ';' {
+		$$ = opr(YL::YareParser::token::ARRAY_FILL, 2, idA($1), $5);
+	}
+	| ARRAY_ID '.' ARRAY_CLEAR '(' ')' ';' {
+		$$ = opr(YL::YareParser::token::ARRAY_CLEAR, 1, idA($1));
+	}
 	| {;}
 	;
 
@@ -541,11 +549,12 @@ expr:
 		$$ = id($1); 
 	}
 	| ARRAY_ID '[' expr ']' {
-		// cout << "_" << (int)run($3) << "\n";
-		//cout << "puto" << endl;
 		$$ = opr(YL::YareParser::token::ARRAY_SHIT, 2, idA($1), $3);
 	}
 	| ARRAY_ID '.' ARRAY_SIZE '(' ')' {
+		$$ = opr(YL::YareParser::token::ARRAY_SIZE, 1, idA($1));
+	}
+	| ARRAY_ID '.' ARRAY_SIZE {
 		$$ = opr(YL::YareParser::token::ARRAY_SIZE, 1, idA($1));
 	}
 	| '-' expr %prec UMINUS				{ 
@@ -1953,6 +1962,51 @@ long double run(nodeType *p) {
 									arrays->getListById(p->opr.op[0]->id.identificador).eliminarN(__index_del);
 									return 0.0L;
 								}
+								
+							}
+						} else {
+							cout << "Error, no se ha declarado el array '" << p->opr.op[0]->id.identificador << "'" << endl;
+							return 0.0L;
+						}
+					}
+					return 0.0L;
+
+				case YL::YareParser::token::ARRAY_FILL:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						if(arrays != NULL) {
+							if(arrays->isDefined(p->opr.op[0]->id.identificador) == false) {
+								cout << "El array '" << p->opr.op[0]->id.identificador << "' no se ha declarado." << endl;
+								return 0.0L;
+							} else {
+								
+								int __index_del = (int)run(p->opr.op[1]);
+								
+								if(__index_del < 0) {
+									cout << "Error, introduzca un número positivo." << endl;
+									return 0.0L;
+								}
+
+								arrays->getListById(p->opr.op[0]->id.identificador).fill(__index_del);
+								return 0.0L;
+								
+							}
+						} else {
+							cout << "Error, no se ha declarado el array '" << p->opr.op[0]->id.identificador << "'" << endl;
+							return 0.0L;
+						}
+					}
+					return 0.0L;
+
+				case YL::YareParser::token::ARRAY_CLEAR:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						if(arrays != NULL) {
+							if(arrays->isDefined(p->opr.op[0]->id.identificador) == false) {
+								cout << "El array '" << p->opr.op[0]->id.identificador << "' no se ha declarado." << endl;
+								return 0.0L;
+							} else {
+								
+								arrays->getListById(p->opr.op[0]->id.identificador).limpiar();
+								return 0.0L;
 								
 							}
 						} else {
