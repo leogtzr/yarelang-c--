@@ -137,6 +137,10 @@
 	return YL::YareParser::token::PUTS;	
 }
 
+[pP][uU][tT][sS][nN] {
+	return YL::YareParser::token::PUTSN;	
+}
+
 [iI][nN][cC] {
 	return YL::YareParser::token::INC;
 }

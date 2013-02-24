@@ -144,6 +144,7 @@
 %token PRINTN 		// @todo printn(expr), prints out the expression with new line
 %token PRINT		// Without new line
 %token PUTS 		// PUTS sentence, to write strings to console.
+%token PUTSN 		// PUTS sentence, to write strings to console.
 %token RAND			// rand(expr);
 ///////////// Expressions operators with words //////////////////////////////
 %token EXPR_DIV				// "entre"
@@ -383,6 +384,12 @@ stmt:
 	}
 	| PUTS CADENA ';'		{
 		$$ = opr(YL::YareParser::token::PUTS, 1, conStr($2, typeCadena));
+	}
+	| PUTSN '(' CADENA ')' ';'		{
+		$$ = opr(YL::YareParser::token::PUTSN, 1, conStr($3, typeCadena));
+	}
+	| PUTSN CADENA ';'		{
+		$$ = opr(YL::YareParser::token::PUTSN, 1, conStr($2, typeCadena));
 	}
 	| WHILE	'(' expr ')' stmt	{ 
 		$$ = opr(YL::YareParser::token::WHILE, 2, $3, $5); 
@@ -984,9 +991,16 @@ long double run(nodeType *p) {
 
 				case YL::YareParser::token::PUTS: {
 					if((spLoop < 0) || pilaLoop[spLoop]) {
+						cout << p->opr.op[0]->con.cadena;
+					}
+					return 0.0L;	
+				}
+
+				case YL::YareParser::token::PUTSN: {
+					if((spLoop < 0) || pilaLoop[spLoop]) {
 						cout << p->opr.op[0]->con.cadena << endl;
 					}
-					return 0.0f;	
+					return 0.0L;	
 				}
 
 				case YL::YareParser::token::CALL:
@@ -1940,6 +1954,7 @@ long double run(nodeType *p) {
 						}
 					}
 					return 0.0L;
+
 				case YL::YareParser::token::STACK_SIZE:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(pila == NULL) {
