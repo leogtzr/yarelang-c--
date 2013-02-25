@@ -56,6 +56,22 @@ class Array {
             return out;
         }
 
+        inline long double minmax(bool flag) {
+            if(lista.size() <= 0)
+                return 0.0L;
+
+            long double _max = lista[0];
+            for(int i = 0; i < lista.size(); i++)
+                if(flag) {
+                    if(lista[i] < _max)
+                        _max = lista[i];
+                } else {
+                    if(lista[i] > _max)
+                        _max = lista[i];
+                }
+            return _max;
+        }
+
         vector<long double> &getList() {
             return lista;
         }
