@@ -3,23 +3,12 @@ rem Leo Gtz R.
 
 array(@a);
 
-@a.put(8);
-@a.put(-1);
-@a.put(45);
-@a.put(-45);
+@a.put(1);
+@a.put(2);
+@a.put(3);
+@a.put(4);
+@a.put(5);
 
-x to 0;
-while(x < @a.size) {
-	printn(@a[x@+]);
-}
-
-@a.putfront(1 + 2 * 3);
-
-putsn("--------------------");
-
-x to 0;
-while(x < @a.size) {
-	printn(@a[x@+]);
-}
+printn(@a.average());
 
 .

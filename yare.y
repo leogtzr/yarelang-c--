@@ -131,6 +131,7 @@
 %token ARRAY_MAX			// @a.max();
 %token ARRAY_HEAD			// @a.head();
 %token ARRAY_TAIL			// @a.tail();
+%token ARRAY_AVERAGE			// @a.average();
 
 /// Arrays tokens:
 %token ARRAY_C			// array_c(id_array);
@@ -576,6 +577,9 @@ expr:
 	}
 	| ARRAY_ID '.' ARRAY_HEAD '(' ')' {
 		$$ = opr(YL::YareParser::token::ARRAY_HEAD, 1, idA($1));
+	}
+	| ARRAY_ID '.' ARRAY_AVERAGE '(' ')' {
+		$$ = opr(YL::YareParser::token::ARRAY_AVERAGE, 1, idA($1));
 	}
 	| '-' expr %prec UMINUS				{ 
 		$$ = opr(YL::YareParser::token::UMINUS, 1, $2); 
@@ -1876,7 +1880,7 @@ long double run(nodeType *p) {
 							if(arrays->isDefined(p->opr.op[0]->id.identificador)) {
 								cout << "El array '" << p->opr.op[0]->id.identificador << "' ya está declarado" << endl;
 							} else {
-								arrays->add(*(new Array(p->opr.op[0]->id.identificador, 0.0L)));
+								arrays->add(*(new Array(p->opr.op[0]->id.identificador)));
 							}
 							//arrays->mostrar();
 							return 0.0L;
@@ -2153,6 +2157,22 @@ long double run(nodeType *p) {
 								return 0.0L;
 							} else {
 								return arrays->getListById(p->opr.op[0]->id.identificador).head();
+							}
+						} else {
+							cout << "Error, no se ha declarado el array '" << p->opr.op[0]->id.identificador << "'" << endl;
+							return 0.0L;
+						}
+					}
+					return 0.0L;
+
+				case YL::YareParser::token::ARRAY_AVERAGE:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						if(arrays != NULL) {
+							if(arrays->isDefined(p->opr.op[0]->id.identificador) == false) {
+								cout << "El array '" << p->opr.op[0]->id.identificador << "' no se ha declarado." << endl;
+								return 0.0L;
+							} else {
+								return arrays->getListById(p->opr.op[0]->id.identificador).average();
 							}
 						} else {
 							cout << "Error, no se ha declarado el array '" << p->opr.op[0]->id.identificador << "'" << endl;

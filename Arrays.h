@@ -137,6 +137,19 @@ class Array {
             cout << "}\n";
         }
 
+        inline long double average(void) {
+            if(lista.size() <= 0) {
+                return 0.0L;
+            }
+
+            long double sum = 0.0L;
+            for(vector<long double>::iterator it = lista.begin(); it != lista.end(); ++it)
+                sum += *it;
+
+            return (sum / lista.size());
+
+        }
+
         inline int size(void) {
             return lista.size();
         }

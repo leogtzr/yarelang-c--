@@ -109,6 +109,10 @@
 	return YL::YareParser::token::ARRAY_FILL;	
 }
 
+[aA][vV][eE][rR][aA][gG][eE] {
+	return YL::YareParser::token::ARRAY_AVERAGE;	
+}
+
 [sS][iI][zZ][eE] {
 	return YL::YareParser::token::ARRAY_SIZE;		
 }
