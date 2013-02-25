@@ -120,6 +120,7 @@
 %token ARRAY_ASSIGN			// @id
 %token ARRAY_ADD_ELEMENT 	// @a.add(expr)
 %token ARRAY_PUT			// @a.put(expr);
+%token ARRAY_PUTFRONT		// @a.putfront(expr);
 %token ARRAY_SIZE			// @a.size();
 %token ARRAY_SHIT			// @a.size();
 %token ARRAY_SORT			// @a.sort(true);
@@ -127,7 +128,9 @@
 %token ARRAY_FILL			// @a.fill(expr);
 %token ARRAY_CLEAR			// @a.clear();
 %token ARRAY_MIN			// @a.min();
-%token ARRAY_MAX			// @a.min();
+%token ARRAY_MAX			// @a.max();
+%token ARRAY_HEAD			// @a.head();
+%token ARRAY_TAIL			// @a.tail();
 
 /// Arrays tokens:
 %token ARRAY_C			// array_c(id_array);
@@ -508,6 +511,9 @@ stmt:
 	| ARRAY_ID '.' ARRAY_PUT '(' expr ')' ';' {
 		$$ = opr(YL::YareParser::token::ARRAY_PUT, 2, idA($1), $5);
 	}
+	| ARRAY_ID '.' ARRAY_PUTFRONT '(' expr ')' ';' {
+		$$ = opr(YL::YareParser::token::ARRAY_PUTFRONT, 2, idA($1), $5);
+	}
 	| ARRAY_ID '.' ARRAY_SORT '(' expr ')' ';' {
 		$$ = opr(YL::YareParser::token::ARRAY_SORT, 2, idA($1), $5);
 	}
@@ -564,6 +570,12 @@ expr:
 	}
 	| ARRAY_ID '.' ARRAY_MAX '(' ')' {
 		$$ = opr(YL::YareParser::token::ARRAY_MAX, 1, idA($1));
+	}
+	| ARRAY_ID '.' ARRAY_TAIL '(' ')' {
+		$$ = opr(YL::YareParser::token::ARRAY_TAIL, 1, idA($1));
+	}
+	| ARRAY_ID '.' ARRAY_HEAD '(' ')' {
+		$$ = opr(YL::YareParser::token::ARRAY_HEAD, 1, idA($1));
 	}
 	| '-' expr %prec UMINUS				{ 
 		$$ = opr(YL::YareParser::token::UMINUS, 1, $2); 
@@ -1922,7 +1934,23 @@ long double run(nodeType *p) {
 								return 0.0L;
 							} else {
 								arrays->getListById(p->opr.op[0]->id.identificador).add(run(p->opr.op[1]));
-								// arrays->mostrar();
+								return 0.0L;
+							}
+						} else {
+							cout << "Error, no se ha declarado el array '" << p->opr.op[0]->id.identificador << "'" << endl;
+							return 0.0L;
+						}
+					}
+					return 0.0L;
+
+				case YL::YareParser::token::ARRAY_PUTFRONT:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						if(arrays != NULL) {
+							if(arrays->isDefined(p->opr.op[0]->id.identificador) == false) {
+								cout << "El array '" << p->opr.op[0]->id.identificador << "' no se ha declarado." << endl;
+								return 0.0L;
+							} else {
+								arrays->getListById(p->opr.op[0]->id.identificador).putfront(run(p->opr.op[1]));
 								return 0.0L;
 							}
 						} else {
@@ -2101,7 +2129,37 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
+				case YL::YareParser::token::ARRAY_TAIL:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						if(arrays != NULL) {
+							if(arrays->isDefined(p->opr.op[0]->id.identificador) == false) {
+								cout << "El array '" << p->opr.op[0]->id.identificador << "' no se ha declarado." << endl;
+								return 0.0L;
+							} else {
+								return arrays->getListById(p->opr.op[0]->id.identificador).tail();
+							}
+						} else {
+							cout << "Error, no se ha declarado el array '" << p->opr.op[0]->id.identificador << "'" << endl;
+							return 0.0L;
+						}
+					}
+					return 0.0L;
 
+				case YL::YareParser::token::ARRAY_HEAD:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						if(arrays != NULL) {
+							if(arrays->isDefined(p->opr.op[0]->id.identificador) == false) {
+								cout << "El array '" << p->opr.op[0]->id.identificador << "' no se ha declarado." << endl;
+								return 0.0L;
+							} else {
+								return arrays->getListById(p->opr.op[0]->id.identificador).head();
+							}
+						} else {
+							cout << "Error, no se ha declarado el array '" << p->opr.op[0]->id.identificador << "'" << endl;
+							return 0.0L;
+						}
+					}
+					return 0.0L;
 
 				case YL::YareParser::token::STACK_SIZE:
 					if((spLoop < 0) || pilaLoop[spLoop]) {

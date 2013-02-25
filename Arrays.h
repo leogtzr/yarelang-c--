@@ -96,6 +96,22 @@ class Array {
             }
         }
 
+        long double tail() {
+            if(lista.size() > 0) {
+                return lista[lista.size() - 1];
+            } else {
+                return 0.0L;
+            }
+        }
+
+        long double head() {
+            if(lista.size() > 0) {
+                return lista[0];
+            } else {
+                return 0.0L;
+            }
+        }
+
         void fill(int n) {
             srand((unsigned)time(NULL));
 
@@ -132,6 +148,10 @@ class Array {
 
         void add(long double x) {
             lista.push_back(x);
+        }
+
+        void putfront(long double x) {
+            lista.insert(lista.begin(), x);
         }
 
         long double get(int n) {

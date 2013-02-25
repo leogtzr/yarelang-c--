@@ -89,6 +89,10 @@
 	return YL::YareParser::token::ARRAY_PUT;	
 }
 
+[pP][uU][tT][fF][rR][oO][nN][tT] {
+	return YL::YareParser::token::ARRAY_PUTFRONT;	
+}
+
 [sS][oO][rR][tT] {
 	return YL::YareParser::token::ARRAY_SORT;	
 }
@@ -115,6 +119,14 @@
 
 [mM][aA][xX] {
 	return YL::YareParser::token::ARRAY_MAX;		
+}
+
+[tT][aA][iI][lL] {
+	return YL::YareParser::token::ARRAY_TAIL;		
+}
+
+[hH][eE][aA][dD] {
+	return YL::YareParser::token::ARRAY_HEAD;		
 }
 
 :["'0-9 _#@a-zA-Z\t\+\-\^\|\(\)\\/]+: 	{
