@@ -3,14 +3,18 @@ rem Leo Gtz R.
 
 array(@a);
 
-@a.fill(12);
+@a.put(7);
+@a.put(-1);
+@a.put(45);
+@a.put(-45);
 
+
+x to 0;
 while(x < @a.size) {
 	printn(@a[x@+]);
 }
 
-@a.clear();
-
-printn(@a.size);
+puts("Mayor: ");
+printn(@a.max());
 
 .

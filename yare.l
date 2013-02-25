@@ -109,6 +109,14 @@
 	return YL::YareParser::token::ARRAY_SIZE;		
 }
 
+[mM][iI][nN] {
+	return YL::YareParser::token::ARRAY_MIN;		
+}
+
+[mM][aA][xX] {
+	return YL::YareParser::token::ARRAY_MAX;		
+}
+
 :["'0-9 _#@a-zA-Z\t\+\-\^\|\(\)\\/]+: 	{
 	strcpy(lexema->identificador, yytext);
 	for(unsigned _i_ = 0; _i_ < strlen(lexema->identificador); _i_++)

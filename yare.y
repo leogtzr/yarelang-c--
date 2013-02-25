@@ -126,6 +126,8 @@
 %token ARRAY_DEL 			// @a.del(expr);
 %token ARRAY_FILL			// @a.fill(expr);
 %token ARRAY_CLEAR			// @a.clear();
+%token ARRAY_MIN			// @a.min();
+%token ARRAY_MAX			// @a.min();
 
 /// Arrays tokens:
 %token ARRAY_C			// array_c(id_array);
@@ -556,6 +558,12 @@ expr:
 	}
 	| ARRAY_ID '.' ARRAY_SIZE {
 		$$ = opr(YL::YareParser::token::ARRAY_SIZE, 1, idA($1));
+	}
+	| ARRAY_ID '.' ARRAY_MIN '(' ')' {
+		$$ = opr(YL::YareParser::token::ARRAY_MIN, 1, idA($1));
+	}
+	| ARRAY_ID '.' ARRAY_MAX '(' ')' {
+		$$ = opr(YL::YareParser::token::ARRAY_MAX, 1, idA($1));
 	}
 	| '-' expr %prec UMINUS				{ 
 		$$ = opr(YL::YareParser::token::UMINUS, 1, $2); 
@@ -2017,7 +2025,6 @@ long double run(nodeType *p) {
 					return 0.0L;
 
 				case YL::YareParser::token::ARRAY_SIZE:
-					// p->opr.op[0]->con.cadena
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(arrays != NULL) {
 							if(arrays->isDefined(p->opr.op[0]->id.identificador) == false) {
@@ -2061,6 +2068,40 @@ long double run(nodeType *p) {
 						}
 					}
 					return 0.0L;
+
+				case YL::YareParser::token::ARRAY_MIN:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						if(arrays != NULL) {
+							if(arrays->isDefined(p->opr.op[0]->id.identificador) == false) {
+								cout << "El array '" << p->opr.op[0]->id.identificador << "' no se ha declarado." << endl;
+								return 0.0L;
+							} else {
+								return arrays->getListById(p->opr.op[0]->id.identificador).minmax(true);
+							}
+						} else {
+							cout << "Error, no se ha declarado el array '" << p->opr.op[0]->id.identificador << "'" << endl;
+							return 0.0L;
+						}
+					}
+					return 0.0L;
+
+				case YL::YareParser::token::ARRAY_MAX:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						if(arrays != NULL) {
+							if(arrays->isDefined(p->opr.op[0]->id.identificador) == false) {
+								cout << "El array '" << p->opr.op[0]->id.identificador << "' no se ha declarado." << endl;
+								return 0.0L;
+							} else {
+								return arrays->getListById(p->opr.op[0]->id.identificador).minmax(!true);
+							}
+						} else {
+							cout << "Error, no se ha declarado el array '" << p->opr.op[0]->id.identificador << "'" << endl;
+							return 0.0L;
+						}
+					}
+					return 0.0L;
+
+
 
 				case YL::YareParser::token::STACK_SIZE:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
