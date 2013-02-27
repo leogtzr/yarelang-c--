@@ -1,9 +1,13 @@
-#ifndef MY_MATH_H
-#define MY_MATH_H
+///////////////////// Yare /////////////////////////////
+// Autor: Leo Gutiérrez Ramírez <leorocko13@hotmail.com>
+///////////////////// Yare /////////////////////////////
+
 /* mymath.h 
 	Contiene algunas funciones matemáticas importantes que se utilizarán
 	en el intérprete 
 */
+#ifndef MY_MATH_H
+#define MY_MATH_H
 
 long double factorial(short n) {
     if(n <= 1)

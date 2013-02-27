@@ -1,3 +1,7 @@
+///////////////////// Yare /////////////////////////////
+// Autor: Leo Gutiérrez Ramírez <leorocko13@hotmail.com>
+///////////////////// Yare /////////////////////////////
+
 #ifndef PILA_H_INCLUDED
 #define PILA_H_INCLUDED
 
@@ -14,6 +18,7 @@ using std::ostream;
 class Pila {
     private:
         vector<long double> lista;
+        
     public:
 
         Pila() {}

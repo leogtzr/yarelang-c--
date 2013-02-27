@@ -1,3 +1,7 @@
+///////////////////// Yare /////////////////////////////
+// Autor: Leo Gutiérrez Ramírez <leorocko13@hotmail.com>
+///////////////////// Yare /////////////////////////////
+
 #include "YareScanner.h"
 #include "YareParser.h"
 #include <cstring>

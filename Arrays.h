@@ -1,4 +1,7 @@
-// Arrays.h, control sobre arrays.
+///////////////////// Yare /////////////////////////////
+// Autor: Leo Gutiérrez Ramírez <leorocko13@hotmail.com>
+///////////////////// Yare /////////////////////////////
+
 
 #ifndef ARRAYS_H_INCLUDED
 #define ARRAYS_H_INCLUDED

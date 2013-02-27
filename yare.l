@@ -1,4 +1,8 @@
 %{
+	///////////////////// Yare /////////////////////////////
+	// Autor: Leo Gutiérrez Ramírez <leorocko13@hotmail.com>
+	///////////////////// Yare /////////////////////////////
+
 	#include "yare.tab.h"
 	#include "YareScanner.h"
 	#include "constantes.h"

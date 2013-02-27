@@ -1,9 +1,12 @@
+///////////////////// Yare /////////////////////////////
+// Autor: Leo Gutiérrez Ramírez <leorocko13@hotmail.com>
+///////////////////// Yare /////////////////////////////
+
 #pragma once
 
 #ifndef _YARESCANNER_H_INCLUDED
 #define _YARESCANNER_H_INCLUDED
 
-// Only include FlexLexer.h if it hasn't been already included
 #if ! defined(yyFlexLexerOnce)
 	#include <FlexLexer.h>
 #endif

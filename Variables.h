@@ -1,3 +1,7 @@
+///////////////////// Yare /////////////////////////////
+// Autor: Leo Gutiérrez Ramírez <leorocko13@hotmail.com>
+///////////////////// Yare /////////////////////////////
+
 #ifndef VARIABLES_H_INCLUDED
 #define VARIABLES_H_INCLUDED
 

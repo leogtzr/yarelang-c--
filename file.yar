@@ -16,6 +16,6 @@ printn(@a.average());*/
 
 _@_ = ^;
 
-printn((:my id:_@_:ok:)*2);
+printn((:my id:_@_:ok:) * const.pi);
 
 .
