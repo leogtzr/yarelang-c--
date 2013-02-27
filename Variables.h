@@ -67,10 +67,12 @@ class Variables {
     public:
         Variables(void) {
         }
+
         ~Variables() {
             if(!lista.empty())
                 lista.clear();
         }
+
         vector<Var> &getListaVar(void) {
             return lista;
         }

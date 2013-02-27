@@ -147,6 +147,9 @@
 %token OPVAR_DIV 
 %token OPVAR_POW
 
+// Clear vars:
+%token CLEARVARS			// clearvars();
+
 /// Arrays tokens:
 %token ARRAY_C			// array_c(id_array);
 
@@ -555,6 +558,9 @@ stmt:
 	}
 	| OPVAR_OP '=''^'';'	{ 
 		$$ = opr(YL::YareParser::token::OPVAR_POW, 0); 
+	}
+	| CLEARVARS '(' ')' {
+		$$ = opr(YL::YareParser::token::CLEARVARS, 0);
 	}
 	| {;}
 	;
@@ -2258,6 +2264,14 @@ long double run(nodeType *p) {
 				case YL::YareParser::token::OPVAR_POW:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						strcpy(opVar, "^");
+					}
+					return 0.0L;
+
+				case YL::YareParser::token::CLEARVARS:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						if(vars != NULL) {
+							vars->limpiar();
+						}
 					}
 					return 0.0L;
 
