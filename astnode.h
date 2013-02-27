@@ -66,5 +66,7 @@ extern Variables *vars;
 extern Pila *pila;
 // Arrays:
 extern Arrays *arrays;
+// Opvar:
+extern char opVar[4];
 
 #endif

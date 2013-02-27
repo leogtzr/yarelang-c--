@@ -64,6 +64,10 @@
 	return YL::YareParser::token::NUMERIC;
 }
 
+"_@_" {
+	return YL::YareParser::token::OPVAR_OP;	
+}
+
 [a-zA-Z] 				{
 						// TODO Revisar esto con calma
 	if(isupper(*yytext))

@@ -28,6 +28,7 @@
 	Pila *pila = NULL;
 	struct proc *procs = NULL;
 	Arrays *arrays = NULL;
+	char opVar[4];
 %}
 
 %code requires {
@@ -132,6 +133,14 @@
 %token ARRAY_HEAD			// @a.head();
 %token ARRAY_TAIL			// @a.tail();
 %token ARRAY_AVERAGE			// @a.average();
+
+// ******************** OPVAR TOKENS **********************************
+%token OPVAR_OP
+%token OPVAR_ADD 
+%token OPVAR_SUB 
+%token OPVAR_MUL 
+%token OPVAR_DIV 
+%token OPVAR_POW
 
 /// Arrays tokens:
 %token ARRAY_C			// array_c(id_array);
@@ -527,6 +536,21 @@ stmt:
 	| ARRAY_ID '.' ARRAY_CLEAR '(' ')' ';' {
 		$$ = opr(YL::YareParser::token::ARRAY_CLEAR, 1, idA($1));
 	}
+	| OPVAR_OP '=''+'';'					{ 
+		$$ = opr(YL::YareParser::token::OPVAR_ADD, 0); 
+	}
+	| OPVAR_OP '=''-'';'	{ 
+		$$ = opr(YL::YareParser::token::OPVAR_SUB, 0); 
+	}
+	| OPVAR_OP '=''*'';'	{ 
+		$$ = opr(YL::YareParser::token::OPVAR_MUL, 0); 
+	}
+	| OPVAR_OP '=''/'';'	{ 
+		$$ = opr(YL::YareParser::token::OPVAR_DIV, 0); 
+	}
+	| OPVAR_OP '=''^'';'	{ 
+		$$ = opr(YL::YareParser::token::OPVAR_POW, 0); 
+	}
 	| {;}
 	;
 
@@ -683,6 +707,20 @@ expr:
 	| '(' expr ')' 						{
 		$$ = $2;
 	}
+	| expr OPVAR_OP expr 					{ 
+		// Comparaciones de operadores
+			if(strcmp(opVar, "+") == 0) {
+				$$ = opr('+', 2, $1, $3);
+			} else if(strcmp(opVar, "-") == 0) {
+				$$ = opr('-', 2, $1, $3);
+			} else if(strcmp(opVar, "*") == 0) {
+				$$ = opr('*', 2, $1, $3);
+			} else if(strcmp(opVar, "/") == 0) {
+				$$ = opr('/', 2, $1, $3);
+			} else if(strcmp(opVar, "^") == 0) {
+				$$ = opr('^', 2, $1, $3);
+			} 
+	}	
 	| READ '('')' {
 		$$ = opr(YL::YareParser::token::READ, 0);
 	}
@@ -1882,7 +1920,6 @@ long double run(nodeType *p) {
 							} else {
 								arrays->add(*(new Array(p->opr.op[0]->id.identificador)));
 							}
-							//arrays->mostrar();
 							return 0.0L;
 						} else {
 
@@ -1891,7 +1928,6 @@ long double run(nodeType *p) {
 							} else {
 								arrays->add(*(new Array(p->opr.op[0]->id.identificador, 0.0L)));
 							}
-							// arrays->mostrar();
 							return 0.0L;
 						}
 					}
@@ -1917,7 +1953,6 @@ long double run(nodeType *p) {
 
 									arrays->getListById(p->opr.op[0]->id.identificador).getList().at(__index_array) = 
 										run(p->opr.op[2]);
-									// arrays->mostrar();
 									return 0.0L;
 								}
 
@@ -2188,6 +2223,36 @@ long double run(nodeType *p) {
 						} else {
 							return pila->size();
 						}
+					}
+					return 0.0L;
+
+				case YL::YareParser::token::OPVAR_ADD:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						strcpy(opVar, "+");
+					}
+					return 0.0L;
+
+				case YL::YareParser::token::OPVAR_SUB:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						strcpy(opVar, "-");
+					}
+					return 0.0L;
+
+				case YL::YareParser::token::OPVAR_MUL:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						strcpy(opVar, "*");
+					}
+					return 0.0L;
+
+				case YL::YareParser::token::OPVAR_DIV:	
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						strcpy(opVar, "/");
+					}
+					return 0.0L;
+
+				case YL::YareParser::token::OPVAR_POW:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						strcpy(opVar, "^");
 					}
 					return 0.0L;
 
