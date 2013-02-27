@@ -410,6 +410,9 @@ stmt:
 	| '{' stmt_list	'}'		{ 
 		$$ = $2; 
 	}
+	| THEN stmt_list FIN		{ 
+		$$ = $2; 
+	}
 	| PUTS '(' CADENA ')' ';'		{
 		$$ = opr(YL::YareParser::token::PUTS, 1, conStr($3, typeCadena));
 	}

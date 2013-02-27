@@ -1,8 +1,7 @@
-rem Testing arrays in Yare
-rem Leo Gtz R.
 
-si(1 == 1) {
-	puts("Simon\4");
-}
+while(x -lt 3) entonces
+	printn(x);
+	x to x + 1;
+end
 
 .

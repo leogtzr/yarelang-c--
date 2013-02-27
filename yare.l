@@ -145,6 +145,14 @@
 	return YL::YareParser::token::CLEARVARS;
 }
 
+([tT][hH][eE][nN])|([eE][nN][tT][oO][nN][cC][eE][sS]) {
+	return YL::YareParser::token::THEN;	
+}
+
+([eE][nN][dD])|([fF][iI][nN]) {
+	return YL::YareParser::token::FIN;		
+}
+
 :["'0-9 _#@a-zA-Z\t\+\-\^\|\(\)\\/]+: 	{
 	strcpy(lexema->identificador, yytext);
 	for(unsigned _i_ = 0; _i_ < strlen(lexema->identificador); _i_++)
