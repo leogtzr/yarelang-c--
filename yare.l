@@ -257,7 +257,7 @@
 	return YL::YareParser::token::EXIT;		
 }
 
-[iI][fF] {
+[iIsS][fFiI] {
 	return YL::YareParser::token::IF;
 }
 
