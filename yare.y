@@ -150,6 +150,10 @@
 // Clear vars:
 %token CLEARVARS			// clearvars();
 
+// Manejo de ciclos:
+%token THEN
+%token FIN
+
 /// Arrays tokens:
 %token ARRAY_C			// array_c(id_array);
 
