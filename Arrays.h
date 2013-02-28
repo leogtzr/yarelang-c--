@@ -115,6 +115,11 @@ class Array {
             }
         }
 
+        inline void reverse() {
+            if(!lista.empty())
+                std::reverse(lista.begin(), lista.end());
+        }
+
         void fill(int n) {
             srand((unsigned)time(NULL));
 

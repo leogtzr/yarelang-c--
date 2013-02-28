@@ -105,6 +105,10 @@
 	return YL::YareParser::token::ARRAY_SORT;	
 }
 
+[rR][eE][vV][eE][rR][sS][eE] {
+	return YL::YareParser::token::ARRAY_REVERSE;
+}
+
 [dD][eE][lL] {
 	return YL::YareParser::token::ARRAY_DEL;
 }
@@ -227,7 +231,7 @@
 }
 
 [aA][dD][dD] {
-	// dd x, 1+ 2 * 3;
+	// add x, 1+ 2 * 3;
 	return YL::YareParser::token::ADD_ASM;
 }
 

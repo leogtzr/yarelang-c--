@@ -74,6 +74,7 @@
 
 	void freeNode(nodeType *);
 	long double run(nodeType *);
+	void  freeResources(void);
 
 	long double validateInput(char *, bool &);
 
@@ -137,7 +138,8 @@
 %token ARRAY_MAX			// @a.max();
 %token ARRAY_HEAD			// @a.head();
 %token ARRAY_TAIL			// @a.tail();
-%token ARRAY_AVERAGE			// @a.average();
+%token ARRAY_AVERAGE		// @a.average();
+%token ARRAY_REVERSE		// @a.reverse()
 
 // ******************** OPVAR TOKENS **********************************
 %token OPVAR_OP
@@ -290,15 +292,6 @@
 
 program:
 	funciones cuerpo '.' {
-	if(vars != NULL) {
-		delete(vars);
-	}
-	if(pila != NULL) {
-		delete(pila);
-	}
-	if(arrays != NULL) {
-		delete(arrays);
-	}
 	exit(EXIT_SUCCESS);
 }
 ;
@@ -312,8 +305,8 @@ funciones:
 
 cuerpo:
 	cuerpo stmt		{ 
-		run($2);			/* Ejecutar los nodos */ 
-		freeNode($2); 	/* Liberar los nodos */
+		run($2);		
+		freeNode($2);
 
 	}
 	| {;}
@@ -550,6 +543,9 @@ stmt:
 	}
 	| ARRAY_ID '.' ARRAY_CLEAR '(' ')' ';' {
 		$$ = opr(YL::YareParser::token::ARRAY_CLEAR, 1, idA($1));
+	}
+	| ARRAY_ID '.' ARRAY_REVERSE '(' ')' ';' {
+		$$ = opr(YL::YareParser::token::ARRAY_REVERSE, 1, idA($1));
 	}
 	| OPVAR_OP '=''+'';'					{ 
 		$$ = opr(YL::YareParser::token::OPVAR_ADD, 0); 
@@ -958,17 +954,19 @@ void yyerror(char *s) {
 }
 
 void freeNode(nodeType *p) {
-	int i;
+	
 	if (!p) 
 		return;
+
 	if (p->type == typeOpr) {
+		int i;
 		for (i = 0; i < p->opr.nops; i++) 
 			freeNode(p->opr.op[i]);
 	}
 	free(p);
 }
 
-// The run method executing the AST nodes:
+// Ejecutar el árbol AST.
 long double run(nodeType *p) {
 
 	if(!p) 
@@ -1000,7 +998,7 @@ long double run(nodeType *p) {
 					cerr << "El array '" << p->id.identificador << "' no está declarado\n";
 					return 0.0L;	
 				} else {
-					// cout << "mmm" << p->id.identificador << "\n";
+
 					int __index = p->id.index_array;
 					
 					if(__index >= arrays->getListById(p->id.identificador).size()) {
@@ -1047,6 +1045,7 @@ long double run(nodeType *p) {
 					} else {
 						return (pilaLoop[spLoop] = 0);
 					}
+					return 0.0L;
 				
 				case YL::YareParser::token::IF:
 					if(spLoop < 0) {
@@ -1084,14 +1083,14 @@ long double run(nodeType *p) {
 							cout << run(p->opr.op[0]);
 						return 0.0L;
 					}
-					return 0.0f;
+					return 0.0L;
 
-				case YL::YareParser::token::PUTS: {
+				case YL::YareParser::token::PUTS:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						cout << p->opr.op[0]->con.cadena;
 					}
 					return 0.0L;	
-				}
+				
 
 				case YL::YareParser::token::PUTSN: {
 					if((spLoop < 0) || pilaLoop[spLoop]) {
@@ -1102,7 +1101,6 @@ long double run(nodeType *p) {
 
 				case YL::YareParser::token::CALL:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
-						// cout << "Intentando ejecutar: " << p->opr.op[0]->id.identificador << endl;
 						if(buscarProc(procs, p->opr.op[0]->id.identificador)) {
 							return run(getValueProc(procs, p->opr.op[0]->id.identificador));
 						} else {
@@ -1685,67 +1683,66 @@ long double run(nodeType *p) {
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return floor(run(p->opr.op[0]));
 					else
-						return 0.0f;
+						return 0.0L;
+
 				case YL::YareParser::token::LN:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(run(p->opr.op[0]) <= 0.0) {
 							cerr << "Aviso: cuando x tiende a 0 se vuelve infinito ...\n";
-							return 0.0f;
+							return 0.0L;
 						}
 						return log(run(p->opr.op[0]));
 					} else
-						return 0.0f;
+						return 0.0L;
 
 				case YL::YareParser::token::SIN:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return sin(run(p->opr.op[0]));
 					else
-						return 0.0f;
+						return 0.0L;
 
 				case YL::YareParser::token::SINH:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return sinh(run(p->opr.op[0]));
 					else
-						return 0.0f;
+						return 0.0L;
 
 				case YL::YareParser::token::TAN:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return tan(run(p->opr.op[0]));
 					else
-						return 0.0f;
+						return 0.0L;
 
 				case YL::YareParser::token::TANH:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return tanh(run(p->opr.op[0]));
 					else
-						return 0.0f;
+						return 0.0L;
 
 				case YL::YareParser::token::SUMATORIA:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return sumatoria((short)run(p->opr.op[0]), (short)run(p->opr.op[1]));
 					else
-						return 0.0f;
+						return 0.0L;
 
 				case YL::YareParser::token::FACTORIAL:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return factorial((long)run(p->opr.op[0]));
 					else
-						return 0.0f;
+						return 0.0L;
 
 				////// Código para la pila Virtual:
 				case YL::YareParser::token::PUSH:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(pila == NULL) {
 							pila = new Pila();
-							// pila->mostrar();
 							pila->add(run(p->opr.op[0]));
 						} else {
 							pila->add(run(p->opr.op[0]));
-							// pila->mostrar();
 						}
-						return 0.0f;
+						return 0.0L;
 					}
-					return 0.0f;
+					return 0.0L;
 
 				case YL::YareParser::token::POP:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
@@ -1759,7 +1756,8 @@ long double run(nodeType *p) {
 							}
 						}
 					}
-					return 0.0f;
+					return 0.0L;
+
 				case YL::YareParser::token::FACE_HAPPY:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
@@ -1775,7 +1773,7 @@ long double run(nodeType *p) {
 							}
 						}
 					}
-					return 0.0f;
+					return 0.0L;
 
 				case YL::YareParser::token::FACE_SAD:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
@@ -1792,23 +1790,25 @@ long double run(nodeType *p) {
 							}
 						}
 					}
-					return 0.0f;
+					return 0.0L;
 
 				case YL::YareParser::token::FACE_NO:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(p->opr.op[0]->type == typeId) {
-							return sym[p->opr.op[0]->id.i] = 0.0f;
+							return sym[p->opr.op[0]->id.i] = 0.0L;
 						} else if(p->opr.op[0]->type == typeVar) {
 							if(vars == NULL) {
 								cerr << "La variable '" << p->opr.op[0]->id.identificador << "' no se encuentra declarada.\n";
 								exit(EXIT_FAILURE);
 							} else {
 								if(vars->isDefined(p->opr.op[0]->id.identificador)) {
-									vars->getVarByIndex(vars->getIndex(p->opr.op[0]->id.identificador)).setLongValue(0.0f);
+									vars->getVarByIndex(vars->getIndex(p->opr.op[0]->id.identificador)).setLongValue(0.0L);
 								}
 							}
 						}
 					}
+					return 0.0L;
+
 				case YL::YareParser::token::DO_WHILE:
 					spLoop++;
 					pilaLoop[spLoop] = 1;
@@ -1824,7 +1824,7 @@ long double run(nodeType *p) {
 					}
 					pilaLoop[spLoop] = 0;
 					spLoop--;
-					return 0.0f;
+					return 0.0L;
 
 				case YL::YareParser::token::READ:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
@@ -1842,6 +1842,7 @@ long double run(nodeType *p) {
 						_temp[_index] = '\0';
 	
 						_resultado = check(_temp, &_end);
+
 						if(*_end != '\0') {
 							return -1.0f;
 						} else {
@@ -1874,13 +1875,13 @@ long double run(nodeType *p) {
 							return _resultado;
 						}
 					}
-					return 0.0f;
+					return 0.0L;
 
 				case YL::YareParser::token::PRASCII:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						std::cout << (char)getAscii(run(p->opr.op[0]));
 					}
-					return 0.0f;
+					return 0.0L;
 
 				case YL::YareParser::token::FOREACH:
 					std::cout << "Entra aquí ... " << std::endl;
@@ -1903,13 +1904,13 @@ long double run(nodeType *p) {
 						}
 						pilaLoop[spLoop] = 0;
 						spLoop--;
-					return 0.0f;
+					return 0.0L;
 
 				case YL::YareParser::token::SYSTEM:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						int ____x = system(p->opr.op[0]->con.cadena);
 					}
-					return 0.0f;
+					return 0.0L;
 
 				case YL::YareParser::token::EXIT:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
@@ -2025,6 +2026,23 @@ long double run(nodeType *p) {
 								return 0.0L;
 							} else {
 								arrays->getListById(p->opr.op[0]->id.identificador).ordenar(run(p->opr.op[1]));
+								return 0.0L;
+							}
+						} else {
+							cout << "Error, no se ha declarado el array '" << p->opr.op[0]->id.identificador << "'" << endl;
+							return 0.0L;
+						}
+					}
+					return 0.0L;
+
+				case YL::YareParser::token::ARRAY_REVERSE:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						if(arrays != NULL) {
+							if(arrays->isDefined(p->opr.op[0]->id.identificador) == false) {
+								cout << "El array '" << p->opr.op[0]->id.identificador << "' no se ha declarado." << endl;
+								return 0.0L;
+							} else {
+								arrays->getListById(p->opr.op[0]->id.identificador).reverse();
 								return 0.0L;
 							}
 						} else {
@@ -2286,7 +2304,7 @@ long double run(nodeType *p) {
 			default:
 					break;
 	}
-	return 0.0f;
+	return 0.0L;
 }
 
 long double validateInput(char *s, bool &result) {
@@ -2297,11 +2315,23 @@ long double validateInput(char *s, bool &result) {
 
     if (!(test >> value) || (test >> rest)) {
         result = false;
-        return 0.0f;
+        return 0.0L;
     } else {
         result = true;
         return value;
     }
+}
+
+void freeResources(void) {
+	if(vars != NULL) {
+		delete(vars);
+	}
+	if(pila != NULL) {
+		delete(pila);
+	}
+	if(arrays != NULL) {
+		delete(arrays);
+	}
 }
 
 unsigned short int getAscii(long long valor) {
