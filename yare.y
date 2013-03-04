@@ -2,7 +2,6 @@
 // Autor: Leo Gutiérrez Ramírez <leorocko13@hotmail.com>
 ///////////////////// Yare /////////////////////////////
 
-
 %require "2.4.1"
 %skeleton "lalr1.cc"
 
@@ -139,7 +138,7 @@
 %token ARRAY_HEAD			// @a.head();
 %token ARRAY_TAIL			// @a.tail();
 %token ARRAY_AVERAGE		// @a.average();
-%token ARRAY_REVERSE		// @a.reverse()
+%token ARRAY_REVERSE		// @a.reverse();
 
 // ******************** OPVAR TOKENS **********************************
 %token OPVAR_OP
@@ -440,7 +439,7 @@ stmt:
 		$$ = opr(YL::YareParser::token::EXIT, 1, $3);		
 	}
 	| IF '(' expr ')'	stmt %prec	IFX		{ 
-		$$ = opr(YL::YareParser::token::IF, 2, $3, $5); 
+		$$ = opr(YL::YareParser::token::IF, 2, $3, $5);
 	}
 	| IF '(' expr ')' stmt ELSE stmt	{ 
 		$$ = opr(YL::YareParser::token::IF, 3, $3, $5, $7); 
@@ -1884,10 +1883,9 @@ long double run(nodeType *p) {
 					return 0.0L;
 
 				case YL::YareParser::token::FOREACH:
-					std::cout << "Entra aquí ... " << std::endl;
+					// std::cout << "Entra aquí ... " << std::endl;
 					spLoop++;
 					pilaLoop[spLoop] = 1;
-
 
 					if(spLoop == 0) {
 							for(sym[p->opr.op[2]->id.i] = run(p->opr.op[0]);
@@ -1945,7 +1943,7 @@ long double run(nodeType *p) {
 							if(arrays->isDefined(p->opr.op[0]->id.identificador)) {
 								cout << "El array '" << p->opr.op[0]->id.identificador << "' ya está declarado" << endl;
 							} else {
-								arrays->add(*(new Array(p->opr.op[0]->id.identificador, 0.0L)));
+								arrays->add(*(new Array(p->opr.op[0]->id.identificador)));
 							}
 							return 0.0L;
 						}
@@ -2042,7 +2040,11 @@ long double run(nodeType *p) {
 								cout << "El array '" << p->opr.op[0]->id.identificador << "' no se ha declarado." << endl;
 								return 0.0L;
 							} else {
-								arrays->getListById(p->opr.op[0]->id.identificador).reverse();
+								//	Empezar la copia:
+
+
+
+								//arrays->getListById(p->opr.op[0]->id.identificador).reverse();
 								return 0.0L;
 							}
 						} else {
@@ -2051,7 +2053,7 @@ long double run(nodeType *p) {
 						}
 					}
 					return 0.0L;
-
+				
 				case YL::YareParser::token::ARRAY_DEL:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(arrays != NULL) {

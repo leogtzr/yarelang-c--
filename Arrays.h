@@ -120,6 +120,15 @@ class Array {
                 std::reverse(lista.begin(), lista.end());
         }
 
+        /*
+        inline void copy(Array &srcA) {
+            if(srcA.size() > 1) {
+                for(vector<long double>::iterator it = srcA.getList().begin(); it != srcA.getList().end(); ++it) {
+                    lista.push_back(*it);
+                }
+            }
+        }*/
+
         void fill(int n) {
             srand((unsigned)time(NULL));
 
