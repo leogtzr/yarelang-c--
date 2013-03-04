@@ -263,6 +263,9 @@
 %token POP
 %token STACK_SIZE
 
+// Operador ternario:
+%token TERNARY		// expr ? expr : expr
+
 %type <valnum> NUMERIC 
 %type <nPtr> expr
 %type <nPtr> cuerpo
@@ -733,6 +736,9 @@ expr:
 			} else if(strcmp(opVar, "^") == 0) {
 				$$ = opr('^', 2, $1, $3);
 			} 
+	}
+	| expr '?' expr ':' expr {
+		$$ = opr(YL::YareParser::token::TERNARY, 3, $1, $3, $5);
 	}	
 	| READ '('')' {
 		$$ = opr(YL::YareParser::token::READ, 0);
@@ -2298,6 +2304,16 @@ long double run(nodeType *p) {
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						if(vars != NULL) {
 							vars->limpiar();
+						}
+					}
+					return 0.0L;
+
+				case YL::YareParser::token::TERNARY:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						if(run(p->opr.op[0])) {
+							return run(p->opr.op[1]);
+						} else {
+							return run(p->opr.op[2]);
 						}
 					}
 					return 0.0L;

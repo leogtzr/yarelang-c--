@@ -1,10 +1,4 @@
-x = 1 /* Hola */ + 2; /*
-Comentario
-de
-varias
-lineas
-
-*/
-
+x = 3;
+x = (x mod 2 == 0) ? 0 : 1;
 printn(x);
 .

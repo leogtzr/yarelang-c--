@@ -245,7 +245,7 @@
 	return YL::YareParser::token::MUL_ASM;
 }
 
-[wW][hH][iI][lL][eE] {
+([wW][hH][iI][lL][eE])|([mM][iI][eE][nN][tT][rR][aA][sS]) {
 	return YL::YareParser::token::WHILE;
 }
 
