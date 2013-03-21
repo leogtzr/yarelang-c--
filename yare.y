@@ -301,7 +301,7 @@ program:
 funciones:
 	funciones PROC FUNCNAME '{' stmt_list '}' {
 		push_l_proc(&procs, $3, $5);
-}
+	}
 | {;}
 ;
 
@@ -1191,7 +1191,7 @@ long double run(nodeType *p) {
 
 				case '=':
 					if((spLoop < 0) || pilaLoop[spLoop]) 
-						return sym[p->opr.op[0]->id.i] = run(p->opr.op[1]);	
+						return (sym[p->opr.op[0]->id.i] = run(p->opr.op[1]));
 					return 0.0L;
 
 				//////////////////////////////// Asignaciones abreviadas ////////////////////////////////////////
@@ -2047,10 +2047,7 @@ long double run(nodeType *p) {
 								return 0.0L;
 							} else {
 								//	Empezar la copia:
-
-
-
-								//arrays->getListById(p->opr.op[0]->id.identificador).reverse();
+								arrays->getListById(p->opr.op[0]->id.identificador).reverse();
 								return 0.0L;
 							}
 						} else {

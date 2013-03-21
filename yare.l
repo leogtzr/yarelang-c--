@@ -81,7 +81,7 @@
 	return YL::YareParser::token::VARIABLE;
 }
 
-@[a-zA-Z0-9"':\t #]+ {
+@[a-zA-Z0-9"':\t #_]+ {
 	strcpy(lexema->identificador, yytext);
 	for(unsigned _i_ = 0; _i_ < strlen(lexema->identificador); _i_++)
 		if(isalpha(lexema->identificador[_i_]) && isupper(lexema->identificador[_i_]))
