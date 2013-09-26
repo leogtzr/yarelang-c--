@@ -242,6 +242,7 @@
 %token SQRT
 %token ACOS
 %token ASIN
+%token ASINH
 %token ATAN
 %token ATANH
 %token CEIL
@@ -769,6 +770,9 @@ expr:
 	}
 	| ASIN '(' expr ')' {
 		$$ = opr(YL::YareParser::token::ASIN, 1, $3);	
+	}
+	| ASINH '(' expr ')' {
+		$$ = opr(YL::YareParser::token::ASINH, 1, $3);	
 	}
 	| ATAN '(' expr ')' {
 		$$ = opr(YL::YareParser::token::ATAN, 1, $3);	
@@ -1701,6 +1705,13 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 
+				case YL::YareParser::token::ASINH:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						return MathFunctions::math_asinh(run(p->opr.op[0]));
+					}
+					return 0.0L;
+
+
 				case YL::YareParser::token::CEIL:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return ceil(run(p->opr.op[0]));
@@ -1778,7 +1789,7 @@ long double run(nodeType *p) {
 						try {
 							return MathFunctions::math_atanh(run(p->opr.op[0]));
 						} catch(NanOrInfinity ex) {
-							std::cout << "Argumento fuera de la función para la función 'atanh'" << std::endl;
+							std::cout << "Argumento fuera de la función para la función 'atan'" << std::endl;
 							exit(EXIT_FAILURE);
 
 						}

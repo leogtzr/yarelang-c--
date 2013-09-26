@@ -491,6 +491,10 @@
 	return YL::YareParser::token::ASIN;	
 }
 
+[aA][sS][iI][nN][hH]	{
+	return YL::YareParser::token::ASINH;	
+}
+
 [aA][tT][aA][nN]	{
 	return YL::YareParser::token::ATAN;	
 }
