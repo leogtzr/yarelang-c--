@@ -495,6 +495,10 @@
 	return YL::YareParser::token::ATAN;	
 }
 
+[aA][tT][aA][nN][hH]	{
+	return YL::YareParser::token::ATANH;	
+}
+
 [cC][eE][iI][lL]	{
 	return YL::YareParser::token::CEIL;	
 }

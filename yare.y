@@ -243,6 +243,7 @@
 %token ACOS
 %token ASIN
 %token ATAN
+%token ATANH
 %token CEIL
 %token COS
 %token COSH
@@ -771,6 +772,10 @@ expr:
 	}
 	| ATAN '(' expr ')' {
 		$$ = opr(YL::YareParser::token::ATAN, 1, $3);	
+	}
+
+	| ATANH '(' expr ')' {
+		$$ = opr(YL::YareParser::token::ATANH, 1, $3);	
 	}
 	| CEIL '(' expr ')' {
 		$$ = opr(YL::YareParser::token::CEIL, 1, $3);	
@@ -1683,6 +1688,7 @@ long double run(nodeType *p) {
 						// return acos(run(p->opr.op[0]));
 					}
 					return 0.0L;
+
 				case YL::YareParser::token::ASIN:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
 						try {
@@ -1694,22 +1700,27 @@ long double run(nodeType *p) {
 						// return asin(run(p->opr.op[0]));
 					}
 					return 0.0L;
+
 				case YL::YareParser::token::CEIL:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return ceil(run(p->opr.op[0]));
 					return 0.0L;
+
 				case YL::YareParser::token::COS:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return cos(run(p->opr.op[0]));
 					return 0.0L;
+
 				case YL::YareParser::token::COSH:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return cosh(run(p->opr.op[0]));
 					return 0.0L;
+
 				case YL::YareParser::token::EXP:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return exp(run(p->opr.op[0]));
 					return 0.0L;
+
 				case YL::YareParser::token::FLOOR:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return floor(run(p->opr.op[0]));
@@ -1760,6 +1771,20 @@ long double run(nodeType *p) {
 						return MathFunctions::math_atan(run(p->opr.op[0]));
 					}
 					return 0.0L;
+
+				case YL::YareParser::token::ATANH:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						//return MathFunctions::math_atan(run(p->opr.op[0]));
+						try {
+							return MathFunctions::math_atanh(run(p->opr.op[0]));
+						} catch(NanOrInfinity ex) {
+							std::cout << "Argumento fuera de la función para la función 'atanh'" << std::endl;
+							exit(EXIT_FAILURE);
+
+						}
+					}
+					return 0.0L;
+
 
 
 				case YL::YareParser::token::TANH:
