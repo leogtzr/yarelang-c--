@@ -9,8 +9,6 @@
 
 namespace MathFunctions {
 
-	static bool evaluate = false;
-
 	template<typename T>
 	inline bool isinf(T value) {
 		return value == std::numeric_limits<T>::infinity();
@@ -24,12 +22,11 @@ namespace MathFunctions {
 	inline bool isNan(double z) {
 		return z != z;
     }
+
 	/*
-	 * Calcular el factorial de un valor:
+	 * Calcular el factorial de un número:
 	 */
 	double factorial(double value) {
-
-		if(evaluate) return 1.0;
 
 		double res;
 		int v = static_cast<int>(value);
@@ -52,8 +49,6 @@ namespace MathFunctions {
 
 	inline double log_expr(double x) throw (NanOrInfinity) {
 
-		if(evaluate) return 1.0;
-
 		long double result = log(x);
 		if (!isinf(result) && !isNan(result) && !is_infinite(result)) {
 				return result;
@@ -63,15 +58,10 @@ namespace MathFunctions {
 	}
 
 	inline long double math_acot(double x) {
-
-		if(evaluate) return 1.0;
-
 		return ((M_PI / 2.0) - abs(atan(x)));
 	}
 
 	inline long double math_acosh(double x) throw(NanOrInfinity) {
-
-		if(evaluate) return 1.0;
 
 		if(x >= 1.0) {
 			long double result = log(x + sqrt((x * x) - 1.0));
@@ -88,8 +78,6 @@ namespace MathFunctions {
 	   Calcula el signo de un valor dado */
 	inline double sign(double value) {
 
-		if(evaluate) return 1.0;
-
 		if (value > 0)
 			return 1;
 		if (value < 0)
@@ -98,8 +86,6 @@ namespace MathFunctions {
 	}
 
 	inline double raiz(double x) throw (NanOrInfinity) {
-
-		if(evaluate) return 1.0;
 
         long double result = sqrt(x);
 		if (!isinf(result) && !isNan(result) && !is_infinite(result)) {
@@ -110,8 +96,6 @@ namespace MathFunctions {
 	}
 
 	inline long double math_acos(double x) throw (NanOrInfinity) {
-
-		if(evaluate) return 1.0;
 
 		if(x >= -1.0 && x <= 1.0) {
 			long double result = acos(x);
@@ -125,9 +109,7 @@ namespace MathFunctions {
 		}
 	}
 
-	inline long double math_asech(double x) {
-
-		if(evaluate) return 1.0;
+	inline long double math_asech(double x) throw(NanOrInfinity) {
 
 		if(fabs(x) < 0.00000000000001) {
 			throw NanOrInfinity("Fuera de rango.", x);
@@ -144,10 +126,7 @@ namespace MathFunctions {
 
 	inline long double math_atan(double x) {
 
-		if(evaluate) return 1.0;
-
 		if(fabs(x - 0.0) < std::numeric_limits<double>::epsilon()) {
-			// std::cout << "Iguales ... " << std::endl;
 			return 0.0;
 		}
 		return atan(x);
@@ -155,9 +134,6 @@ namespace MathFunctions {
 
 	inline long double math_asinh(double x) {
 
-		if(evaluate) return 1.0;
-
-		//if(fabs(x) < 0.000000000000001) {
 		if(fabs(x - 0.0) < std::numeric_limits<double>::epsilon()) {
             return 0.0;
         }
@@ -165,8 +141,6 @@ namespace MathFunctions {
 	}
 
 	inline long double math_atanh(double x) throw (NanOrInfinity) {
-
-		if(evaluate) return 1.0;
 
 		if(fabs(x - 0.0) < std::numeric_limits<double>::epsilon()) {
 			return 0.0;
@@ -185,9 +159,6 @@ namespace MathFunctions {
 
 	inline long double math_acoth(double x) throw (NanOrInfinity) {
 
-		if(evaluate) return 1.0;
-
-		// std::cout << "Decimal[" << fabs(val) << "]" << std::endl;
 		if(abs(x) < 1.0) {
 			throw NanOrInfinity("Fuera de dominio para la función 'acoth'", x);
 		}
@@ -196,9 +167,7 @@ namespace MathFunctions {
 
 	inline double math_asin(double x) throw (NanOrInfinity) {
 
-		if(evaluate) return 1.0;
-
-        /// XXX Warning.
+		/// XXX Warning.
 		if(fabs(x - 0.0) < std::numeric_limits<double>::epsilon()) {
 			return 0.0L;
 		}
@@ -216,8 +185,6 @@ namespace MathFunctions {
 
 	inline long double math_acsc(double x) throw (NanOrInfinity) {
 
-		if(evaluate) return 1.0;
-
 		if(x <= 1.0 && x >= 1.0) {
 			throw NanOrInfinity("Fuera de dominio para la función 'acoth'", x);
 		}
@@ -225,7 +192,6 @@ namespace MathFunctions {
 	}
 
 	inline long double math_acsch(double x) throw (NanOrInfinity) {
-		if(evaluate) return 1.0;
 		  //if(x != 0.0) {
 		  //	return _asinh(1.0 / x);
 		  //} else {
@@ -245,7 +211,6 @@ namespace MathFunctions {
 
 	inline long double math_asec(double x) throw(NanOrInfinity) {
 
-		if(evaluate) return 1.0;
 		/*if(x >= -1.0 && x >= 1.0) {
 			throw NanOrInfinity("Fura de dominio para la función 'asec'", x);
         }*/
@@ -260,8 +225,6 @@ namespace MathFunctions {
 	}
 
 	inline long double math_cot(double x) {
-
-		if(evaluate) return 1.0;
 
 		long double result = 0.0;
 
@@ -284,9 +247,6 @@ namespace MathFunctions {
 
 	inline long double math_coth(double x) throw (NanOrInfinity) {
 
-		if(evaluate) return 1.0;
-		//return 1.0 / tanh(x);
-
     	// Código anterior, descomentar si hay problemas.
 		//if(/*(x == M_PI) || (tanh(x) == 0.0) || */(fabs(x) < 0.00000000000001)) {
 		// XXX Warning.
@@ -298,7 +258,7 @@ namespace MathFunctions {
 	}
 
 	inline long double math_csc(double x) {
-		if(evaluate) return 1.0;
+		
 		 /*if(fabs(sin(x)) < 0.00000000000001) {
 			 throw NanOrInfinity("Fuera de rango.", x);
 		 } else {
@@ -316,7 +276,7 @@ namespace MathFunctions {
 	}
 
 	inline long double math_csch(double x) {
-		if(evaluate) return 1.0;
+		
 		  // Código anterior, descomentar si hay problemas.
 		 //if(/*(x == M_PI) || */(fabs(sinh(x)) < 0.00000000000001) || (fabs(x) < 0.00000000000001)) {
 		 // XXX Warning.
@@ -330,8 +290,6 @@ namespace MathFunctions {
 
 	inline double math_log(double x) {
 
-		if(evaluate) return 1.0;
-
 		if(fabs(x) < 0.0) {
             throw NanOrInfinity("Fuera de dominio.", x);
         }
@@ -344,8 +302,6 @@ namespace MathFunctions {
 
 	inline long double math_log10(double x) {
 
-		if(evaluate) return 1.0;
-
 		if(x < 0.0) {
 		   throw NanOrInfinity("Fuera de rango.", x);
 		} else if(x == 0.0 || fabs(x) < 0.00000000000001) {
@@ -356,8 +312,6 @@ namespace MathFunctions {
 	}
 
 	inline long double math_log2(double x) {
-
-		if(evaluate) return 1.0;
 
 		/*double intpart;
 		double fract_part = modf(x, &intpart);*/
@@ -373,8 +327,6 @@ namespace MathFunctions {
 
 	inline long double math_sec(double x) {
 
-		if(evaluate) return 1.0;
-
 		//return ((2.0 * cos(x)) / (cos(2.0 * x) + 1.0));
 		if(fabs(cos(x)) < 0.00000000000001) {
 			throw NanOrInfinity("Fuera de rango.", x);
@@ -385,14 +337,10 @@ namespace MathFunctions {
 
 	inline long double math_sech(double x) {
 
-		if(evaluate) return 1.0;
-
 		return ((2.0 * cosh(x)) / (cosh(2.0 * x) + 1.0));
 	}
 
 	inline long double math_sqrt(double x) {
-
-		if(evaluate) return 1.0;
 
 		if(fabs(x) < 0.00000000000001) {
 			return 0.0;
@@ -405,8 +353,6 @@ namespace MathFunctions {
 	}
 
 	inline long double math_tan(double x) {
-
-		if(evaluate) return 1.0;
 
 		if(fmod(x, M_PI) == M_PI_2) {
 			throw NanOrInfinity("Fuera de rango.", x);
@@ -421,30 +367,19 @@ namespace MathFunctions {
 	// Se hace la suposición de que ya se está randomizado.
 	inline double rand_0_to_1(void) {
 
-		if(evaluate) return 1.0;
-
 		return (double)rand() / (double)RAND_MAX;
 	}
 
 	inline double rand_between(double min, double max) {
-
-		if(evaluate) return 1.0;
-
 		return ((double(rand()) / double(RAND_MAX)) * ((max + 1) - min)) + min;
 	}
 
 	inline int rand_int_between(int min, int max) {
-
-		if(evaluate) return 1.0;
-
 		return min + (rand() % (int)(max - min + 1));
 	}
 
     // XXX Solo para pruebas.
 	inline double math_sin_test(double x) {
-
-		if(evaluate) return 1.0;
-
 		double temp = sin(x);
 		if(fabs(temp - 0.0) < std::numeric_limits<double>::epsilon()) {
             return 0;
