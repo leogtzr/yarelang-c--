@@ -543,6 +543,10 @@
 	return YL::YareParser::token::TAN;
 }
 
+[sS][eE][cC]	{
+	return YL::YareParser::token::SEC;
+}
+
 [tT][aA][nN][hH]	{
 	   return YL::YareParser::token::TANH;
 }

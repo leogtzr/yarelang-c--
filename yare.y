@@ -255,6 +255,7 @@
 %token SIN
 %token SINH
 %token TAN
+%token SEC
 %token TANH
 
 ///////////// Smileys
@@ -811,6 +812,9 @@ expr:
 	}
 	| TAN '(' expr ')' {
 		$$ = opr(YL::YareParser::token::TAN, 1, $3);	
+	}
+	| SEC '(' expr ')' {
+		$$ = opr(YL::YareParser::token::SEC, 1, $3);	
 	}
 	| TANH '(' expr ')' {
 		$$ = opr(YL::YareParser::token::TANH, 1, $3);	
@@ -1784,6 +1788,20 @@ long double run(nodeType *p) {
 							return MathFunctions::math_tan(run(p->opr.op[0]));
 						} catch(NanOrInfinity ex) {
 							std::cout << "Argumento fuera de la función para la función 'tan'" << std::endl;
+							exit(EXIT_FAILURE);
+
+						}
+						
+					}
+					else
+						return 0.0L;
+
+				case YL::YareParser::token::SEC:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						try {
+							return MathFunctions::math_sec(run(p->opr.op[0]));
+						} catch(NanOrInfinity ex) {
+							std::cout << "Argumento fuera de la función para la función 'sec'" << std::endl;
 							exit(EXIT_FAILURE);
 
 						}
