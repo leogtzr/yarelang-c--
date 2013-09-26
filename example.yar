@@ -1,3 +1,3 @@
-:ok: = csc(2);
+:ok: = cot(2);
 printn(:ok:);
 .

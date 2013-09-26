@@ -257,6 +257,7 @@
 %token TAN
 %token SEC
 %token CSC
+%token COT
 %token TANH
 
 ///////////// Smileys
@@ -819,6 +820,9 @@ expr:
 	}
 	| CSC '(' expr ')' {
 		$$ = opr(YL::YareParser::token::CSC, 1, $3);	
+	}
+	| COT '(' expr ')' {
+		$$ = opr(YL::YareParser::token::COT, 1, $3);	
 	}
 	| TANH '(' expr ')' {
 		$$ = opr(YL::YareParser::token::TANH, 1, $3);	
@@ -1820,6 +1824,17 @@ long double run(nodeType *p) {
 							return MathFunctions::math_csc(run(p->opr.op[0]));
 						} catch(NanOrInfinity ex) {
 							std::cout << "Argumento fuera de la función para la función 'csc'" << std::endl;
+							exit(EXIT_FAILURE);
+						}
+					}
+					return 0.0L;
+
+				case YL::YareParser::token::COT:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						try {
+							return MathFunctions::math_cot(run(p->opr.op[0]));
+						} catch(NanOrInfinity ex) {
+							std::cout << "Argumento fuera de la función para la función 'cot'" << std::endl;
 							exit(EXIT_FAILURE);
 						}
 					}
