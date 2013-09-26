@@ -547,6 +547,10 @@
 	return YL::YareParser::token::SEC;
 }
 
+[aA][sS][eE][cC]	{
+	return YL::YareParser::token::ASEC;
+}
+
 [cC][sS][cC]	{
 	return YL::YareParser::token::CSC;
 }
