@@ -1,3 +1,3 @@
-:ok: = sqrt(-6);
+:ok: = acos(0.02);
 printn(:ok:);
 .

@@ -1660,7 +1660,6 @@ long double run(nodeType *p) {
 					return 0.0L;
 				case YL::YareParser::token::SQRT:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
-
 						//return sqrt(run(p->opr.op[0]));
 						try {
 							return MathFunctions::raiz(run(p->opr.op[0]));
@@ -1671,8 +1670,18 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 				case YL::YareParser::token::ACOS:
-					if((spLoop < 0) || pilaLoop[spLoop]) 
-						return acos(run(p->opr.op[0]));
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+
+						try {
+							//return acos(run(p->opr.op[0]));
+							return MathFunctions::math_acos(run(p->opr.op[0]));
+						} catch(NanOrInfinity ex) {
+							std::cout << "Argumento fuera de la función para la función 'acos'" << std::endl;
+							exit(EXIT_FAILURE);
+						}
+
+						// return acos(run(p->opr.op[0]));
+					}
 					return 0.0L;
 				case YL::YareParser::token::ASIN:
 					if((spLoop < 0) || pilaLoop[spLoop]) 

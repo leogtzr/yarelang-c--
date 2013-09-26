@@ -1,7 +1,4 @@
 Funciones que necesitan tratamiento:
 
 math_log -- "log" o "ln".
-<<<<<<< HEAD
-SQRT -- sqrt
-=======
->>>>>>> 7eddf7f4ececa850cf1df22b370ea82120122ecf
+math_acos -- "acos"
