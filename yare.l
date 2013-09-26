@@ -487,6 +487,10 @@
 	return YL::YareParser::token::ACOS;	
 }
 
+[aA][cC][oO][sS][hH] {
+	return YL::YareParser::token::ACOSH;	
+}
+
 [aA][sS][iI][nN]	{
 	return YL::YareParser::token::ASIN;	
 }

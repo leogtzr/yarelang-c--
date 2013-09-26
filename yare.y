@@ -241,6 +241,7 @@
 %token SUMATORIA
 %token SQRT
 %token ACOS
+%token ACOSH
 %token ASIN
 %token ASINH
 %token ATAN
@@ -767,6 +768,9 @@ expr:
 	}
 	| ACOS '(' expr ')' {
 		$$ = opr(YL::YareParser::token::ACOS, 1, $3);	
+	}
+	| ACOSH '(' expr ')' {
+		$$ = opr(YL::YareParser::token::ACOSH, 1, $3);	
 	}
 	| ASIN '(' expr ')' {
 		$$ = opr(YL::YareParser::token::ASIN, 1, $3);	
@@ -1690,6 +1694,17 @@ long double run(nodeType *p) {
 						}
 
 						// return acos(run(p->opr.op[0]));
+					}
+					return 0.0L;
+
+				case YL::YareParser::token::ACOSH:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						try {
+							return MathFunctions::math_acosh(run(p->opr.op[0]));
+						} catch(NanOrInfinity ex) {
+							std::cout << "Argumento fuera de la función para la función 'acosh'" << std::endl;
+							exit(EXIT_FAILURE);
+						}
 					}
 					return 0.0L;
 
