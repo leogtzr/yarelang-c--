@@ -1684,8 +1684,15 @@ long double run(nodeType *p) {
 					}
 					return 0.0L;
 				case YL::YareParser::token::ASIN:
-					if((spLoop < 0) || pilaLoop[spLoop]) 
-						return asin(run(p->opr.op[0]));
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						try {
+							return MathFunctions::math_asin(run(p->opr.op[0]));
+						} catch(NanOrInfinity ex) {
+							std::cout << "Argumento fuera de la función para la función 'asin'" << std::endl;
+							exit(EXIT_FAILURE);
+						}
+						// return asin(run(p->opr.op[0]));
+					}
 					return 0.0L;
 				case YL::YareParser::token::CEIL:
 					if((spLoop < 0) || pilaLoop[spLoop]) 

@@ -1,3 +1,3 @@
-:ok: = acos(0.02);
+:ok: = asin(2);
 printn(:ok:);
 .

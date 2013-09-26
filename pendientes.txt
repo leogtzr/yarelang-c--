@@ -2,3 +2,4 @@ Funciones que necesitan tratamiento:
 
 math_log -- "log" o "ln".
 math_acos -- "acos"
+math_asin -- "asin"
