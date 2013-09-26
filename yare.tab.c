@@ -5057,6 +5057,13 @@ long double run(nodeType *p) {
 					else
 						return 0.0L;
 
+				case YL::YareParser::token::ATAN:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						return MathFunctions::math_atan(run(p->opr.op[0]));
+					}
+					return 0.0L;
+
+
 				case YL::YareParser::token::TANH:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
 						return tanh(run(p->opr.op[0]));
