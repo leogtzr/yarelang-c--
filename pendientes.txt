@@ -1,0 +1,3 @@
+Funciones que necesitan tratamiento:
+
+math_log -- "log" o "ln".
