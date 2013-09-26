@@ -1,3 +1,3 @@
-:ok: = acosh(0.2);
+:ok: = sec(2);
 printn(:ok:);
 .
