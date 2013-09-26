@@ -1,3 +1,3 @@
-:ok: = 1+2;
+:ok: = tan(const.pi/2);
 printn(:ok:);
 .

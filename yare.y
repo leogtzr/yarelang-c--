@@ -25,6 +25,8 @@
 	#include <cstdio>
 	#include <fstream>
 	#include <cstdlib>
+	#include "MathFunctions.h"
+	#include "NanOrInfinity.h"
 
 	// The symbol table:
 	long double sym[26];
@@ -1713,8 +1715,17 @@ long double run(nodeType *p) {
 						return 0.0L;
 
 				case YL::YareParser::token::TAN:
-					if((spLoop < 0) || pilaLoop[spLoop]) 
-						return tan(run(p->opr.op[0]));
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						try {
+							return MathFunctions::math_tan(run(p->opr.op[0]));
+						} catch(NanOrInfinity ex) {
+							double __X = run(p->opr.op[0]);
+							std::cout << "Argumento fuera de la función para la función 'tan'" << std::endl;
+							exit(EXIT_FAILURE);
+
+						}
+						
+					}
 					else
 						return 0.0L;
 
