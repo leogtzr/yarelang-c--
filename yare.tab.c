@@ -4961,8 +4961,16 @@ long double run(nodeType *p) {
 						return fabs(run(p->opr.op[0]));
 					return 0.0L;
 				case YL::YareParser::token::SQRT:
-					if((spLoop < 0) || pilaLoop[spLoop]) 
-						return sqrt(run(p->opr.op[0]));
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+
+						//return sqrt(run(p->opr.op[0]));
+						try {
+							return MathFunctions::raiz(run(p->opr.op[0]));
+						} catch(NanOrInfinity ex) {
+							std::cout << "Argumento fuera de la función para la función 'sqrt'" << std::endl;
+							exit(EXIT_FAILURE);
+						}
+					}
 					return 0.0L;
 				case YL::YareParser::token::ACOS:
 					if((spLoop < 0) || pilaLoop[spLoop]) 
@@ -4996,11 +5004,12 @@ long double run(nodeType *p) {
 
 				case YL::YareParser::token::LN:
 					if((spLoop < 0) || pilaLoop[spLoop]) {
-						if(run(p->opr.op[0]) <= 0.0) {
-							cerr << "Aviso: cuando x tiende a 0 se vuelve infinito ...\n";
-							return 0.0L;
+						try {
+							return MathFunctions::math_log(run(p->opr.op[0]));
+						} catch(NanOrInfinity ex) {
+							std::cout << "Argumento fuera de la función para la función 'ln'" << std::endl;
+							exit(EXIT_FAILURE);
 						}
-						return log(run(p->opr.op[0]));
 					} else
 						return 0.0L;
 
@@ -5021,7 +5030,6 @@ long double run(nodeType *p) {
 						try {
 							return MathFunctions::math_tan(run(p->opr.op[0]));
 						} catch(NanOrInfinity ex) {
-							double __X = run(p->opr.op[0]);
 							std::cout << "Argumento fuera de la función para la función 'tan'" << std::endl;
 							exit(EXIT_FAILURE);
 
