@@ -5030,8 +5030,10 @@ long double run(nodeType *p) {
 						return 0.0L;
 
 				case YL::YareParser::token::SIN:
-					if((spLoop < 0) || pilaLoop[spLoop]) 
-						return sin(run(p->opr.op[0]));
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						//return sin(run(p->opr.op[0]));
+						return MathFunctions::math_sin_test(run(p->opr.op[0]));
+					}
 					else
 						return 0.0L;
 

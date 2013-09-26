@@ -1,3 +1,3 @@
-:ok: = asin(2);
+:ok: = sin(const.pi+2);
 printn(:ok:);
 .
