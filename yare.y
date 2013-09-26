@@ -158,7 +158,7 @@
 /// Arrays tokens:
 %token ARRAY_C			// array_c(id_array);
 
-/********************** Sentences *********************************/
+/* ********************* Sentences ******************************** */
 // Control structures and more:
 %token WHILE	// @todo while|mientras
 %token DO_WHILE	// do stmt while();

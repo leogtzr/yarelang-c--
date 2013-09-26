@@ -1,2 +1,2 @@
-Yarelang in C++
+Yarelang in C++ - A structured programming language written in C++
 
