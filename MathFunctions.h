@@ -59,8 +59,7 @@ namespace MathFunctions {
 
 	inline long double math_acot(double x) {
 		double val_return = ((M_PI / 2.0) - abs(atan(x)));
-		std::cout << "Return[" << val_return << "]" << std::endl;
-		//return ((M_PI / 2.0) - abs(atan(x)));
+		//std::cout << "Return[" << val_return << "]" << std::endl;
 		return val_return;
 	}
 
@@ -195,29 +194,14 @@ namespace MathFunctions {
 	}
 
 	inline long double math_acsch(double x) throw (NanOrInfinity) {
-		  //if(x != 0.0) {
-		  //	return _asinh(1.0 / x);
-		  //} else {
-		  //  throw NanOrInfinity("Fuera de dominio para la función 'acsch'", x);
-		  //}
-			//if(x != 1.52656E-15)
-
-		  //if(fabs(x) < 0.00000000000001) {
-			/// XXX Warning.
 		  if(fabs(x - 0.0) < std::numeric_limits<double>::epsilon()) {
 			throw NanOrInfinity("Fuera de dominio.", x);
           }
 		  return log(sqrt(1.0 + (1.0/(x * x))) + (1.0/x));
-			//else
-            //	throw NanOrInfinity("Fuera de dominio para la función 'acsch'", x);
 	}
 
 	inline long double math_asec(double x) throw(NanOrInfinity) {
 
-		/*if(x >= -1.0 && x >= 1.0) {
-			throw NanOrInfinity("Fura de dominio para la función 'asec'", x);
-        }*/
-		//return math_acos(1.0 / x);
 		long double y = acos(1.0 / x);
 		if (!isinf(y) && !isNan(y) && !is_infinite(y)) {
 			return y;
@@ -250,9 +234,7 @@ namespace MathFunctions {
 
 	inline long double math_coth(double x) throw (NanOrInfinity) {
 
-    	// Código anterior, descomentar si hay problemas.
-		//if(/*(x == M_PI) || (tanh(x) == 0.0) || */(fabs(x) < 0.00000000000001)) {
-		// XXX Warning.
+    	// XXX Warning.
 		if(fabs(x - 0.0) < std::numeric_limits<double>::epsilon()) {
 			throw NanOrInfinity("Fuera de rango.", x);
 		} else {
@@ -262,14 +244,6 @@ namespace MathFunctions {
 
 	inline long double math_csc(double x) {
 		
-		 /*if(fabs(sin(x)) < 0.00000000000001) {
-			 throw NanOrInfinity("Fuera de rango.", x);
-		 } else {
-			 return (1.0 / sin(x));
-		 }*/
-
-    	// Código anterior, descomentar si hay problemas.
-		//if(fmod(fabs(x), M_PI) < 0.00000000000001) {
         // XXX Warning.
 		if(fabs(fmod(fabs(x), M_PI) - 0.0) < std::numeric_limits<double>::epsilon()) {
 			throw NanOrInfinity("Fuera de rango.", x);
@@ -279,10 +253,7 @@ namespace MathFunctions {
 	}
 
 	inline long double math_csch(double x) {
-		
-		  // Código anterior, descomentar si hay problemas.
-		 //if(/*(x == M_PI) || */(fabs(sinh(x)) < 0.00000000000001) || (fabs(x) < 0.00000000000001)) {
-		 // XXX Warning.
+		  // XXX Warning.
 		 if((fabs(sinh(x) - 0.0) < std::numeric_limits<double>::epsilon()) ||
 			(fabs(x - 0.0) < std::numeric_limits<double>::epsilon())) {
 			 throw NanOrInfinity("Fuera de rango.", x);
@@ -316,9 +287,6 @@ namespace MathFunctions {
 
 	inline long double math_log2(double x) {
 
-		/*double intpart;
-		double fract_part = modf(x, &intpart);*/
-		// std::cout << "Parte fraccionaria[" << std::setprecision(15) << fract_part << "]Entero[" << intpart << "]" << std::endl;
 		if(x < 0.0) {
 		   throw NanOrInfinity("Fuera de rango.", x);
 		} else if(x == 0.0 || fabs(x) < 0.00000000000001) {
