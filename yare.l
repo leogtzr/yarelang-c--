@@ -555,6 +555,10 @@
 	return YL::YareParser::token::CSC;
 }
 
+[aA][cC][sS][cC]	{
+	return YL::YareParser::token::ACSC;
+}
+
 [cC][oO][tT]	{
 	return YL::YareParser::token::COT;
 }
