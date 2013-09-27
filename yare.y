@@ -819,6 +819,10 @@ expr:
 		$$ = opr(YL::YareParser::token::LOG10, 1, $3);	
 	}
 
+	| LOG2 '(' expr ')' {
+		$$ = opr(YL::YareParser::token::LOG2, 1, $3);	
+	}
+
 	| SIN '(' expr ')' {
 		$$ = opr(YL::YareParser::token::SIN, 1, $3);	
 	}
@@ -1814,6 +1818,18 @@ long double run(nodeType *p) {
 							return MathFunctions::math_log10(run(p->opr.op[0]));
 						} catch(NanOrInfinity ex) {
 							std::cout << "Argumento fuera de la función para la función 'log10'" << std::endl;
+							exit(EXIT_FAILURE);
+						}
+					}
+					return 0.0L;
+
+				case YL::YareParser::token::LOG2:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						
+						try {
+							return MathFunctions::math_log2(run(p->opr.op[0]));
+						} catch(NanOrInfinity ex) {
+							std::cout << "Argumento fuera de la función para la función 'log2'" << std::endl;
 							exit(EXIT_FAILURE);
 						}
 					}
