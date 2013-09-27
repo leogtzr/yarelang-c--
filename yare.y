@@ -257,6 +257,7 @@
 %token TAN
 %token SEC
 %token ASEC
+%token ASECH
 %token CSC
 %token ACSC
 %token ACSCH
@@ -824,6 +825,9 @@ expr:
 	}
 	| ASEC '(' expr ')' {
 		$$ = opr(YL::YareParser::token::ASEC, 1, $3);	
+	}
+	| ASECH '(' expr ')' {
+		$$ = opr(YL::YareParser::token::ASECH, 1, $3);	
 	}
 	| CSC '(' expr ')' {
 		$$ = opr(YL::YareParser::token::CSC, 1, $3);	
@@ -1839,7 +1843,18 @@ long double run(nodeType *p) {
 						try {
 							return MathFunctions::math_asec(run(p->opr.op[0]));
 						} catch(NanOrInfinity ex) {
-							std::cout << "Argumento fuera de la función para la función 'sec'" << std::endl;
+							std::cout << "Argumento fuera de la función para la función 'asec'" << std::endl;
+							exit(EXIT_FAILURE);
+						}
+					}
+					return 0.0L;
+
+				case YL::YareParser::token::ASECH:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						try {
+							return MathFunctions::math_asech(run(p->opr.op[0]));
+						} catch(NanOrInfinity ex) {
+							std::cout << "Argumento fuera de la función para la función 'asech'" << std::endl;
 							exit(EXIT_FAILURE);
 						}
 					}
