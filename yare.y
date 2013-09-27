@@ -12,21 +12,20 @@
 %lex-param   { YL::FlexScanner &scanner }
 
 %{
-	#include "astnode.h"
+	#include "astnode.hpp"
 	#include <cstdarg>
 	#include <cstring>
-	#include "Variables.h"
-	#include "Pila.hh"
-	#include "procs.h"
-	#include "mymath.h"
-	#include "Pila.hh"
+	#include "variables.hpp"
+	#include "stack.hpp"
+	#include "procs.hpp"
+	#include "my_math.hpp"
 	#include <cmath>
 	#include <sstream>
 	#include <cstdio>
 	#include <fstream>
 	#include <cstdlib>
-	#include "MathFunctions.h"
-	#include "NanOrInfinity.h"
+	#include "math_functions.hpp"
+	#include "nan_or_infinity.hpp"
 
 	// The symbol table:
 	long double sym[26];
@@ -903,7 +902,7 @@ void YL::YareParser::error(const YL::YareParser::location_type &loc, const std::
 	
 }
 
-#include "YareScanner.h"
+#include "yare_scanner.hpp"
 static int yylex(YL::YareParser::semantic_type * yylval, YL::FlexScanner &scanner) {
 	return scanner.yylex(yylval);
 }

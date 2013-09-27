@@ -6,10 +6,10 @@
 #ifndef ASTNODE_H_INCLUDED
 #define ASTNODE_H_INCLUDED
 
-#include "Variables.h"
-#include "Arrays.h"
-#include "Pila.hh"
-#include "procs.h"
+#include "variables.hpp"
+#include "arrays.hpp"
+#include "stack.hpp"
+#include "procs.hpp"
 
 typedef enum { 
 	typeCon, 

@@ -4,9 +4,9 @@
 	///////////////////// Yare /////////////////////////////
 
 	#include "yare.tab.h"
-	#include "YareScanner.h"
-	#include "constantes.h"
-	// XXX  #include "astnode.h"
+	#include "yare_scanner.hpp"
+	#include "constants.hpp"
+	// XXX  #include "astnode.hpp"
 	#include <cstring>
 	#include <cctype>
 	#include <cstdlib>

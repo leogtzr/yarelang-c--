@@ -2,8 +2,8 @@
 #define MATH_FUNCTIONS_H
 
 #include <limits>
-#include "NanOrInfinity.h"
-#include "ParsingException.h"
+#include "nan_or_infinity.hpp"
+#include "parsing_exception.hpp"
 #include <cstdlib>
 #include <ctime>
 
