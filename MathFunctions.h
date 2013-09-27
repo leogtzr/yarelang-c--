@@ -58,7 +58,10 @@ namespace MathFunctions {
 	}
 
 	inline long double math_acot(double x) {
-		return ((M_PI / 2.0) - abs(atan(x)));
+		double val_return = ((M_PI / 2.0) - abs(atan(x)));
+		std::cout << "Return[" << val_return << "]" << std::endl;
+		//return ((M_PI / 2.0) - abs(atan(x)));
+		return val_return;
 	}
 
 	inline long double math_acosh(double x) throw(NanOrInfinity) {

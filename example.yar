@@ -1,3 +1,3 @@
-:ok: = asec(2);
+:ok: = acot(1);
 printn(:ok:);
 .
