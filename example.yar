@@ -1,3 +1,3 @@
-:ok: = asech(0.2);
+:ok: = sech(1.2);
 printn(:ok:);
 .
