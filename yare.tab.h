@@ -232,33 +232,34 @@ namespace YL {
      ASEC = 370,
      CSC = 371,
      ACSC = 372,
-     COT = 373,
-     TANH = 374,
-     ACOT = 375,
-     FACE_HAPPY = 376,
-     FACE_SAD = 377,
-     FACE_NO = 378,
-     PUSH = 379,
-     POP = 380,
-     STACK_SIZE = 381,
-     TERNARY = 382,
-     IFX = 383,
-     ELSE = 384,
-     OR = 385,
-     AND = 386,
-     SHIFTRIGHT = 387,
-     SHIFTLEFT = 388,
-     ANDBITS = 389,
-     ORBITS = 390,
-     LT = 391,
-     GT = 392,
-     NE = 393,
-     EQ = 394,
-     LE = 395,
-     GE = 396,
-     EXPR_ELEVADO = 397,
-     NEGACION = 398,
-     UMINUS = 399
+     ACSCH = 373,
+     COT = 374,
+     TANH = 375,
+     ACOT = 376,
+     FACE_HAPPY = 377,
+     FACE_SAD = 378,
+     FACE_NO = 379,
+     PUSH = 380,
+     POP = 381,
+     STACK_SIZE = 382,
+     TERNARY = 383,
+     IFX = 384,
+     ELSE = 385,
+     OR = 386,
+     AND = 387,
+     SHIFTRIGHT = 388,
+     SHIFTLEFT = 389,
+     ANDBITS = 390,
+     ORBITS = 391,
+     LT = 392,
+     GT = 393,
+     NE = 394,
+     EQ = 395,
+     LE = 396,
+     GE = 397,
+     EXPR_ELEVADO = 398,
+     NEGACION = 399,
+     UMINUS = 400
    };
 
     };
@@ -437,7 +438,7 @@ namespace YL {
 } // YL
 
 /* Line 35 of lalr1.cc  */
-#line 441 "yare.tab.h"
+#line 442 "yare.tab.h"
 
 
 

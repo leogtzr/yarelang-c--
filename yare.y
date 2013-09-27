@@ -259,6 +259,7 @@
 %token ASEC
 %token CSC
 %token ACSC
+%token ACSCH
 %token COT
 %token TANH
 %token ACOT
@@ -829,6 +830,9 @@ expr:
 	}
 	| ACSC '(' expr ')' {
 		$$ = opr(YL::YareParser::token::ACSC, 1, $3);	
+	}
+	| ACSCH '(' expr ')' {
+		$$ = opr(YL::YareParser::token::ACSCH, 1, $3);	
 	}
 	| COT '(' expr ')' {
 		$$ = opr(YL::YareParser::token::COT, 1, $3);	
@@ -1858,6 +1862,17 @@ long double run(nodeType *p) {
 							return MathFunctions::math_acsc(run(p->opr.op[0]));
 						} catch(NanOrInfinity ex) {
 							std::cout << "Argumento fuera de la función para la función 'acsc'" << std::endl;
+							exit(EXIT_FAILURE);
+						}
+					}
+					return 0.0L;
+
+				case YL::YareParser::token::ACSCH:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						try {
+							return MathFunctions::math_acsch(run(p->opr.op[0]));
+						} catch(NanOrInfinity ex) {
+							std::cout << "Argumento fuera de la función para la función 'acsch'" << std::endl;
 							exit(EXIT_FAILURE);
 						}
 					}
