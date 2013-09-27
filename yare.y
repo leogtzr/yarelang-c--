@@ -252,6 +252,8 @@
 %token EXP
 %token FLOOR
 %token LN
+%token LOG10
+%token LOG2
 %token SIN
 %token SINH
 %token TAN
@@ -812,6 +814,11 @@ expr:
 	| LN '(' expr ')' {
 		$$ = opr(YL::YareParser::token::LN, 1, $3);	
 	}
+
+	| LOG10 '(' expr ')' {
+		$$ = opr(YL::YareParser::token::LOG10, 1, $3);	
+	}
+
 	| SIN '(' expr ')' {
 		$$ = opr(YL::YareParser::token::SIN, 1, $3);	
 	}
@@ -1799,6 +1806,18 @@ long double run(nodeType *p) {
 						}
 					} else
 						return 0.0L;
+
+				case YL::YareParser::token::LOG10:
+					if((spLoop < 0) || pilaLoop[spLoop]) {
+						
+						try {
+							return MathFunctions::math_log10(run(p->opr.op[0]));
+						} catch(NanOrInfinity ex) {
+							std::cout << "Argumento fuera de la función para la función 'log10'" << std::endl;
+							exit(EXIT_FAILURE);
+						}
+					}
+					return 0.0L;
 
 				case YL::YareParser::token::SIN:
 					if((spLoop < 0) || pilaLoop[spLoop]) {

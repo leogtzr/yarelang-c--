@@ -531,6 +531,14 @@
 	return YL::YareParser::token::LN;
 }
 
+[lL][oO][gG][1][0]	{
+	return YL::YareParser::token::LOG10;
+}
+
+[lL][oO][gG][2]	{
+	return YL::YareParser::token::LOG2;
+}
+
 [sS][iI][nN]	{
 	return YL::YareParser::token::SIN;
 }

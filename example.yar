@@ -1,3 +1,3 @@
-:ok: = sech(1.2);
+:ok: = log10(-1.2);
 printn(:ok:);
 .
